@@ -8,7 +8,7 @@ cd "$PROJECT_DIR"
 
 echo ""
 echo "=============================="
-echo " Vibe Coding 入门课 - 快速设置"
+echo " 梦夜的 AI 课 - 快速设置"
 echo "=============================="
 echo ""
 
@@ -47,7 +47,7 @@ else
   echo "   ${PROJECT_DIR}/.env"
   echo ""
   echo "   不填 Anthropic Key 的话，也可以换成其他模型："
-  echo "   https://github.com/dreamnight16/vibe-coding-agent#-%E9%85%8D%E7%BD%AE%E5%A4%9A%E6%A8%A1%E5%9E%8B"
+  echo "   https://github.com/dreamnight16/learn-to-code#readme"
   echo ""
 fi
 

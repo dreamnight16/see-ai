@@ -7,12 +7,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dreamnight16/vibe-coding-agent.git"
+    "url": "git+https://github.com/dreamnight16/learn-to-code.git"
   },
   "bugs": {
-    "url": "https://github.com/dreamnight16/vibe-coding-agent/issues"
+    "url": "https://github.com/dreamnight16/learn-to-code/issues"
   },
-  "homepage": "https://github.com/dreamnight16/vibe-coding-agent#readme",
+  "homepage": "https://learn.dreamnight.net.cn",
   "keywords": [
     "ai-literacy",
     "ai-education",

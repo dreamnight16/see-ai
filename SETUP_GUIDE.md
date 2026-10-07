@@ -212,7 +212,7 @@ git add .
 git commit -m "初始化项目"
 
 # 关联远程仓库
-git remote add origin https://github.com/你的用户名/vibe-coding-agent.git
+git remote add origin https://github.com/你的用户名/learn-to-code.git
 
 # 推送代码
 git push -u origin main
@@ -225,7 +225,7 @@ git push -u origin main
 ## 七、项目结构说明
 
 ```
-vibe-coding-agent/
+learn-to-code/
 ├── app/                    # 页面文件
 │   ├── api/agent/          # AI 对话接口
 │   ├── lesson/[id]/        # 课程内容页
