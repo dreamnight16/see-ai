@@ -24,7 +24,7 @@ export default function ChatInterface() {
     {
       role: "assistant",
       content:
-        "你好！我是你的 Vibe Coding 学习助手。有什么不懂的随时问我，比如：\n\n- 这个课程里的概念我不太明白\n- 帮我看看这个描述能不能让 AI 理解\n- 我想做一个 [xxx]，该怎么描述？",
+        "你好，我是课程里的可选学习助手。正文、练习和进度都在这里，不需要我也能继续。\n\n卡住时，把具体的一段代码或一句话贴过来就好。我们可以一起拆概念、改描述，或者把一个小想法拆成几步来做。",
     },
   ]);
   const [input, setInput] = useState("");
@@ -70,7 +70,7 @@ export default function ChatInterface() {
       });
 
       if (!response.ok || !response.body) {
-        const err = await response.json().catch(() => ({}));
+        const err = await response.json().catch(() => ({} as { error?: string }));
         throw new Error(err.error || "请求失败");
       }
 
@@ -98,12 +98,12 @@ export default function ChatInterface() {
       const msg =
         err instanceof Error
           ? err.message
-          : "抱歉，出错了。请检查 API Key 是否配置正确，或者稍后再试。";
+          : "这次没有接上学习助手。";
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: `抱歉，出错了：${msg}\n\n提示：请检查 .env 文件中的 API Key 是否配置正确。`,
+            content: `${msg}\n\n没关系，课程正文、练习、测验和进度不会受影响。等服务恢复后再回来问就行。`,
         },
       ]);
     } finally {
@@ -120,11 +120,8 @@ export default function ChatInterface() {
         </span>
         <div className="flex-1">
           <div className="flex items-center">
-            <span className="font-semibold text-sm">AI 学习助手</span>
-            <span className="text-[10px] text-success ml-2 inline-flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-success" />
-              在线
-            </span>
+            <span className="font-semibold text-sm">学习助手</span>
+            <span className="text-[10px] text-muted ml-2">需要时再用</span>
           </div>
           <div className="mt-1">
             <SocraticToggle value={socraticMode} onChange={setSocraticMode} />
@@ -187,7 +184,7 @@ export default function ChatInterface() {
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="输入你的问题..."
+          placeholder="说说你卡在哪里..."
           className="flex-1 px-4 py-3 rounded-xl border border-edge bg-surface text-sm focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent/50 transition-all placeholder:text-faint"
         />
         <button

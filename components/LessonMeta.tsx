@@ -1,7 +1,7 @@
 "use client";
 
 import type { Lesson } from "@/lib/lessons";
-import { Clock, Gauge, Tag } from "lucide-react";
+import { Clock, Tag } from "lucide-react";
 
 const DIFFICULTY_CONFIG: Record<string, { label: string; className: string; icon: string }> = {
   beginner: {

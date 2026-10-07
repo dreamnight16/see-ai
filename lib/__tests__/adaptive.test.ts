@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { MemoryRepository, setRepository } from "../repository";
 import { getRecommendations } from "../adaptive";
-import { saveQuizResult, markLessonCompleted, loadProgress, saveProgress } from "../progress";
+import { saveQuizResult, loadProgress, saveProgress } from "../progress";
 
 describe("getRecommendations", () => {
   beforeEach(() => {
@@ -25,9 +25,6 @@ describe("getRecommendations", () => {
     // Lesson "1-3" has prerequisites ["1-2"], so completing it without 1-2 should suggest review
     saveQuizResult("1-3", 50);
     const recs = getRecommendations("5-1");
-    // "5-1" has prerequisites, so we need to check what they are
-    const prereqRecs = recs.filter((r) => r.type === "review-lesson");
-    // May or may not have prereqs depending on the lesson structure
     expect(recs.length).toBeGreaterThan(0);
   });
 

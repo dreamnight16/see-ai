@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import type { SavedProject } from '@/lib/projects';
 import { loadProjects, deleteProject } from '@/lib/projects';
-import { ExternalLink, Trash2, Eye, Code2, Calendar, Sparkles, Download } from 'lucide-react';
+import { Trash2, Eye, Code2, Calendar, Sparkles, Download } from 'lucide-react';
 import ExportDialog from './ExportDialog';
 import Link from 'next/link';
 
@@ -36,7 +36,7 @@ export default function ProjectGallery() {
         <Code2 className="w-16 h-16 text-faint/30 mx-auto mb-4" />
         <h2 className="font-display text-2xl font-bold mb-2">还没有作品</h2>
         <p className="text-muted mb-6 max-w-md mx-auto">
-          去课程里打开 Playground，用 AI 生成你的第一个网页作品！
+          去课程里打开 Playground，先做出你的第一个网页作品。卡住时，再叫助手帮一把。
         </p>
         <Link
           href="/lesson/3-1"

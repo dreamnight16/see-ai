@@ -72,6 +72,8 @@ cp .env.example .env
 
 用文本编辑器打开项目根目录的 `.env` 文件：
 
+AI 配置是可选的。不填 API Key 也可以打开课程、完成练习、测验和记录进度。
+
 #### 方式一：使用 DeepSeek（推荐，国内直接访问）
 ```env
 AI_PROVIDER=openai-compatible
@@ -106,9 +108,9 @@ AI_API_KEY=你的OpenAI_API_Key
 
 > **小提示**：`AI_API_KEY` 是通用配置；如果用 Anthropic 也可以用 `ANTHROPIC_API_KEY`，用 OpenAI 也可以用 `OPENAI_API_KEY`。
 
-### 4. 配置 API 认证密钥
+### 4. （可选）配置 API 认证密钥
 
-从 0.2.0 版本开始，API 需要认证。在 `.env` 文件中添加：
+本地使用可留空。配置后，所有 AI API 请求都必须携带 `Authorization: Bearer <密钥>`，包括浏览器请求；仅设置同源请求头不能代替认证。需要浏览器助手时，由受信任的服务端代理附加认证，不要把密钥写入前端代码。
 
 ```env
 AI_API_AUTH_TOKEN=你的随机密钥
@@ -157,9 +159,9 @@ A: 检查终端有没有报错信息。最常见的问题是：
 - 忘记安装依赖 (`npm install`)
 - Node.js 版本太低（需要 v18 以上）
 
-### Q: AI 助教回复"API Key 未配置"
+### Q: AI 助教提示未配置
 
-A: 你的 `.env` 文件没有正确配置 API Key。
+A: AI 助教、代码生成和代码审阅属于可选功能。没有 API Key 时，课程正文、练习、测验、进度和作品保存仍可使用；如果需要 AI 功能，再按上面的方式配置：
 - 确认 `.env` 文件已创建（不是 `.env.example`）
 - 确认 API Key 填对了（不要有多余空格）
 - 确认 `AI_PROVIDER` 和对应的 Key 匹配

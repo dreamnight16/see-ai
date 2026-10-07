@@ -7,25 +7,26 @@
 [![CI](https://github.com/dreamnight16/vibe-coding-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/dreamnight16/vibe-coding-agent/actions/workflows/ci.yml)
 [![線上體驗](https://socialistic.ai/api/embed/dreamcode-vibe-curriculum-6a796a?lang=zh)](https://socialistic.ai/zh/skill/dreamcode-vibe-curriculum-6a796a)
 
-一個面向零基礎學習者的 AI 輔助程式設計（Vibe Coding）互動教學網站。22 節課涵蓋 7 個章節，內建 AI 助教、遊戲化系統、Prompt Playground 可直接生成可執行的程式碼。
+一個邊學邊做的網頁製作互動課程。22 節課分成 7 個章節，配有本地練習和進度記錄；遇到卡點時，也可以叫一個選用的小助手過來一起捋一捋。
 
 ---
 
 ## 功能
 
 - **22 節系統化課程** — 7 個章節從概念到發布
-- **AI 學習助手** — 蘇格拉底引導模式 + 直接回答模式，串流回應
-- **Prompt Playground** — 輸入描述即可生成可執行的 HTML/CSS/JS 程式碼
+- **可選學習助手** — 蘇格拉底引導模式 + 直接回答模式，串流回應
+- **Prompt Playground** — 描述一個小想法，設定模型後生成可執行的 HTML/CSS/JS
 - **遊戲化系統** — 經驗值、等級、連續學習天數、10 種成就徽章
 - **程式碼練習** — 互動式練習，附提示與自動檢查
 - **學習儀表板** — 進度追蹤、熱力圖、技能雷達圖
 - **PWA 支援** — 可安裝到桌面，支援離線使用
-- **多模型支援** — Claude、OpenAI、DeepSeek 及任意 OpenAI 相容介面
-- **AI 降級** — 主服務故障時自動切換到備用服務
+- **服務商可選** — Claude、OpenAI、DeepSeek 及其他 OpenAI 相容介面
+- **備用線路** — 主服務沒接通時嘗試備用服務
+- **核心流程離線可用** — 課程、練習、測驗、進度和作品保存不依賴 API Key 或網路
 
 ## 線上體驗
 
-無需安裝、無需設定 API Key——打開連結就能開始學習：
+無需安裝、無需設定 API Key——打開連結就能開始學習；AI 輔助是選用功能：
 
 [![在 Socialistic 上體驗](https://socialistic.ai/api/embed/dreamcode-vibe-curriculum-6a796a?lang=zh)](https://socialistic.ai/zh/skill/dreamcode-vibe-curriculum-6a796a)
 
@@ -61,11 +62,13 @@ docker compose up -d
 
 ## 設定
 
-### 必填
+### 選用：學習助手
+
+不設定 AI 也可以啟動並完成課程。只有需要學習助手、程式碼生成或程式碼審閱時，才需要填寫以下設定：
 
 ```env
-# API 認證金鑰（產生一個隨機字串）
-AI_API_AUTH_TOKEN=你的金鑰
+# 可選認證；設定後所有 AI 請求都須攜帶 Bearer 金鑰
+AI_API_AUTH_TOKEN=
 
 # 主 AI 服務商
 AI_PROVIDER=openai-compatible
@@ -74,7 +77,7 @@ AI_API_KEY=sk-...
 AI_BASE_URL=https://api.deepseek.com/v1
 ```
 
-### 選用：備用 AI 服務商
+### 選用：備用模型服務
 
 主服務商故障時自動切換：
 

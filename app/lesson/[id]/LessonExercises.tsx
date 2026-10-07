@@ -15,7 +15,7 @@ export default function LessonExercises({ exercises }: LessonExercisesProps) {
 
   return (
     <div className="space-y-6">
-      {exercises.map((exercise, idx) => (
+      {exercises.map((exercise) => (
         <CodeExercise
           key={exercise.id}
           exercise={exercise}

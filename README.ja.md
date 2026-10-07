@@ -7,25 +7,26 @@
 [![CI](https://github.com/dreamnight16/vibe-coding-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/dreamnight16/vibe-coding-agent/actions/workflows/ci.yml)
 [![オンラインで試す](https://socialistic.ai/api/embed/dreamcode-vibe-curriculum-6a796a?lang=ja)](https://socialistic.ai/ja/skill/dreamcode-vibe-curriculum-6a796a)
 
-ゼロから学べる AI アシストプログラミング（Vibe Coding）のインタラクティブな学習サイトです。7 章 22 レッスンで段階的に学習でき、AI チューター、ゲーミフィケーションシステム、コードを直接生成できる Prompt Playground を備えています。
+作りながらウェブ制作を学ぶインタラクティブな学習サイトです。7 章 22 レッスン、ローカル演習、進捗管理があり、つまずいた時だけ使える小さな補助も用意しています。
 
 ---
 
 ## 機能
 
 - **22 の体系的なレッスン** — 概念から公開までの 7 章構成
-- **AI 学習アシスタント** — ソクラテス式誘導モード + 直接回答モード、ストリーミング応答
-- **Prompt Playground** — 説明を入力するだけで実行可能な HTML/CSS/JS を生成
+- **オプションの学習アシスタント** — ソクラテス式誘導モード + 直接回答モード、ストリーミング応答
+- **Prompt Playground** — 小さなアイデアを説明すると、設定したモデルで実行可能な HTML/CSS/JS を生成
 - **ゲーミフィケーション** — XP、レベル、連続学習日数、10 種類の達成バッジ
 - **コード演習** — ヒントと自動チェック付きのインタラクティブ演習
 - **学習ダッシュボード** — 進捗追跡、ヒートマップ、スキルレーダー
 - **PWA 対応** — インストール可能、オフライン動作対応
-- **マルチモデル対応** — Claude、OpenAI、DeepSeek 及び任意の OpenAI 互換インターフェース
-- **AI フォールバック** — メインプロバイダー障害時に自動でバックアップに切替
+- **プロバイダー選択** — Claude、OpenAI、DeepSeek、その他の OpenAI 互換インターフェース
+- **バックアップ経路** — メインサービスにつながらない時は別の設定を試行
+- **オフライン対応のコア** — レッスン、演習、クイズ、進捗、作品保存は API Key やネットワーク不要
 
 ## オンラインで試す
 
-インストール不要・API Key 不要——リンクを開くだけですぐに学習を始められます：
+インストール不要・API Key 不要——リンクを開くだけですぐに学習を始められます。AI 補助はオプションです：
 
 [![Socialistic で試す](https://socialistic.ai/api/embed/dreamcode-vibe-curriculum-6a796a?lang=ja)](https://socialistic.ai/ja/skill/dreamcode-vibe-curriculum-6a796a)
 
@@ -61,11 +62,13 @@ docker compose up -d
 
 ## 設定
 
-### 必須
+### オプション：学習ヘルパー
+
+AI を設定しなくてもコースを開始できます。アシスタント、コード生成、コードレビューを使う場合だけ以下を設定してください。
 
 ```env
-# API 認証キー（ランダムな文字列を生成）
-AI_API_AUTH_TOKEN=あなたの秘密キー
+# 任意の認証設定。有効にすると全AIリクエストにBearerトークンが必要
+AI_API_AUTH_TOKEN=
 
 # メイン AI プロバイダー
 AI_PROVIDER=openai-compatible
@@ -74,7 +77,7 @@ AI_API_KEY=sk-...
 AI_BASE_URL=https://api.deepseek.com/v1
 ```
 
-### オプション：バックアップ AI プロバイダー
+### オプション：バックアップモデルサービス
 
 メインプロバイダー障害時に自動切替：
 

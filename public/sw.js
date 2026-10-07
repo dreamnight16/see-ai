@@ -1,4 +1,3 @@
-const CACHE_NAME = 'vibe-coding-v1';
 const STATIC_CACHE = 'vibe-coding-static-v1';
 const CONTENT_CACHE = 'vibe-coding-content-v1';
 

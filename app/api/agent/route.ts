@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { SYSTEM_PROMPT, SOCRATIC_SYSTEM_PROMPT } from "@/lib/system-prompt";
+import { getAiApiAccessError } from "@/lib/api-access";
 
 // ---- 速率限制 ----
 const RATE_WINDOW_MS = 60_000; // 1 分钟窗口
@@ -226,21 +227,9 @@ function getClientIP(req: NextRequest): string {
 
 export async function POST(req: NextRequest) {
   // CSRF is handled by middleware (Origin validation for POST/PUT/DELETE).
-  // API 认证：与 /api/review 一致，防止未授权调用付费 AI 服务。
-  const authToken = process.env.AI_API_AUTH_TOKEN;
-  if (!authToken) {
-    return new Response(
-      JSON.stringify({ error: "Server not configured: AI_API_AUTH_TOKEN is required" }),
-      { status: 500, headers: { "Content-Type": "application/json" } },
-    );
-  }
-  const auth = req.headers.get("Authorization");
-  if (!auth || auth !== `Bearer ${authToken}`) {
-    return new Response(
-      JSON.stringify({ error: "Unauthorized" }),
-      { status: 401, headers: { "Content-Type": "application/json" } },
-    );
-  }
+  // Enforce the bearer token when configured, including browser requests.
+  const accessError = getAiApiAccessError(req);
+  if (accessError) return accessError;
 
   const ip = getClientIP(req);
   if (!checkRateLimit(ip)) {
@@ -260,8 +249,8 @@ export async function POST(req: NextRequest) {
 
   if (!apiKey) {
     return new Response(
-      JSON.stringify({ error: "AI_API_KEY 未配置" }),
-      { status: 500, headers: { "Content-Type": "application/json" } },
+      JSON.stringify({ error: "AI 助手未配置。课程、练习和进度功能不受影响。" }),
+      { status: 503, headers: { "Content-Type": "application/json" } },
     );
   }
 

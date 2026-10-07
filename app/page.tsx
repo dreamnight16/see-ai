@@ -34,14 +34,13 @@ export default function Home() {
 
           {/* Main headline */}
           <h1 className="font-display text-hero font-black leading-none mb-6 animate-reveal">
-            用 AI 创造，
+            从看懂网页开始，
             <br />
-            <span className="text-accent">不需要会写代码</span>
+            <span className="text-accent">做出自己的作品</span>
           </h1>
 
           <p className="text-lg md:text-xl text-muted max-w-xl leading-relaxed mb-8 animate-slide-up stagger-2">
-            告别死记硬背。在这门课里，你只需要学会<strong className="text-accent font-semibold">和 AI 对话</strong>，
-            就能做出属于自己的网站、工具和应用。编程从未如此简单。
+            从网页结构、样式和交互开始，边学边做出属于自己的网站、工具和小应用。需要时再用 AI 辅助，不依赖它才能完成课程。
           </p>
 
           {/* CTA + stats */}
@@ -50,8 +49,8 @@ export default function Home() {
               href={`/lesson/${lessons[0].id}`}
               className="inline-flex items-center gap-2 px-8 py-3.5 bg-accent text-white rounded-xl font-semibold text-lg shadow-glow hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
             >
-              <Sparkles className="w-5 h-5" />
-              开始学习，免费
+              <BookOpen className="w-5 h-5" />
+              从第一课开始
               <ArrowRight className="w-4 h-4" />
             </Link>
 
@@ -130,7 +129,7 @@ export default function Home() {
           <div className="decorative-line mb-4" />
           <h2 className="font-display text-3xl md:text-4xl font-bold">课程大纲</h2>
           <p className="text-muted mt-3 text-lg">
-            七个章节，从认识 AI 编程到做出你自己的作品
+            七个章节，从网页基础到发布自己的作品
           </p>
         </div>
 
@@ -224,11 +223,10 @@ export default function Home() {
           <div className="card p-10 md:p-16 gradient-warm border-accent/20">
             <Sparkles className="w-10 h-10 text-accent mx-auto mb-4" />
             <h2 className="font-display text-2xl md:text-3xl font-bold mb-3">
-              准备好开始你的编程之旅了吗？
+              准备好做第一个小作品了吗？
             </h2>
             <p className="text-muted mb-6 max-w-md mx-auto">
-              不需要任何基础，不需要安装复杂软件。
-              打开浏览器，跟着课程，用 AI 创造你的第一个作品。
+              不需要预装复杂工具。打开浏览器，跟着课程一步步完成第一个作品。
             </p>
             <Link
               href={`/lesson/${lessons[0].id}`}
@@ -249,7 +247,7 @@ export default function Home() {
           让每个人都能创造
         </p>
         <p className="text-xs text-faint mt-2">
-          用 AI 的力量，把想法变成现实
+          从一个小想法开始，把它做出来
         </p>
       </footer>
     </div>

@@ -1,4 +1,4 @@
-import { type Lesson, lessons } from './lessons';
+import { lessons } from './lessons';
 import { loadProgress } from './progress';
 
 export interface AdaptiveRecommendation {
@@ -77,7 +77,7 @@ export function getRecommendations(lessonId?: string): AdaptiveRecommendation[] 
     recs.push({
       type: 'try-playground',
       lessonId: currentLesson.id,
-      reason: '打开 Playground，试试用 AI 生成代码',
+      reason: '打开 Playground，试着把一个想法做成网页；需要时再用 AI 辅助',
       priority: 4,
       icon: 'Wand2',
     });

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Play, Pause, RotateCcw, ChevronRight } from 'lucide-react';
+import { Play, Pause, RotateCcw } from 'lucide-react';
 
 const HTML_CODE = `<!DOCTYPE html>
 <html>

@@ -12,12 +12,12 @@ interface Step {
 }
 
 const STEPS: Step[] = [
-  { label: '描述需求', description: '用大白话告诉 AI 你想要什么', x: 50, y: 60, color: '#e85d3a' },
-  { label: 'AI 理解', description: 'AI 分析你的需求，拆解成任务', x: 220, y: 60, color: '#d4952a' },
-  { label: '生成代码', description: 'AI 写出完整的 HTML/CSS/JS', x: 390, y: 60, color: '#5b8c5a' },
+  { label: '描述需求', description: '用大白话说清楚你想做什么', x: 50, y: 60, color: '#3159d8' },
+  { label: '拆成小步', description: '把页面和交互拆成能动手的任务', x: 220, y: 60, color: '#d99a2e' },
+  { label: '写出第一版', description: '先得到一份能打开、能修改的代码', x: 390, y: 60, color: '#229b8d' },
   { label: '预览效果', description: '在浏览器中看到你的作品', x: 560, y: 60, color: '#4a7fb5' },
-  { label: '迭代修改', description: '不满意就继续告诉 AI 怎么改', x: 475, y: 160, color: '#e85d3a' },
-  { label: '完成作品', description: '得到你想要的网页或应用', x: 305, y: 160, color: '#5b8c5a' },
+  { label: '迭代修改', description: '哪里不对，就指出哪里再改一轮', x: 475, y: 160, color: '#3159d8' },
+  { label: '完成作品', description: '留下一个你看得懂、改得动的版本', x: 305, y: 160, color: '#229b8d' },
 ];
 
 const ARROWS = [

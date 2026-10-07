@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 import GamificationStatus from '@/components/gamification/GamificationStatus';
 import BadgeUnlock from '@/components/gamification/BadgeUnlock';
 import PWAPrompt from '@/components/ui/PWAPrompt';
-import { loadProgress, saveProgress } from '@/lib/progress';
 import { usePWA } from '@/hooks/usePWA';
 
 export default function AppShell({ children }: { children: React.ReactNode }) {

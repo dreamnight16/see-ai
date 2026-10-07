@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Wand2, Copy, Check, Code2, Play, Sparkles, Save, FolderOpen } from "lucide-react";
+import { Wand2, Copy, Check, Code2, Play, Sparkles, Save, FolderOpen, AlertTriangle } from "lucide-react";
 import CodeReview from "./playground/CodeReview";
 import { saveProject } from "@/lib/projects";
 import { emitGameEvent } from "@/lib/events";
@@ -14,12 +14,13 @@ export default function PromptPlayground() {
   const [copied, setCopied] = useState(false);
   const [showReview, setShowReview] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [projectTitle, setProjectTitle] = useState('');
+  const [error, setError] = useState('');
 
   async function generate() {
     if (!prompt.trim()) return;
     setLoading(true);
     setCode("");
+    setError("");
 
     try {
       const response = await fetch("/api/agent", {
@@ -29,11 +30,11 @@ export default function PromptPlayground() {
           messages: [
             {
               role: "user",
-              content: `请根据以下描述，生成一个完整的、可直接运行的 HTML 文件代码。要求：
-1. 包含所有 CSS 和 JavaScript，不要依赖外部文件
-2. 代码要有中文注释，解释关键部分
-3. 使用现代简洁的设计风格
-4. 直接返回代码，不要加任何解释性文字
+              content: `把下面的想法做成一个打开就能运行的 HTML 文件。先把结构和交互做对，再用清楚的排版和克制的颜色收尾。要求：
+1. CSS 和 JavaScript 都写在文件里，不依赖外部文件
+2. 关键逻辑加简短中文注释，方便初学者读懂
+3. 保持页面清楚、轻快，不堆装饰性渐变
+4. 只返回代码，不要附加说明
 
 描述：${prompt}`,
             },
@@ -42,7 +43,8 @@ export default function PromptPlayground() {
       });
 
       if (!response.ok || !response.body) {
-        throw new Error("请求失败");
+        const payload = await response.json().catch(() => ({} as { error?: string }));
+        throw new Error(payload.error || "这次没有接上模型服务");
       }
 
       const reader = response.body.getReader();
@@ -57,11 +59,9 @@ export default function PromptPlayground() {
       }
 
       // Fire playground event for gamification
-      import('@/lib/events').then(({ emitGameEvent }) => {
-        emitGameEvent({ type: 'playground:generated' });
-      });
-    } catch {
-      setCode("<!-- 出错了，请检查 API Key 配置或稍后重试 -->");
+      emitGameEvent({ type: 'playground:generated' });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "这次没有接上模型服务");
     } finally {
       setLoading(false);
     }
@@ -70,7 +70,7 @@ export default function PromptPlayground() {
   function handleSave() {
     if (!cleanCode) return;
     saveProject({
-      title: projectTitle || prompt.slice(0, 30) || '未命名作品',
+      title: prompt.slice(0, 30) || '未命名作品',
       description: prompt.slice(0, 200),
       code: cleanCode,
       tags: [],
@@ -99,8 +99,8 @@ export default function PromptPlayground() {
           <Wand2 className="w-4 h-4 text-accent" />
         </span>
         <div>
-          <span className="font-semibold text-sm">Prompt Playground</span>
-          <span className="text-[10px] text-muted ml-2">动手试试</span>
+          <span className="font-semibold text-sm">网页小工坊</span>
+          <span className="text-[10px] text-muted ml-2">把想法做出来</span>
         </div>
       </div>
 
@@ -129,7 +129,7 @@ export default function PromptPlayground() {
         </div>
 
         <div className="flex items-center justify-between">
-          <span className="text-xs text-faint">提示：描述越具体，生成效果越好</span>
+          <span className="text-xs text-faint">说清楚页面要做什么，结果会更接近你的想法</span>
           <button
             onClick={generate}
             disabled={loading || !prompt.trim()}
@@ -149,6 +149,13 @@ export default function PromptPlayground() {
           </button>
         </div>
       </div>
+
+      {error && (
+        <div role="alert" className="flex items-start gap-2.5 px-4 py-3 text-sm text-warning bg-warning-soft border-b border-warning/10">
+          <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
+          <span>{error} 课程和练习不需要模型，可以先继续学习。</span>
+        </div>
+      )}
 
       {/* Code output */}
       {cleanCode && (
@@ -193,7 +200,7 @@ export default function PromptPlayground() {
                 className="flex items-center gap-1 text-xs text-muted hover:text-accent transition-colors"
               >
                 <Sparkles className="w-3 h-3" />
-                AI 点评
+                请助手看一眼
               </button>
               <button
                 onClick={copyCode}

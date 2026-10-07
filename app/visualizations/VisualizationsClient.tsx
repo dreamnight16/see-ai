@@ -39,7 +39,7 @@ export default function VisualizationsClient() {
           <section>
             <div className="flex items-center gap-2 mb-3">
               <Eye className="w-4 h-4 text-accent" />
-              <h2 className="font-display text-xl font-bold">AI 如何生成代码</h2>
+              <h2 className="font-display text-xl font-bold">代码是怎样一步步写出来的</h2>
             </div>
             <TokenStream />
           </section>

@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import type { Exercise } from '@/lib/exercises';
-import { Play, Eye, Lightbulb, CheckCircle2, RotateCcw, ChevronDown, ChevronUp } from 'lucide-react';
+import { Play, Eye, Lightbulb, CheckCircle2, RotateCcw } from 'lucide-react';
 
 interface CodeExerciseProps {
   exercise: Exercise;

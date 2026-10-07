@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Confetti from '@/components/ui/Confetti';
-import { getBadgeById, type Badge } from '@/lib/achievements';
+import { getBadgeById } from '@/lib/achievements';
 import { X, Award, Footprints, Zap, Flag, GraduationCap, Trophy, Wand2, Flame, Compass, Code2, Star } from 'lucide-react';
 
 interface BadgeUnlockProps {

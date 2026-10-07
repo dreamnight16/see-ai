@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server';
+import { getAiApiAccessError } from '@/lib/api-access';
 
 const SYSTEM_REVIEW_PROMPT = `你是一个友善的代码审阅老师，帮零基础的人看代码。
 
@@ -55,21 +56,9 @@ function validateBaseURL(url: string): boolean {
 }
 
 export async function POST(req: NextRequest) {
-  // API 认证（必需，不再可选）
-  const authToken = process.env.AI_API_AUTH_TOKEN;
-  if (!authToken) {
-    return new Response(
-      JSON.stringify({ error: "Server not configured: AI_API_AUTH_TOKEN is required" }),
-      { status: 500, headers: { "Content-Type": "application/json" } },
-    );
-  }
-  const auth = req.headers.get("Authorization");
-  if (!auth || auth !== `Bearer ${authToken}`) {
-    return new Response(
-      JSON.stringify({ error: "Unauthorized" }),
-      { status: 401, headers: { "Content-Type": "application/json" } },
-    );
-  }
+  // Enforce the bearer token when configured, including browser requests.
+  const accessError = getAiApiAccessError(req);
+  if (accessError) return accessError;
 
   const ip =
     req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
@@ -89,8 +78,8 @@ export async function POST(req: NextRequest) {
     const baseURL = process.env.AI_BASE_URL || 'https://api.deepseek.com/v1';
 
     if (!apiKey) {
-      return new Response(JSON.stringify({ error: 'AI_API_KEY 未配置' }), {
-        status: 500,
+      return new Response(JSON.stringify({ error: 'AI 代码审阅未配置。课程、练习和作品保存不受影响。' }), {
+        status: 503,
         headers: { 'Content-Type': 'application/json' },
       });
     }

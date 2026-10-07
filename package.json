@@ -2,7 +2,7 @@
   "name": "dreamcode",
   "version": "0.2.0",
   "private": true,
-  "description": "Interactive Vibe Coding crash course — 22 lessons with AI teaching assistant, gamification, and code playground",
+  "description": "Interactive coding crash course — 22 lessons with local exercises, progress tracking, and a small optional code helper",
   "author": "DreamNight",
   "license": "MIT",
   "repository": {
@@ -16,11 +16,10 @@
   "keywords": [
     "vibe-coding",
     "education",
-    "ai",
     "tutorial",
     "nextjs",
     "typescript",
-    "llm"
+    "code-playground"
   ],
   "scripts": {
     "dev": "next dev",

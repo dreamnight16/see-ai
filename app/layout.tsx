@@ -23,7 +23,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "梦夜的编程课",
-  description: "零基础学会用 AI 编程，让创意变成现实",
+  description: "从网页基础开始学习，边学边做出自己的作品；AI 辅助功能可选",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,

@@ -5,7 +5,7 @@ import { loadProgress } from '@/lib/progress';
 import { calculateLevel } from '@/lib/gamification';
 import { lessons } from '@/lib/lessons';
 import AnimatedCounter from '@/components/ui/AnimatedCounter';
-import { BookOpen, Trophy, Code2, Flame, Star, Calendar, Clock, Zap } from 'lucide-react';
+import { BookOpen, Trophy, Flame, Star, Calendar, Clock, Zap } from 'lucide-react';
 
 interface StatCard {
   label: string;

@@ -3,7 +3,6 @@ import { MemoryRepository, setRepository } from "../repository";
 import {
   loadProgress,
   saveProgress,
-  getLessonProgress,
   markLessonAccessed,
   markLessonCompleted,
   saveQuizResult,

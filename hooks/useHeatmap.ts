@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { loadProgress } from '@/lib/progress';
-import { getTodayKey } from '@/lib/gamification';
 
 export interface DayActivity {
   date: string;

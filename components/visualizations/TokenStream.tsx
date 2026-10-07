@@ -97,8 +97,8 @@ export default function TokenStream() {
             <Sparkles className="w-4 h-4 text-accent" />
           </span>
           <div>
-            <h3 className="font-display font-bold text-base">AI 如何生成代码</h3>
-            <p className="text-[10px] text-muted">看 AI 如何把你的一句话变成完整网页</p>
+            <h3 className="font-display font-bold text-base">代码是怎样一步步写出来的</h3>
+            <p className="text-[10px] text-muted">看一段话怎样被拆成可以运行的网页代码</p>
           </div>
         </div>
         <div className="flex items-center gap-1.5">
@@ -179,8 +179,8 @@ export default function TokenStream() {
       <div className="mt-4 p-3 rounded-xl bg-surface-alt border border-edge/50">
         <p className="text-xs text-muted leading-relaxed">
           <span className="font-semibold text-text-primary">原理：</span>
-          AI 就像一个超级快速的&ldquo;文字接龙&rdquo;机器。它根据你给的提示词，一个字一个字地预测接下来最可能是什么。
-          每次预测一个 token（通常是一个词或标点），直到完成整个代码。这就是为什么你描述得越清楚，AI 生成得越准。
+          模型更像一个速度很快的“文字接龙”工具：它根据你给的描述，逐个预测接下来可能出现的 token（通常是词或标点），直到代码写完。
+          描述越具体，生成结果通常越容易修改，也越接近你真正想做的东西。
         </p>
       </div>
     </div>

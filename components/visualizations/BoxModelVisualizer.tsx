@@ -1,12 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { MoveHorizontal, MoveVertical, ChevronRight } from 'lucide-react';
 
 export default function BoxModelVisualizer() {
-  const [showMargin, setShowMargin] = useState(true);
-  const [showBorder, setShowBorder] = useState(true);
-  const [showPadding, setShowPadding] = useState(true);
   const [activeLayer, setActiveLayer] = useState<string | null>(null);
 
   const layers = [

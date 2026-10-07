@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { loadProgress, saveProgress } from '@/lib/progress';
 import type { GamificationState } from '@/lib/gamification';
 import { calculateLevel, xpForNextLevel, emptyGamification, updateStreak, awardXp } from '@/lib/gamification';
-import { checkNewBadges, getBadgeById, type BadgeContext } from '@/lib/achievements';
 import { Flame, Trophy, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -13,43 +12,12 @@ interface GamificationStatusProps {
   onBadgeUnlock?: (badgeId: string) => void;
 }
 
-export default function GamificationStatus({ compact = false, onBadgeUnlock }: GamificationStatusProps) {
+export default function GamificationStatus({ compact = false }: GamificationStatusProps) {
   const [gamification, setGamification] = useState<GamificationState>(
     () => loadProgress().gamification || emptyGamification(),
   );
   const level = calculateLevel(gamification.xp);
   const xpProgress = xpForNextLevel(gamification.xp);
-  const onBadgeUnlockRef = useRef(onBadgeUnlock);
-
-  // Keep the latest onBadgeUnlock callback available to async event handlers
-  useEffect(() => {
-    onBadgeUnlockRef.current = onBadgeUnlock;
-  }, [onBadgeUnlock]);
-
-  const updateGamification = useCallback((gs: GamificationState) => {
-    setGamification(gs);
-    const progress = loadProgress();
-    progress.gamification = gs;
-    saveProgress(progress);
-
-    // Check for new badges
-    const ctx = buildBadgeContext(progress);
-    const newBadges = checkNewBadges(ctx, gs.badges);
-    if (newBadges.length > 0 && onBadgeUnlockRef.current) {
-      const updated = {
-        ...gs,
-        badges: [...gs.badges, ...newBadges.map((b) => b.id)],
-        xp: gs.xp + newBadges.reduce((s, b) => s + b.xpReward, 0),
-        totalXpEarned: gs.totalXpEarned + newBadges.reduce((s, b) => s + b.xpReward, 0),
-      };
-      setGamification(updated);
-      const p = loadProgress();
-      p.gamification = updated;
-      saveProgress(p);
-      onBadgeUnlockRef.current(newBadges[0].id);
-    }
-  }, []);
-
   const handleEvent = useCallback((xpAmount: number) => {
     setGamification((prev) => {
       const next = updateStreak(awardXp(prev, xpAmount));
@@ -152,24 +120,4 @@ export default function GamificationStatus({ compact = false, onBadgeUnlock }: G
       </div>
     </div>
   );
-}
-
-function buildBadgeContext(progress: ReturnType<typeof loadProgress>): BadgeContext {
-  const ids = Object.keys(progress.lessons);
-  const completedLessons = ids.filter((id) => progress.lessons[id]?.completed);
-  const passedQuizIds = ids.filter((id) => progress.lessons[id]?.quizCompleted);
-  const perfectQuizIds = ids.filter(
-    (id) => progress.lessons[id]?.quizCompleted && progress.lessons[id]?.quizScore === 100,
-  );
-  const projectCount = (progress.gamification as GamificationState & { projectsCreated?: number })?.projectsCreated || 0;
-  const exercisesCompleted = (progress.gamification as GamificationState & { exercisesCompleted?: string[] })?.exercisesCompleted || [];
-
-  return {
-    completedLessons,
-    passedQuizIds,
-    perfectQuizIds,
-    projectCount,
-    currentStreak: progress.gamification?.currentStreak || 0,
-    exercisesCompleted,
-  };
 }

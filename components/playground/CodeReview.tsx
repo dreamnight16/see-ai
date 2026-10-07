@@ -57,7 +57,7 @@ export default function CodeReview({ code, onClose }: CodeReviewProps) {
           <span className="w-8 h-8 rounded-lg bg-accent-soft flex items-center justify-center">
             <Sparkles className="w-4 h-4 text-accent" />
           </span>
-          <span className="font-display font-bold text-base">AI 代码审阅</span>
+          <span className="font-display font-bold text-base">请助手看一眼（可选）</span>
         </div>
         <button
           onClick={onClose}
@@ -70,7 +70,7 @@ export default function CodeReview({ code, onClose }: CodeReviewProps) {
       {!result && !loading && !error && (
         <div className="text-center py-8 space-y-3">
           <Code2 className="w-12 h-12 text-faint/40 mx-auto" />
-          <p className="text-sm text-muted">AI 会分析你的代码，用大白话告诉你哪里做得好、哪里可以改进</p>
+          <p className="text-sm text-muted">它会先说清楚代码现在做了什么，再指出一两个值得动手改的地方。</p>
           <button
             onClick={requestReview}
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-white rounded-xl text-sm font-semibold hover:shadow-lg active:scale-95 transition-all"
@@ -84,7 +84,7 @@ export default function CodeReview({ code, onClose }: CodeReviewProps) {
       {loading && (
         <div className="text-center py-8 space-y-3">
           <Loader2 className="w-8 h-8 text-accent mx-auto animate-spin" />
-          <p className="text-sm text-muted">AI 正在分析你的代码...</p>
+          <p className="text-sm text-muted">正在逐行看这段代码...</p>
         </div>
       )}
 
@@ -101,7 +101,7 @@ export default function CodeReview({ code, onClose }: CodeReviewProps) {
           <div className="p-4 rounded-xl bg-accent-soft border border-accent/10">
             <div className="flex items-center gap-2 mb-2">
               <Lightbulb className="w-4 h-4 text-accent" />
-              <span className="text-sm font-semibold text-accent">大白话解释</span>
+              <span className="text-sm font-semibold text-accent">先说人话</span>
             </div>
             <p className="text-sm leading-relaxed">{result.simpleExplanation}</p>
           </div>

@@ -7,25 +7,26 @@
 [![CI](https://github.com/dreamnight16/vibe-coding-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/dreamnight16/vibe-coding-agent/actions/workflows/ci.yml)
 [![Try Online](https://socialistic.ai/api/embed/dreamcode-vibe-curriculum-6a796a?lang=en)](https://socialistic.ai/en/skill/dreamcode-vibe-curriculum-6a796a)
 
-An interactive tutorial site that teaches absolute beginners how to code with AI assistance (Vibe Coding). 22 lessons across 7 chapters, built-in AI teaching assistant, gamification system, and a prompt playground that generates real HTML/CSS/JS.
+An interactive tutorial site for learning by making. It has 22 lessons across 7 chapters, local exercises, progress tracking, and a small optional helper for when you get stuck.
 
 ---
 
 ## Features
 
 - **22 structured lessons** — 7 chapters from concepts to publishing
-- **AI teaching assistant** — Socratic and direct modes, streaming responses
-- **Prompt Playground** — Describe what you want, get runnable HTML/CSS/JS code
+- **Optional study helper** — Ask a question, get a hint, or talk through a stuck point
+- **Prompt Playground** — Describe a small idea and get runnable HTML/CSS/JS when a provider is configured
 - **Gamification** — XP, levels, streaks, 10 achievement badges
 - **Code exercises** — Interactive exercises with hints and auto-check
 - **Learning dashboard** — Progress tracking, heatmap, skill radar
 - **PWA support** — Installable, works offline
-- **Multi-model support** — Claude, OpenAI, DeepSeek, and any OpenAI-compatible API
-- **AI fallback** — Automatic switch to backup provider if primary fails
+- **Provider choice** — Claude, OpenAI, DeepSeek, and other OpenAI-compatible APIs
+- **Fallback path** — Try a backup provider when the primary one is unavailable
+- **Offline-friendly core** — Lessons, exercises, quizzes, progress, and saved projects do not require an API key or network
 
 ## Try Online
 
-No install, no API key — open the link and start learning immediately:
+No install, no API key — open the link and start learning immediately. AI assistance is optional:
 
 [![Try dreamcode-vibe-curriculum on Socialistic](https://socialistic.ai/api/embed/dreamcode-vibe-curriculum-6a796a?lang=en)](https://socialistic.ai/en/skill/dreamcode-vibe-curriculum-6a796a)
 
@@ -61,11 +62,13 @@ docker compose up -d
 
 ## Configuration
 
-### Required
+### Optional study helper
+
+The app starts and the core course remains usable without AI configuration. Add these values only if you want the assistant, code generation, or code review features:
 
 ```env
-# Shared secret for API authentication (generate a random string)
-AI_API_AUTH_TOKEN=your-secret-token
+# Optional authentication: when set, every AI request requires a bearer token
+AI_API_AUTH_TOKEN=
 
 # Primary AI provider
 AI_PROVIDER=openai-compatible
@@ -74,7 +77,7 @@ AI_API_KEY=sk-...
 AI_BASE_URL=https://api.deepseek.com/v1
 ```
 
-### Optional: Fallback AI Provider
+### Optional: Backup model provider
 
 If the primary AI provider fails, the fallback is tried automatically:
 

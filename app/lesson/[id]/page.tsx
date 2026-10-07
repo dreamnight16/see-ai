@@ -15,7 +15,7 @@ import LessonMeta from "@/components/LessonMeta";
 import Quiz from "@/components/Quiz";
 import { getQuizByLessonId, getQuizById } from "@/lib/quiz-data";
 import ReactMarkdown from "react-markdown";
-import { ChevronLeft, ChevronRight, MessageCircle, Wand2, Sparkles, Flame, Eye } from "lucide-react";
+import { ChevronLeft, ChevronRight, MessageCircle, Wand2, Sparkles, Flame } from "lucide-react";
 import LessonExercises from "./LessonExercises";
 import LessonVisualizations from "./LessonVisualizations";
 import GamificationStatus from "@/components/gamification/GamificationStatus";
@@ -106,7 +106,7 @@ export default async function LessonPage({
             </div>
           )}
 
-          {/* AI Chat */}
+          {/* Optional assistant */}
           {lesson.hasChat && (
             <div className="mb-12 animate-slide-up space-y-4">
               <div className="flex items-center gap-2.5">
@@ -114,11 +114,11 @@ export default async function LessonPage({
                   <MessageCircle className="w-4 h-4 text-accent" />
                 </span>
                 <div>
-                  <span className="font-display font-bold text-lg text-accent">AI 助教</span>
-                  <p className="text-xs text-muted">有问题随时问，AI 助教为你解答</p>
+                  <span className="font-display font-bold text-lg text-accent">学习助手（可选）</span>
+                  <p className="text-xs text-muted">需要时可以提问；未配置 AI 也不影响课程和练习</p>
                 </div>
               </div>
-              <div className="h-[520px]">
+              <div className="h-[min(520px,70vh)] min-h-[360px]">
                 <ChatInterface />
               </div>
             </div>
@@ -133,10 +133,10 @@ export default async function LessonPage({
                 </span>
                 <div>
                   <span className="font-display font-bold text-lg text-accent">动手实践</span>
-                  <p className="text-xs text-muted">描述你想要的效果，AI 帮你生成代码</p>
+                  <p className="text-xs text-muted">描述想法后，可选用模型生成代码；也可以直接编辑和预览</p>
                 </div>
               </div>
-              <div className="h-[640px]">
+              <div className="h-[min(640px,75vh)] min-h-[420px]">
                 <PromptPlayground />
               </div>
             </div>
