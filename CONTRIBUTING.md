@@ -1,4 +1,4 @@
-# Contributing to DreamCode · 梦夜的 AI 课
+# Contributing to 见 AI · SeeAI
 
 一套面向非专业大学生的 AI 入门课。课程正文、练习场、提示词库、名词表和热词爬虫都欢迎贡献。
 

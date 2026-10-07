@@ -1,6 +1,6 @@
 {
-  "name": "梦夜的 AI 课",
-  "short_name": "AI 课",
+  "name": "见 AI",
+  "short_name": "见 AI",
   "description": "面向非专业大学生的 AI 入门课：会用、用对、别被坑",
   "start_url": "/",
   "display": "standalone",

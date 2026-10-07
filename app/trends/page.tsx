@@ -12,7 +12,7 @@ import {
 import { loadTrendReport, getSourceNames, isStale } from "@/lib/trends";
 
 export const metadata: Metadata = {
-  title: "本周热词 | 梦夜的 AI 课",
+  title: "本周热词 | 见 AI",
   description:
     "每周自动抓一次 AI 圈的新说法，只放候选词和出处，不放机器写的解释。看到感兴趣的，自己点进原文看一眼。",
 };

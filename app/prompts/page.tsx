@@ -4,7 +4,7 @@ import { ChevronLeft } from "lucide-react";
 import PromptLibrary from "@/components/prompts/PromptLibrary";
 
 export const metadata: Metadata = {
-  title: "提示词库 | 梦夜的 AI 课",
+  title: "提示词库 | 见 AI",
   description: "40 条可以直接复制去用的话术，覆盖生活、办公、写作、表格、翻译、图片、音视频和学习辅导。",
 };
 

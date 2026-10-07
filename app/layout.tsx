@@ -22,13 +22,13 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "梦夜的 AI 课",
+  title: "见 AI",
   description:
     "面向非专业大学生的 AI 入门课：作业、论文、汇报、简历、四六级怎么用 AI，以及什么时候不该用。不配 API Key 也能学。",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    title: "梦夜的 AI 课",
+    title: "见 AI",
     statusBarStyle: "default",
   },
 };

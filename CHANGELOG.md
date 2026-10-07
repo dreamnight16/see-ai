@@ -36,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 练习场、每日打卡和提示词检查现在会发放 XP
 
 ### Changed
-- 站名从「梦夜的编程课」改为「梦夜的 AI 课」，首页改为面向非专业大学生的 AI 入门
+- 站名从「梦夜的编程课」改为「见 AI」，首页改为面向非专业大学生的 AI 入门；仓库改名为 `see-ai`
 - 全仓库清理旧标识：CONTRIBUTING、SETUP_GUIDE、scripts/setup.sh、package.json 里的仓库地址和课程名都还指着已改名的 `vibe-coding-agent`，四个 README 的 CI 徽章也是
 - 仓库改名为 `see-ai`（原 `learn-to-code`）。GitHub 会为旧地址自动跳转，历史外链不会断
 - 课程导航按「轨道 → 章节 → 课程」三层分组

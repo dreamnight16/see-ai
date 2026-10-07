@@ -4,7 +4,7 @@ import { ChevronLeft } from "lucide-react";
 import StartWizard from "@/components/StartWizard";
 
 export const metadata: Metadata = {
-  title: "我该从哪开始 | 梦夜的 AI 课",
+  title: "我该从哪开始 | 见 AI",
   description: "四个问题，帮你排出适合自己的学习顺序。",
 };
 

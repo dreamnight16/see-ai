@@ -294,7 +294,7 @@ export default function Home() {
       {/* ── Footer ── */}
       <footer className="border-t border-edge py-10 text-center">
         <p className="text-sm text-muted">
-          <span className="font-display font-bold text-accent">梦夜的 AI 课</span>
+          <span className="font-display font-bold text-accent">见 AI</span>
           <span className="mx-2 text-faint">—</span>
           让每个人都能用起来
         </p>

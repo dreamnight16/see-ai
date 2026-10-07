@@ -64,7 +64,7 @@ export default function LessonNavigator() {
           </span>
           <div className="min-w-0">
             <div className="font-display font-bold text-base leading-tight group-hover:text-accent transition-colors">
-              梦夜的 AI 课
+              见 AI
             </div>
             <div className="text-[10px] text-muted">
               {completedCount} / {totalLessons} 课完成

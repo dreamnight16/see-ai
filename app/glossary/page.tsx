@@ -4,7 +4,7 @@ import { ChevronLeft, Rss } from "lucide-react";
 import GlossaryBrowser from "@/components/glossary/GlossaryBrowser";
 
 export const metadata: Metadata = {
-  title: "AI 名词表 | 梦夜的 AI 课",
+  title: "AI 名词表 | 见 AI",
   description: "把听到过的 AI 术语用大白话讲一遍，每个词配一个生活里的比方和一处容易踩的坑。",
 };
 

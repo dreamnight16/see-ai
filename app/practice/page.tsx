@@ -4,7 +4,7 @@ import { ChevronLeft } from "lucide-react";
 import PromptLab from "@/components/practice/PromptLab";
 
 export const metadata: Metadata = {
-  title: "提示词练习场 | 梦夜的 AI 课",
+  title: "提示词练习场 | 见 AI",
   description: "挑一个真实场景，自己写一遍提问，本地规则立刻给你打分并指出漏掉了什么。不用配 API Key。",
 };
 

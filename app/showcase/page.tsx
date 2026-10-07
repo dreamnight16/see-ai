@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { ArrowLeft, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: '我的作品 - 梦夜的 AI 课',
+  title: '我的作品 - 见 AI',
 };
 
 export default function ShowcasePage() {
