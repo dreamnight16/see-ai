@@ -38,7 +38,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install pytest
-        run: python -m pip install --upgrade pip pytest
+      # 必须装完整依赖：测试会 import sources，而 sources 依赖 httpx 和
+      # chinese-scraper-utils。只装 pytest 的话会在收集阶段就 ImportError。
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r scripts/trends/requirements.txt
+          pip install pytest
       - name: Test the trends crawler
         run: python -m pytest scripts/trends -q
