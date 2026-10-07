@@ -411,6 +411,76 @@ body::after {
   margin-bottom: 1.5em;
 }
 
+/* Tailwind 的 preflight 把 ul/ol 的 list-style 和缩进清零了，
+   课程正文里大量用到分点列表，必须在这里补回来，否则会变成
+   没有项目符号、没有缩进的一坨文字。 */
+.prose ul, .prose ol {
+  margin: 0 0 1.5em;
+  padding-left: 1.5em;
+}
+
+.prose ul {
+  list-style: disc;
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
+.prose li {
+  margin-bottom: 0.5em;
+  padding-left: 0.25em;
+}
+
+.prose li::marker {
+  color: var(--color-accent);
+}
+
+.prose li > ul, .prose li > ol {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
+
+/* 课程里有 20 篇用 Markdown 表格做对比。
+   宽度用 max-content + min-width:100%，窄表格铺满、宽表格在手机上横向滚动。 */
+.prose table {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 0 0 1.75em;
+  font-size: var(--text-base);
+  line-height: 1.6;
+}
+
+.prose thead {
+  background: var(--color-bg-tertiary);
+}
+
+.prose th, .prose td {
+  border: 1px solid var(--color-border-primary);
+  padding: 0.6em 0.9em;
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.prose tbody tr + tr td {
+  border-top-color: var(--color-border-secondary);
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--color-border-primary);
+  margin: 2.5em 0;
+}
+
 .prose code {
   font-family: var(--font-mono);
   font-size: 0.9em;

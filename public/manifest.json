@@ -1,11 +1,11 @@
 {
-  "name": "梦夜的编程课",
-  "short_name": "编程课",
-  "description": "零基础学会用 AI 编程，让创意变成现实",
+  "name": "梦夜的 AI 课",
+  "short_name": "AI 课",
+  "description": "面向非专业大学生的 AI 入门课：会用、用对、别被坑",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#faf7f2",
-  "theme_color": "#e85d3a",
+  "background_color": "#f3f6f8",
+  "theme_color": "#3159d8",
   "orientation": "portrait-primary",
   "icons": [
     {

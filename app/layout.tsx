@@ -22,18 +22,19 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "梦夜的编程课",
-  description: "从网页基础开始学习，边学边做出自己的作品；AI 辅助功能可选",
+  title: "梦夜的 AI 课",
+  description:
+    "面向非专业大学生的 AI 入门课：作业、论文、汇报、简历、四六级怎么用 AI，以及什么时候不该用。不配 API Key 也能学。",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    title: "梦夜的编程课",
+    title: "梦夜的 AI 课",
     statusBarStyle: "default",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#faf7f2",
+  themeColor: "#f3f6f8",
 };
 
 export default function RootLayout({

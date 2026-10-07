@@ -1,0 +1,883 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-07T15:19:03Z",
+  "week": "2026-W41",
+  "stats": {
+    "totalItems": 168,
+    "aiItems": 58,
+    "sourceCounts": {
+      "Hugging Face 每日论文": 50,
+      "arXiv cs.AI": 40,
+      "Hacker News": 29,
+      "微博热搜": 51,
+      "知乎热榜": 0
+    },
+    "failedSources": [
+      "知乎热榜"
+    ]
+  },
+  "candidates": [
+    {
+      "term": "RL",
+      "hits": 5,
+      "sources": [
+        "Hugging Face 每日论文",
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "HuatuoGPT-3: RL-Only Domain Adaptation from Base Models",
+      "sampleUrl": "https://huggingface.co/papers/2610.05966",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "MoE",
+      "hits": 2,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "TRACE: Rollout-Guided Quantization-Aware Training for FP4 Reinforcement Learning of MoE Language Models",
+      "sampleUrl": "https://huggingface.co/papers/2610.07767",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "AGO",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "AGO AI Quality Gate: Evidence-First Release Decisions for Retrieval-Augmented Generation",
+      "sampleUrl": "https://huggingface.co/papers/2610.01218",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "AdvSim2Real",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "AdvSim2Real : Training Web Agents Against Adaptive Prompt Injection in a Web World Model",
+      "sampleUrl": "https://huggingface.co/papers/2610.08773",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "CNN",
+      "hits": 1,
+      "sources": [
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "MemFLoRA: Memory-Floor LoRA for CNN Adaptation at the Edge",
+      "sampleUrl": "http://arxiv.org/abs/2610.08669v1",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "DCR",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "NeMo-DCR: Bit-Exact Delta-Compressed Refit for Scalable Agentic RL at Trillion-Parameter Scale",
+      "sampleUrl": "https://huggingface.co/papers/2610.08430",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "DepthWorld",
+      "hits": 1,
+      "sources": [
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "DepthWorld: 3D World Model for Robot Manipulation",
+      "sampleUrl": "http://arxiv.org/abs/2610.08780v1",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "EmbeddingGemma",
+      "hits": 1,
+      "sources": [
+        "Hacker News"
+      ],
+      "sampleTitle": "EmbeddingGemma 2: An open, lightweight multimodal embedding model",
+      "sampleUrl": "https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2/",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "EmbodiedSmith",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "EmbodiedSmith: Scaling Embodied Data through Recursive Self-Improvement Flywheel in Simulation",
+      "sampleUrl": "https://huggingface.co/papers/2610.07969",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "FP4",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "TRACE: Rollout-Guided Quantization-Aware Training for FP4 Reinforcement Learning of MoE Language Models",
+      "sampleUrl": "https://huggingface.co/papers/2610.07767",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "GeneICL",
+      "hits": 1,
+      "sources": [
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "GeneICL: A Tabular Foundation Model for Bulk Transcriptomics",
+      "sampleUrl": "http://arxiv.org/abs/2610.08694v1",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "HuatuoGPT",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "HuatuoGPT-3: RL-Only Domain Adaptation from Base Models",
+      "sampleUrl": "https://huggingface.co/papers/2610.05966",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "IdeaAnchor",
+      "hits": 1,
+      "sources": [
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "IdeaAnchor: Teaching LLMs to Turn Literature into Research Ideas",
+      "sampleUrl": "http://arxiv.org/abs/2610.08781v1",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "LoRA",
+      "hits": 1,
+      "sources": [
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "MemFLoRA: Memory-Floor LoRA for CNN Adaptation at the Edge",
+      "sampleUrl": "http://arxiv.org/abs/2610.08669v1",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "MEND",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "MEND: RL For Flow Models via Proximal Velocity Matching",
+      "sampleUrl": "https://huggingface.co/papers/2610.05954",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "MeanFlow",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "Kinematic MeanFlow: One-Step Action Generation Policy for Robotic Foundation Models",
+      "sampleUrl": "https://huggingface.co/papers/2610.00864",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "MemFLoRA",
+      "hits": 1,
+      "sources": [
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "MemFLoRA: Memory-Floor LoRA for CNN Adaptation at the Edge",
+      "sampleUrl": "http://arxiv.org/abs/2610.08669v1",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "MiniCorp",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "MiniCorp: The Last Mile of the AI Agent Firm",
+      "sampleUrl": "https://huggingface.co/papers/2610.05912",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "NanoMuse",
+      "hits": 1,
+      "sources": [
+        "Hacker News"
+      ],
+      "sampleTitle": "Show HN: NanoMuse – An open-source AI agent for your phone and computer",
+      "sampleUrl": "https://github.com/nano-muse/nanoMuse",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "NeMo",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "NeMo-DCR: Bit-Exact Delta-Compressed Refit for Scalable Agentic RL at Trillion-Parameter Scale",
+      "sampleUrl": "https://huggingface.co/papers/2610.08430",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "OPD",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "OPD Before RL: Warm-Starting Rubric-Based RL with On-Policy Distillation",
+      "sampleUrl": "https://huggingface.co/papers/2610.02781",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "QF3",
+      "hits": 1,
+      "sources": [
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "QF3: Fast Flow RL with Filtered Q-Gradients",
+      "sampleUrl": "http://arxiv.org/abs/2610.08789v1",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "S2PD",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "S2PD: Serial-to-Parallel Diffusion for Physically and Logically Consistent Video Generation",
+      "sampleUrl": "https://huggingface.co/papers/2610.06847",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "ScienceClaw",
+      "hits": 1,
+      "sources": [
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "ScienceClaw: Benchmarking Continual Self-Evolution of AI-for-Science Agents Across the Natural and Social Sciences",
+      "sampleUrl": "http://arxiv.org/abs/2610.08691v1",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "VLAs",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "Toward Real-Time VLAs: Stage-Aware Two-Step Flow Denoising and System-Level Evaluation",
+      "sampleUrl": "https://huggingface.co/papers/2609.39822",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "WorldSolver",
+      "hits": 1,
+      "sources": [
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "WorldSolver: Can LLM Agents Simulate the Physical Dynamics via Solver Generation?",
+      "sampleUrl": "http://arxiv.org/abs/2610.08720v1",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    }
+  ],
+  "knownCandidates": [
+    {
+      "term": "LLM",
+      "hits": 9,
+      "sources": [
+        "Hugging Face 每日论文",
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "Understanding and Enhancing Backdoor Persistency in LLM Agent Post-Training",
+      "sampleUrl": "https://huggingface.co/papers/2610.07510",
+      "inGlossary": true,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "RAG",
+      "hits": 1,
+      "sources": [
+        "Hacker News"
+      ],
+      "sampleTitle": "We Built an Alternative to Vector RAG for AI Agent Memory",
+      "sampleUrl": "https://www.claix.dev/blog/rag-for-ai-agents-agentic-retrieval",
+      "inGlossary": true,
+      "firstSeen": "2026-W41"
+    }
+  ],
+  "watchlist": [
+    {
+      "term": "MoE",
+      "hits": 2,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "samples": [
+        {
+          "title": "TRACE: Rollout-Guided Quantization-Aware Training for FP4 Reinforcement Learning of MoE Language Models",
+          "url": "https://huggingface.co/papers/2610.07767",
+          "source": "Hugging Face 每日论文"
+        },
+        {
+          "title": "Cross-Lingual Alignment for Decoder-Only Models using MoE Routers",
+          "url": "https://huggingface.co/papers/2610.01921",
+          "source": "Hugging Face 每日论文"
+        }
+      ],
+      "inGlossary": false
+    },
+    {
+      "term": "embodied",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "samples": [
+        {
+          "title": "EmbodiedSmith: Scaling Embodied Data through Recursive Self-Improvement Flywheel in Simulation",
+          "url": "https://huggingface.co/papers/2610.07969",
+          "source": "Hugging Face 每日论文"
+        }
+      ],
+      "inGlossary": false
+    },
+    {
+      "term": "world model",
+      "hits": 4,
+      "sources": [
+        "Hugging Face 每日论文",
+        "arXiv cs.AI"
+      ],
+      "samples": [
+        {
+          "title": "Adaptive Latent Capacity for World Models",
+          "url": "https://huggingface.co/papers/2609.32921",
+          "source": "Hugging Face 每日论文"
+        },
+        {
+          "title": "AdvSim2Real : Training Web Agents Against Adaptive Prompt Injection in a Web World Model",
+          "url": "https://huggingface.co/papers/2610.08773",
+          "source": "Hugging Face 每日论文"
+        },
+        {
+          "title": "World Models' Last Exam in Physics",
+          "url": "https://huggingface.co/papers/2610.08791",
+          "source": "Hugging Face 每日论文"
+        }
+      ],
+      "inGlossary": true
+    },
+    {
+      "term": "agent memory",
+      "hits": 2,
+      "sources": [
+        "Hugging Face 每日论文",
+        "Hacker News"
+      ],
+      "samples": [
+        {
+          "title": "DAEDALUS: Bootstrapping Agent Memory from Self-Generated Tasks",
+          "url": "https://huggingface.co/papers/2610.08048",
+          "source": "Hugging Face 每日论文"
+        },
+        {
+          "title": "We Built an Alternative to Vector RAG for AI Agent Memory",
+          "url": "https://www.claix.dev/blog/rag-for-ai-agents-agentic-retrieval",
+          "source": "Hacker News"
+        }
+      ],
+      "inGlossary": true
+    },
+    {
+      "term": "distillation",
+      "hits": 2,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "samples": [
+        {
+          "title": "Harness-Aware Distillation for Small Language Model Agents",
+          "url": "https://huggingface.co/papers/2610.02858",
+          "source": "Hugging Face 每日论文"
+        },
+        {
+          "title": "OPD Before RL: Warm-Starting Rubric-Based RL with On-Policy Distillation",
+          "url": "https://huggingface.co/papers/2610.02781",
+          "source": "Hugging Face 每日论文"
+        }
+      ],
+      "inGlossary": true
+    },
+    {
+      "term": "prompt injection",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "samples": [
+        {
+          "title": "AdvSim2Real : Training Web Agents Against Adaptive Prompt Injection in a Web World Model",
+          "url": "https://huggingface.co/papers/2610.08773",
+          "source": "Hugging Face 每日论文"
+        }
+      ],
+      "inGlossary": true
+    },
+    {
+      "term": "quantization",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "samples": [
+        {
+          "title": "TRACE: Rollout-Guided Quantization-Aware Training for FP4 Reinforcement Learning of MoE Language Models",
+          "url": "https://huggingface.co/papers/2610.07767",
+          "source": "Hugging Face 每日论文"
+        }
+      ],
+      "inGlossary": true
+    }
+  ],
+  "items": [
+    {
+      "title": "TRACE: Rollout-Guided Quantization-Aware Training for FP4 Reinforcement Learning of MoE Language Models",
+      "url": "https://huggingface.co/papers/2610.07767",
+      "source": "Hugging Face 每日论文",
+      "score": 53,
+      "keywords": [
+        "models",
+        "reinforcement learning",
+        "training"
+      ]
+    },
+    {
+      "title": "HuatuoGPT-3: RL-Only Domain Adaptation from Base Models",
+      "url": "https://huggingface.co/papers/2610.05966",
+      "source": "Hugging Face 每日论文",
+      "score": 20,
+      "keywords": [
+        "llm",
+        "model",
+        "models"
+      ]
+    },
+    {
+      "title": "UNREAL: Unifying Retrieval and Long-Context with a Single Model",
+      "url": "https://huggingface.co/papers/2610.08463",
+      "source": "Hugging Face 每日论文",
+      "score": 16,
+      "keywords": [
+        "inference",
+        "model",
+        "prompt",
+        "rag"
+      ]
+    },
+    {
+      "title": "AGO AI Quality Gate: Evidence-First Release Decisions for Retrieval-Augmented Generation",
+      "url": "https://huggingface.co/papers/2610.01218",
+      "source": "Hugging Face 每日论文",
+      "score": 13,
+      "keywords": [
+        "ai",
+        "llm",
+        "rag"
+      ]
+    },
+    {
+      "title": "MiniCorp: The Last Mile of the AI Agent Firm",
+      "url": "https://huggingface.co/papers/2610.05912",
+      "source": "Hugging Face 每日论文",
+      "score": 11,
+      "keywords": [
+        "agent",
+        "ai",
+        "training"
+      ]
+    },
+    {
+      "title": "EmbodiedSmith: Scaling Embodied Data through Recursive Self-Improvement Flywheel in Simulation",
+      "url": "https://huggingface.co/papers/2610.07969",
+      "source": "Hugging Face 每日论文",
+      "score": 10,
+      "keywords": [
+        "models",
+        "training"
+      ]
+    },
+    {
+      "title": "Adaptive Latent Capacity for World Models",
+      "url": "https://huggingface.co/papers/2609.32921",
+      "source": "Hugging Face 每日论文",
+      "score": 9,
+      "keywords": [
+        "model",
+        "models"
+      ]
+    },
+    {
+      "title": "NeMo-DCR: Bit-Exact Delta-Compressed Refit for Scalable Agentic RL at Trillion-Parameter Scale",
+      "url": "https://huggingface.co/papers/2610.08430",
+      "source": "Hugging Face 每日论文",
+      "score": 8,
+      "keywords": [
+        "agentic",
+        "reinforcement learning",
+        "training"
+      ]
+    },
+    {
+      "title": "DAEDALUS: Bootstrapping Agent Memory from Self-Generated Tasks",
+      "url": "https://huggingface.co/papers/2610.08048",
+      "source": "Hugging Face 每日论文",
+      "score": 5,
+      "keywords": [
+        "agent",
+        "llm"
+      ]
+    },
+    {
+      "title": "Understanding and Enhancing Backdoor Persistency in LLM Agent Post-Training",
+      "url": "https://huggingface.co/papers/2610.07510",
+      "source": "Hugging Face 每日论文",
+      "score": 5,
+      "keywords": [
+        "agent",
+        "llm",
+        "model",
+        "models"
+      ]
+    },
+    {
+      "title": "Learning to Read the Contextual Tokens in Diffusion Transformers",
+      "url": "https://huggingface.co/papers/2610.06844",
+      "source": "Hugging Face 每日论文",
+      "score": 4,
+      "keywords": [
+        "diffusion",
+        "models",
+        "multimodal"
+      ]
+    },
+    {
+      "title": "Harness-Aware Distillation for Small Language Model Agents",
+      "url": "https://huggingface.co/papers/2610.02858",
+      "source": "Hugging Face 每日论文",
+      "score": 4,
+      "keywords": [
+        "agent",
+        "model"
+      ]
+    },
+    {
+      "title": "AdvSim2Real : Training Web Agents Against Adaptive Prompt Injection in a Web World Model",
+      "url": "https://huggingface.co/papers/2610.08773",
+      "source": "Hugging Face 每日论文",
+      "score": 4,
+      "keywords": [
+        "agent",
+        "model",
+        "prompt",
+        "training"
+      ]
+    },
+    {
+      "title": "Learning Discriminative Geometry for Drifting Models",
+      "url": "https://huggingface.co/papers/2610.04703",
+      "source": "Hugging Face 每日论文",
+      "score": 3,
+      "keywords": [
+        "inference",
+        "models",
+        "training"
+      ]
+    },
+    {
+      "title": "Personal-Agent Mediated Recommendation with Cross-Platform User History",
+      "url": "https://huggingface.co/papers/2610.07588",
+      "source": "Hugging Face 每日论文",
+      "score": 3,
+      "keywords": [
+        "agent",
+        "llm"
+      ]
+    },
+    {
+      "title": "Towards In-Parameter Memory Augmentation for Large Language Models",
+      "url": "https://huggingface.co/papers/2610.08630",
+      "source": "Hugging Face 每日论文",
+      "score": 2,
+      "keywords": [
+        "agent",
+        "models"
+      ]
+    },
+    {
+      "title": "Judged Useless, Queried Anyway: Tool-Using Agents Rarely Turn Their Own Evidence Judgments into Stopping Decisions",
+      "url": "https://huggingface.co/papers/2610.06191",
+      "source": "Hugging Face 每日论文",
+      "score": 2,
+      "keywords": [
+        "agent"
+      ]
+    },
+    {
+      "title": "OPD Before RL: Warm-Starting Rubric-Based RL with On-Policy Distillation",
+      "url": "https://huggingface.co/papers/2610.02781",
+      "source": "Hugging Face 每日论文",
+      "score": 1,
+      "keywords": [
+        "reinforcement learning"
+      ]
+    },
+    {
+      "title": "Rationale-Guided Policy Optimization: Learning to Reason with Adaptive Rationale Scaffolding",
+      "url": "https://huggingface.co/papers/2610.07342",
+      "source": "Hugging Face 每日论文",
+      "score": 1,
+      "keywords": [
+        "model",
+        "models",
+        "reinforcement learning"
+      ]
+    },
+    {
+      "title": "Multilinguality in Hybrid Attention LLMs",
+      "url": "https://huggingface.co/papers/2609.35378",
+      "source": "Hugging Face 每日论文",
+      "score": 1,
+      "keywords": [
+        "agentic"
+      ]
+    },
+    {
+      "title": "MEND: RL For Flow Models via Proximal Velocity Matching",
+      "url": "https://huggingface.co/papers/2610.05954",
+      "source": "Hugging Face 每日论文",
+      "score": 1,
+      "keywords": [
+        "model",
+        "models"
+      ]
+    },
+    {
+      "title": "World Models' Last Exam in Physics",
+      "url": "https://huggingface.co/papers/2610.08791",
+      "source": "Hugging Face 每日论文",
+      "score": 1,
+      "keywords": [
+        "ai",
+        "models"
+      ]
+    },
+    {
+      "title": "Kinematic MeanFlow: One-Step Action Generation Policy for Robotic Foundation Models",
+      "url": "https://huggingface.co/papers/2610.00864",
+      "source": "Hugging Face 每日论文",
+      "score": 0,
+      "keywords": [
+        "inference",
+        "models"
+      ]
+    },
+    {
+      "title": "Cross-Lingual Alignment for Decoder-Only Models using MoE Routers",
+      "url": "https://huggingface.co/papers/2610.01921",
+      "source": "Hugging Face 每日论文",
+      "score": 0,
+      "keywords": [
+        "models",
+        "training"
+      ]
+    },
+    {
+      "title": "S2PD: Serial-to-Parallel Diffusion for Physically and Logically Consistent Video Generation",
+      "url": "https://huggingface.co/papers/2610.06847",
+      "source": "Hugging Face 每日论文",
+      "score": 0,
+      "keywords": [
+        "diffusion",
+        "models"
+      ]
+    },
+    {
+      "title": "Do Language Models Need a Trainable Input Embedding Table? Fixed Minimal Token Codes at 1.7B-Class Scale",
+      "url": "https://huggingface.co/papers/2610.04002",
+      "source": "Hugging Face 每日论文",
+      "score": 0,
+      "keywords": [
+        "embedding",
+        "models",
+        "transformer"
+      ]
+    },
+    {
+      "title": "Conditional Trajectory Peaks: Single-Pass Multimodal Policies over Action Chunks",
+      "url": "https://huggingface.co/papers/2610.06104",
+      "source": "Hugging Face 每日论文",
+      "score": 0,
+      "keywords": [
+        "multimodal"
+      ]
+    },
+    {
+      "title": "Toward Real-Time VLAs: Stage-Aware Two-Step Flow Denoising and System-Level Evaluation",
+      "url": "https://huggingface.co/papers/2609.39822",
+      "source": "Hugging Face 每日论文",
+      "score": 0,
+      "keywords": [
+        "inference",
+        "model",
+        "models",
+        "robot"
+      ]
+    },
+    {
+      "title": "Magic-W0: A Structured World-Action Foundation Model for Physical Intelligence",
+      "url": "https://huggingface.co/papers/2609.39870",
+      "source": "Hugging Face 每日论文",
+      "score": 0,
+      "keywords": [
+        "model",
+        "models",
+        "robot"
+      ]
+    },
+    {
+      "title": "Source Identification Is Not Fitness Testing: Measuring the Limits of Synthetic-Data Attribution",
+      "url": "https://huggingface.co/papers/2610.00417",
+      "source": "Hugging Face 每日论文",
+      "score": 0,
+      "keywords": [
+        "models",
+        "training"
+      ]
+    },
+    {
+      "title": "QF3: Fast Flow RL with Filtered Q-Gradients",
+      "url": "http://arxiv.org/abs/2610.08789v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "reinforcement learning",
+        "robot"
+      ]
+    },
+    {
+      "title": "IdeaAnchor: Teaching LLMs to Turn Literature into Research Ideas",
+      "url": "http://arxiv.org/abs/2610.08781v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "models",
+        "training"
+      ]
+    },
+    {
+      "title": "DepthWorld: 3D World Model for Robot Manipulation",
+      "url": "http://arxiv.org/abs/2610.08780v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "model",
+        "models",
+        "robot",
+        "robotics"
+      ]
+    },
+    {
+      "title": "Sherpa: Teaching LLMs to Teach Adaptively",
+      "url": "http://arxiv.org/abs/2610.08778v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "models",
+        "training"
+      ]
+    },
+    {
+      "title": "Agent in a Bottle: Can LLM Agents Turn Their Capabilities Into Cheap, Scalable Artifacts?",
+      "url": "http://arxiv.org/abs/2610.08775v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "agent",
+        "llm",
+        "models"
+      ]
+    },
+    {
+      "title": "Neural Petri flows for chemical reactions",
+      "url": "http://arxiv.org/abs/2610.08750v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "neural"
+      ]
+    },
+    {
+      "title": "Reinforcement Learning with Conformal Action Sets: An Application to Sequential Recommendation",
+      "url": "http://arxiv.org/abs/2610.08743v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "reinforcement learning"
+      ]
+    },
+    {
+      "title": "Denoising Hierarchical Representations: Joint Continuous Diffusion for Language Modeling",
+      "url": "http://arxiv.org/abs/2610.08738v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "diffusion",
+        "models"
+      ]
+    },
+    {
+      "title": "Does an Agent's History Tell You When Compaction Will Hurt? A Modest, Bounded Effect on the TRACE Paired-Replay Corpus",
+      "url": "http://arxiv.org/abs/2610.08722v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "agent"
+      ]
+    },
+    {
+      "title": "WorldSolver: Can LLM Agents Simulate the Physical Dynamics via Solver Generation?",
+      "url": "http://arxiv.org/abs/2610.08720v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "ai",
+        "llm"
+      ]
+    }
+  ]
+}

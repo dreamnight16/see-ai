@@ -40,3 +40,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# python（scripts/trends 的爬虫）
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/

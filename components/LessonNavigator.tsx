@@ -3,8 +3,21 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { lessons } from "@/lib/lessons";
-import { BookOpen, Circle, Menu, X, ChevronRight, Sparkles, FolderOpen, BarChart3 } from "lucide-react";
+import { totalLessons, getLessonsGroupedByTrack } from "@/lib/lessons";
+import { getTrack } from "@/lib/tracks";
+import {
+  Sparkles,
+  Circle,
+  Menu,
+  X,
+  ChevronRight,
+  FolderOpen,
+  BarChart3,
+  Library,
+  Target,
+  BookMarked,
+  Compass,
+} from "lucide-react";
 import { loadProgress, subscribe } from "@/lib/progress";
 
 function buildProgressMap(): Record<string, boolean> {
@@ -16,13 +29,21 @@ function buildProgressMap(): Record<string, boolean> {
   return map;
 }
 
+const SIDE_LINKS = [
+  { href: "/start", icon: Compass, label: "我该从哪开始" },
+  { href: "/prompts", icon: Library, label: "提示词库" },
+  { href: "/practice", icon: Target, label: "练习场" },
+  { href: "/glossary", icon: BookMarked, label: "名词表" },
+  { href: "/dashboard", icon: BarChart3, label: "学习数据" },
+  { href: "/showcase", icon: FolderOpen, label: "我的作品" },
+];
+
 export default function LessonNavigator() {
   const pathname = usePathname();
   const currentId = pathname.split("/").pop();
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState<Record<string, boolean>>(buildProgressMap);
 
-  // Keep progress in sync whenever it changes elsewhere (e.g. a lesson is completed)
   useEffect(() => {
     const unsubscribe = subscribe(() => setProgress(buildProgressMap()));
     return () => {
@@ -30,167 +51,168 @@ export default function LessonNavigator() {
     };
   }, []);
 
-  const modules = lessons.reduce(
-    (acc, lesson) => {
-      if (!acc[lesson.module]) acc[lesson.module] = [];
-      acc[lesson.module].push(lesson);
-      return acc;
-    },
-    {} as Record<string, typeof lessons>
-  );
-
+  const grouped = getLessonsGroupedByTrack();
   const completedCount = Object.values(progress).filter(Boolean).length;
 
   const nav = (
     <>
-      {/* Header */}
+      {/* Logo */}
       <div className="p-5 border-b border-edge shrink-0">
-        <Link
-          href="/"
-          className="flex items-center gap-2.5 group"
-        >
+        <Link href="/" className="flex items-center gap-2.5 group">
           <span className="w-9 h-9 rounded-xl bg-accent text-white flex items-center justify-center shadow-glow group-hover:scale-105 transition-transform">
-            <Sparkles className="w-4.5 h-4.5" />
+            <Sparkles className="w-4 h-4" />
           </span>
           <div className="min-w-0">
             <div className="font-display font-bold text-base leading-tight group-hover:text-accent transition-colors">
-              梦夜的编程课
+              梦夜的 AI 课
             </div>
             <div className="text-[10px] text-muted">
-              {completedCount} / {lessons.length} 课完成
+              {completedCount} / {totalLessons} 课完成
             </div>
           </div>
         </Link>
       </div>
 
-      {/* Lesson list */}
-      <div className="p-3 space-y-5 overflow-y-auto flex-1">
-        {Object.entries(modules).map(([moduleName, moduleLessons], idx) => {
-          const moduleCompleted = moduleLessons.every((l) => progress[l.id]);
+      {/* 课程：按轨道 → 章节 → 课程 */}
+      <div className="p-3 space-y-4 overflow-y-auto flex-1">
+        {grouped.map(({ trackId, modules }) => {
+          const track = getTrack(trackId);
+          if (!track) return null;
+          const trackLessons = modules.flatMap((m) => m.lessons);
+          const trackDone = trackLessons.filter((l) => progress[l.id]).length;
+          const allDone = trackDone === trackLessons.length;
+
           return (
-            <div key={moduleName}>
-              {/* Module title */}
+            <div key={trackId}>
               <div className="px-3 mb-2 flex items-center gap-2">
                 <span
-                  className={`w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-bold shrink-0 ${
-                    moduleCompleted
-                      ? "bg-success text-white"
-                      : "bg-surface-raised text-muted"
-                  }`}
+                  className={
+                    "w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-bold shrink-0 " +
+                    (allDone ? "bg-success text-white" : "bg-surface-raised text-muted")
+                  }
                 >
-                  {moduleCompleted ? "✓" : idx + 1}
+                  {allDone ? "✓" : trackDone}
                 </span>
                 <h3 className="text-[11px] font-semibold text-muted uppercase tracking-wider leading-tight line-clamp-1">
-                  {moduleName}
+                  {track.name}
                 </h3>
               </div>
 
-              {/* Lessons */}
-              <ul className="space-y-0.5">
-                {moduleLessons.map((lesson) => {
-                  const isActive = lesson.id === currentId;
-                  const isCompleted = progress[lesson.id];
-                  return (
-                    <li key={lesson.id}>
-                      <Link
-                        href={`/lesson/${lesson.id}`}
-                        onClick={() => setOpen(false)}
-                        className={`flex items-start gap-2.5 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 group/item ${
-                          isActive
-                            ? "bg-accent-soft text-accent font-semibold shadow-sm"
-                            : "text-muted hover:text-accent hover:bg-surface"
-                        }`}
-                      >
-                        {/* Status indicator */}
-                        <span className="mt-[3px] shrink-0">
-                          {isCompleted ? (
-                            <span className="w-4 h-4 rounded-full bg-success flex items-center justify-center">
-                              <svg className="w-2.5 h-2.5 text-white" viewBox="0 0 12 12" fill="none">
-                                <path d="M2.5 6L5 8.5L9.5 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                              </svg>
-                            </span>
-                          ) : isActive ? (
-                            <ChevronRight className="w-4 h-4 text-accent" />
-                          ) : (
-                            <Circle className="w-4 h-4 text-faint/40" />
-                          )}
-                        </span>
+              <div className="space-y-2">
+                {modules.map((group) => (
+                  <div key={group.module}>
+                    <div className="px-3 mb-1 text-[10px] text-faint leading-tight line-clamp-1">
+                      {group.module}
+                    </div>
+                    <ul className="space-y-0.5">
+                      {group.lessons.map((lesson) => {
+                        const isActive = lesson.id === currentId;
+                        const isCompleted = progress[lesson.id];
+                        return (
+                          <li key={lesson.id}>
+                            <Link
+                              href={"/lesson/" + lesson.id}
+                              onClick={() => setOpen(false)}
+                              className={
+                                "flex items-start gap-2.5 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 " +
+                                (isActive
+                                  ? "bg-accent-soft text-accent font-semibold shadow-sm"
+                                  : "text-muted hover:text-accent hover:bg-surface")
+                              }
+                            >
+                              <span className="mt-[3px] shrink-0">
+                                {isCompleted ? (
+                                  <span className="w-4 h-4 rounded-full bg-success flex items-center justify-center">
+                                    <svg className="w-2.5 h-2.5 text-white" viewBox="0 0 12 12" fill="none">
+                                      <path
+                                        d="M2.5 6L5 8.5L9.5 3.5"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      />
+                                    </svg>
+                                  </span>
+                                ) : isActive ? (
+                                  <ChevronRight className="w-4 h-4 text-accent" />
+                                ) : (
+                                  <Circle className="w-4 h-4 text-faint/40" />
+                                )}
+                              </span>
 
-                        <div className="min-w-0 flex-1">
-                          <div className="truncate">{lesson.title}</div>
-                          {lesson.type === "project" && (
-                            <span className="text-[9px] text-warning font-medium">实战项目</span>
-                          )}
-                        </div>
-
-                        {/* Lesson number */}
-                        <span className="text-[10px] text-faint/50 tabular-nums mt-[2px] shrink-0">
-                          {lesson.id}
-                        </span>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
+                              <div className="min-w-0 flex-1">
+                                <div className="truncate">{lesson.title}</div>
+                                {lesson.type === "project" && (
+                                  <span className="text-[9px] text-warning font-medium">实战项目</span>
+                                )}
+                              </div>
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                ))}
+              </div>
             </div>
           );
         })}
       </div>
 
-      {/* Footer */}
-      <div className="p-4 border-t border-edge shrink-0 space-y-1.5">
-        <Link
-          href="/dashboard"
-          className="flex items-center justify-center gap-1.5 text-xs text-muted hover:text-accent transition-colors py-1.5 rounded-lg hover:bg-surface"
-        >
-          <BarChart3 className="w-3.5 h-3.5" />
-          学习数据
-        </Link>
-        <Link
-          href="/showcase"
-          className="flex items-center justify-center gap-1.5 text-xs text-muted hover:text-accent transition-colors py-1.5 rounded-lg hover:bg-surface"
-        >
-          <FolderOpen className="w-3.5 h-3.5" />
-          我的作品
-        </Link>
-        <Link
-          href="/"
-          className="flex items-center justify-center gap-1.5 text-xs text-muted hover:text-accent transition-colors py-1.5 rounded-lg hover:bg-surface"
-        >
-          <BookOpen className="w-3.5 h-3.5" />
-          课程首页
-        </Link>
+      {/* 底部入口 */}
+      <div className="p-3 border-t border-edge shrink-0 space-y-0.5">
+        {SIDE_LINKS.map(({ href, icon: Icon, label }) => (
+          <Link
+            key={href}
+            href={href}
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-muted hover:text-accent hover:bg-surface transition-colors"
+          >
+            <Icon className="w-3.5 h-3.5" />
+            {label}
+          </Link>
+        ))}
       </div>
     </>
   );
 
   return (
     <>
-      {/* Mobile toggle */}
+      {/* 移动端开关 */}
       <button
-        onClick={() => setOpen(!open)}
-        className="fixed top-3 left-3 z-50 md:hidden w-10 h-10 rounded-xl glass flex items-center justify-center hover:border-accent/30 transition-all"
-        aria-label={open ? "关闭菜单" : "打开菜单"}
+        type="button"
+        onClick={() => setOpen(true)}
+        aria-label="打开课程目录"
+        className="lg:hidden fixed bottom-5 right-5 z-40 w-12 h-12 rounded-full bg-accent text-white shadow-glow flex items-center justify-center"
       >
-        {open ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+        <Menu className="w-5 h-5" />
       </button>
 
-      {/* Overlay */}
-      {open && (
-        <div
-          className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 md:hidden animate-fade-in"
-          onClick={() => setOpen(false)}
-        />
-      )}
-
-      {/* Sidebar */}
-      <nav
-        className={`fixed md:sticky top-0 left-0 z-40 w-72 h-screen shrink-0 border-r border-edge bg-surface-alt/95 backdrop-blur flex flex-col ${
-          open ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-        } transition-transform duration-300 var(--ease-out-expo)`}
-      >
+      {/* 桌面端固定侧栏 */}
+      <aside className="hidden lg:flex flex-col w-[280px] shrink-0 border-r border-edge bg-surface-alt h-screen sticky top-0">
         {nav}
-      </nav>
+      </aside>
+
+      {/* 移动端抽屉 */}
+      {open && (
+        <div className="lg:hidden fixed inset-0 z-50 flex">
+          <div
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            onClick={() => setOpen(false)}
+          />
+          <aside className="relative w-[85%] max-w-[320px] bg-surface-alt h-full flex flex-col animate-slide-in-left">
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="关闭课程目录"
+              className="absolute top-4 right-4 z-10 w-8 h-8 rounded-lg bg-surface flex items-center justify-center text-muted"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            {nav}
+          </aside>
+        </div>
+      )}
     </>
   );
 }

@@ -14,7 +14,9 @@ export interface Quiz {
   passingScore: number
 }
 
-export const quizzes: Record<string, Quiz> = {
+import { aiQuizzes } from "./quiz-data-ai";
+
+const legacyQuizzes: Record<string, Quiz> = {
   'quiz-1': {
     id: 'quiz-1',
     lessonId: '1-3',
@@ -128,6 +130,9 @@ export const quizzes: Record<string, Quiz> = {
     ],
   },
 }
+
+/** 老编程课的测验 + 新 AI 轨道的测验，统一按 id 索引 */
+export const quizzes: Record<string, Quiz> = { ...legacyQuizzes, ...aiQuizzes };
 
 export function getQuizById(id: string): Quiz | undefined {
   return quizzes[id]

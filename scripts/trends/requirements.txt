@@ -1,0 +1,5 @@
+# 每周热词爬虫的依赖。
+# 复用 dreamnight16/chinese-scraper-utils：热榜抓取、UA 池、限速、稳定 ID 都在里面。
+# 版本刻意钉死，避免上游改接口之后 CI 突然红掉。
+chinese-scraper-utils==0.3.0
+httpx==0.28.1

@@ -3,7 +3,7 @@ import { emptyGamification } from './gamification';
 import { getRepository } from './repository';
 
 const STORAGE_KEY = 'vibe-coding-progress';
-const CURRENT_SCHEMA = 2;
+const CURRENT_SCHEMA = 3;
 
 export interface LessonProgress {
   completed: boolean;
@@ -17,6 +17,10 @@ export interface UserProgress {
   schemaVersion: number;
   lessons: Record<string, LessonProgress>;
   gamification?: GamificationState;
+  /** 完成过的动手练习 id */
+  exercisesCompleted?: string[];
+  /** 在练习场检查过多少次自己写的提示词 */
+  promptChecks?: number;
   lastUpdatedAt: string;
 }
 
@@ -25,21 +29,28 @@ function emptyProgress(): UserProgress {
     schemaVersion: CURRENT_SCHEMA,
     lessons: {},
     gamification: emptyGamification(),
+    exercisesCompleted: [],
+    promptChecks: 0,
     lastUpdatedAt: new Date().toISOString(),
   };
 }
 
+/**
+ * 老版本数据往新 schema 上搬。
+ * 这里只补字段，不动已有的学习记录——进度丢了比少个字段严重得多。
+ */
 function migrateProgress(data: Record<string, unknown>): UserProgress {
   const version = (data.schemaVersion as number) || 1;
-  if (version < 2) {
-    return {
-      schemaVersion: CURRENT_SCHEMA,
-      lessons: (data.lessons as Record<string, LessonProgress>) || {},
-      gamification: emptyGamification(),
-      lastUpdatedAt: new Date().toISOString(),
-    };
-  }
-  return data as unknown as UserProgress;
+  const base: UserProgress = {
+    schemaVersion: CURRENT_SCHEMA,
+    lessons: (data.lessons as Record<string, LessonProgress>) || {},
+    gamification: (data.gamification as GamificationState) || emptyGamification(),
+    exercisesCompleted: (data.exercisesCompleted as string[]) || [],
+    promptChecks: (data.promptChecks as number) || 0,
+    lastUpdatedAt: new Date().toISOString(),
+  };
+  if (version < 2) base.gamification = emptyGamification();
+  return base;
 }
 
 export function loadProgress(): UserProgress {
@@ -103,7 +114,6 @@ export function markLessonCompleted(lessonId: string) {
     lesson.completed = true;
     lesson.completedAt = new Date().toISOString();
   });
-  // Fire event for gamification
   import('./events').then(({ emitGameEvent }) => {
     emitGameEvent({ type: 'lesson:completed', lessonId });
   });
@@ -119,6 +129,29 @@ export function saveQuizResult(lessonId: string, score: number) {
   });
 }
 
+/** 记录一次动手练习，徽章和统计都靠它 */
+export function recordExerciseCompleted(exerciseId: string) {
+  const p = loadProgress();
+  const list = p.exercisesCompleted ?? [];
+  if (!list.includes(exerciseId)) {
+    p.exercisesCompleted = [...list, exerciseId];
+    saveProgress(p);
+  }
+  import('./events').then(({ emitGameEvent }) => {
+    emitGameEvent({ type: 'exercise:completed', exerciseId });
+  });
+}
+
+/** 练习场里每检查一次提示词就记一笔 */
+export function recordPromptCheck(score: number) {
+  const p = loadProgress();
+  p.promptChecks = (p.promptChecks ?? 0) + 1;
+  saveProgress(p);
+  import('./events').then(({ emitGameEvent }) => {
+    emitGameEvent({ type: 'prompt:reviewed', score });
+  });
+}
+
 export function getOverallProgress(total: number): { completed: number; percentage: number } {
   const p = loadProgress();
   const completed = Object.values(p.lessons).filter((l) => l.completed).length;
@@ -126,7 +159,6 @@ export function getOverallProgress(total: number): { completed: number; percenta
 }
 
 export function getModuleProgress(
-  moduleName: string,
   lessonIds: string[],
 ): { completed: number; total: number } {
   const p = loadProgress();

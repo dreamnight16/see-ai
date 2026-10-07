@@ -28,3 +28,17 @@ jobs:
         run: npm test
       - name: Build
         run: npm run build
+
+  # 热词爬虫是 Python 写的，跟上面那个任务分开跑。
+  # 这里只跑纯函数测试，不联网——真正的抓取在 trends.yml 里每周一次。
+  trends:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pytest
+        run: python -m pip install --upgrade pip pytest
+      - name: Test the trends crawler
+        run: python -m pytest scripts/trends -q

@@ -1,58 +1,116 @@
-**语言 / Language:** [English](README.md) | [简体中文](README.zh-CN.md) | [繁體中文](README.zh-Hant.md) | [日本語](README.ja.md)
+**Language:** [English](README.md) | **简体中文** | [繁體中文](README.zh-Hant.md) | [日本語](README.ja.md)
 
-# Vibe Coding 入门课
+# 梦夜的 AI 课
 
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
 [![CI](https://github.com/dreamnight16/vibe-coding-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/dreamnight16/vibe-coding-agent/actions/workflows/ci.yml)
-[![在线体验](https://socialistic.ai/api/embed/dreamcode-vibe-curriculum-6a796a?lang=zh)](https://socialistic.ai/zh/skill/dreamcode-vibe-curriculum-6a796a)
+[![Try Online](https://socialistic.ai/api/embed/dreamcode-vibe-curriculum-6a796a?lang=en)](https://socialistic.ai/en/skill/dreamcode-vibe-curriculum-6a796a)
 
-一个边学边做的网页制作互动课程。22 节课分成 7 个章节，配有本地练习和进度记录；遇到卡点时，也可以叫一个可选的小助手过来帮你捋一捋。
+一套面向非专业大学生的 AI 入门课。目标读者不是程序员，而是**手机里装着豆包、平时只会拿它闲聊**的那批人。
+
+整套课不讲模型原理。它只解决一件事：让只会跟 AI 聊天的人，第一次真正用它把一件正事干完——作业、论文、汇报、简历、社团、四六级，然后知道什么时候不该用它。
+
+后两条轨道专门用来跟上节奏：**AI 智能体**（从你问它答，到它自己动手干完）和**跟上浪潮**（推理模型、多模态、AI 搜索、视频生成、机器人，以及怎么分辨真技术和炒作）。
+
+> 原来的「梦夜的编程课」没有消失，它变成了其中一条轨道（AI 编程，22 节课），和另外九条并列。
 
 ---
 
-## 功能
+## 十条轨道，76 节课
 
-- **22 节系统化课程** — 7 个章节从概念到发布
-- **可选学习助手** — 苏格拉底引导模式 + 直接回答模式，流式响应
-- **Prompt Playground** — 描述一个小想法，配置模型后生成可运行的 HTML/CSS/JS
-- **游戏化系统** — 经验值、等级、连续学习天数、10 种成就徽章
-- **代码练习** — 互动式练习，带提示和自动检查
-- **学习看板** — 进度追踪、热力图、技能雷达图
-- **PWA 支持** — 可安装到桌面，支持离线使用
-- **服务商可选** — Claude、OpenAI、DeepSeek 及其他 OpenAI 兼容接口
-- **备用线路** — 主服务没接通时尝试备用服务
-- **核心流程离线可用** — 课程、练习、测验、进度和作品保存不依赖 API Key 或网络
+| 轨道 | 课程数 | 解决什么 |
+|------|--------|----------|
+| 认识 AI | 5 | 它到底是什么，能做什么，为什么有人说它没用 |
+| **大学里怎么用** | **8** | 作业、论文、期末、社团、汇报、简历、四六级 |
+| 用得靠谱 | 6 | 幻觉、核实、隐私、AI 诈骗、版权、什么时候别用 |
+| 进阶技巧 | 6 | 提示词四件套、给背景、先想再答、喂资料、工作流 |
+| **AI 智能体** | **6** | 智能体是什么、手机里哪个能用、工具调用与 MCP、自动化、它翻车时怎么办 |
+| **跟上浪潮** | **6** | 推理模型、多模态、AI 搜索与知识库、视频生成、机器人、怎么分辨炒作 |
+| 内容创作 | 6 | 画图、海报、配音、短视频、公众号、做小工具 |
+| 实习和办公 | 6 | 报告、表格公式、PPT、会议纪要、职场沟通 |
+| 日常生活 | 5 | 通知、行程、翻译、陪家人看病前整理、出门前的准备 |
+| AI 编程 | 22 | 从网页基础到发布上线，全程用自然语言推进 |
 
-## 在线体验
+课程表定义在 `lib/lessons.ts`，轨道定义在 `lib/tracks.ts`，正文是 `content/lessons/<id>.md`。
 
-无需安装、无需配置 API Key——打开链接就能开始学习；AI 辅助是可选项：
+---
 
-[![在 Socialistic 上体验](https://socialistic.ai/api/embed/dreamcode-vibe-curriculum-6a796a?lang=zh)](https://socialistic.ai/zh/skill/dreamcode-vibe-curriculum-6a796a)
+## 三个不依赖 AI 的功能
 
-> 在线入口由 [@shesonglin](https://github.com/shesl-tinkerland) 贡献。  
-> 官方站点：[learn.dreamnight.net.cn](https://learn.dreamnight.net.cn)
+这是这一版的重点：**没有 API Key、不联网，也能把课学完、把提示词练会。**
+
+### 提示词练习场 `/practice`
+
+十二个真实场景（停水通知、请假、出行安排、辅导作业、Excel 汇总、周报、海报、核实说法、客户信息，以及三个智能体场景：跑调研、做自动化、给会对外动手的任务立规矩）。你写一遍自己的提问，本地规则引擎立刻打分，并指出漏了哪几样。
+
+打分逻辑在 `lib/prompt-coach.ts`，一共二十条探测器：受众、长度、语气、格式、背景、例子、多版本、让它先问你、要求它别乱编、隐私信息、含糊用词……纯规则，结果稳定，有测试盯着。
+
+### 提示词库 `/prompts`
+
+45 条可以直接复制去用的话术，九个分类（含「智能体」一类：让它先给计划、把丑话说在前面、让它自己验收、把重复的活写成说明书）。带方括号占位的地方换成你自己的情况。
+
+### AI 名词表 `/glossary`
+
+68 个术语，分成六组，其中一组是「新潮概念」——工具调用、computer use、多智能体、推理模型、世界模型、具身智能、上下文工程、端侧模型这些最近才冒出来的说法，每个都配大白话解释、一个生活里的比方，和一处容易被人忽悠的地方。
+
+另外还有 `/start`：四道题帮你排出适合自己的学习顺序。
+
+### 每周热词 `/trends`
+
+每周一自动扫一遍 AI 圈的论文、模型和热榜，把反复出现的说法挑出来，提交回仓库。
+
+**一条硬规矩：爬虫不许写解释。** 它只产出「候选词 + 出现次数 + 出处链接」，页面上明确标着这些都是机器抓的、还没写解释。名词表里的每一条解释仍然由人写完再上线——机器写的东西没人核对过，放上去就是给读者添乱。
+
+爬虫复用了作者另外两个仓库：
+
+| 仓库 | 复用什么 |
+|------|----------|
+| [chinese-scraper-utils](https://github.com/dreamnight16/chinese-scraper-utils) | 微博/知乎/Hacker News 热榜抓取、UA 池、限速、稳定 ID；本仓库用它的 `register_scraper` 把 Hugging Face 每日论文和 arXiv 注册成同一种数据源 |
+| [weekly-hotspot](https://github.com/dreamnight16/weekly-hotspot) | 「多源抓取 → 去重 → 过滤 → 输出 JSON + Markdown 周报」这条流水线的骨架，以及每周定时提交的工作流写法 |
+
+数据源五个：Hugging Face 每日论文、arXiv cs.AI、Hacker News、微博热搜、知乎热榜。任何一个源挂掉都只记录不中断，报告里会写清哪几个源这轮没抓到。
+
+```bash
+pip install -r scripts/trends/requirements.txt
+python -m pytest scripts/trends -q   # 20 个纯函数测试，不联网
+python scripts/trends/crawl.py       # 也可以 npm run trends
+```
+
+输出三个文件：
+
+- `data/trends/latest.json` —— 网站读的那个
+- `data/trends/<YYYY-Www>.md` —— 给人看的周报，重点是"这周该给名词表补哪几个词"
+- `data/trends/seen.json` —— 每个词第一次出现的周次，只增不改
+
+---
+
+## 功能一览
+
+- **76 节结构化课程**，10 条轨道，可跳着学，也可以按顺序走
+- **22 个章节测验**，考「会不会用」，不考名词背诵
+- **离线练习场**，纯规则反馈，不需要任何配置
+- **提示词库 + 名词表**，可搜索、可复制
+- **每周热词**（`/trends`）：每周自动抓一次 AI 圈的新说法，只放候选词和出处，不放机器写的解释
+- **学习向导**，四道题推荐起点
+- **游戏化**：XP、等级、连续天数、14 个徽章（现在真的会解锁了）
+- **学习仪表盘**：进度、热力图、能力雷达
+- **可选学习助手**：Claude、OpenAI、DeepSeek 等 OpenAI 兼容接口，支持备用模型
+- **PWA**：可安装，课程与练习离线可用
+
+---
 
 ## 快速开始
 
-### 自动设置（推荐）
-
-```bash
-bash scripts/setup.sh
-```
-
-### 手动
-
 ```bash
 npm install
-cp .env.example .env
-# 编辑 .env，填入 API Key
+cp .env.example .env   # 不配也能跑，学习助手会显示为不可用
 npm run dev
 ```
 
-打开 http://localhost:3000 开始学习。
+打开 http://localhost:3000。
 
-> 详细的零基础设置指南：[SETUP_GUIDE.md](./SETUP_GUIDE.md)
+> 完全不想碰命令行的同学，直接用在线版：https://learn.dreamnight.net.cn
 
 ### Docker
 
@@ -60,110 +118,87 @@ npm run dev
 docker compose up -d
 ```
 
-## 配置
+---
 
-### 可选：学习助手
+## 可选：接入学习助手
 
-不配置 AI 也可以启动并完成课程。只有需要学习助手、代码生成或代码审阅时，才需要填写以下配置：
+课程、练习、测验、提示词库、名词表都不需要 API Key。只有页面底部的「学习助手」需要：
 
 ```env
-# 可选认证；配置后所有 AI 请求都需携带 Bearer 密钥
-AI_API_AUTH_TOKEN=
-
-# 主 AI 服务商
 AI_PROVIDER=openai-compatible
 AI_MODEL=deepseek-chat
 AI_API_KEY=sk-...
 AI_BASE_URL=https://api.deepseek.com/v1
 ```
 
-### 可选：备用模型服务
+备用模型、鉴权 token、限流等选项见 `.env.example`。
 
-主服务商故障时自动切换：
-
-```env
-AI_FALLBACK_PROVIDER=openai
-AI_FALLBACK_MODEL=gpt-4o-mini
-AI_FALLBACK_API_KEY=sk-...
-AI_FALLBACK_BASE_URL=https://api.openai.com/v1
-```
-
-完整配置参见 `.env.example`。
+---
 
 ## 开发
 
 ```bash
-npm install
-npm run dev      # 启动开发服务器
-npm test         # 运行测试（46 个测试，4 个套件）
+npm run dev      # 开发服务器
+npm test         # 单元测试
+npm run lint     # ESLint
 npm run build    # 生产构建
 ```
 
-## 技术栈
-
-- [Next.js](https://nextjs.org/) 16 + React 19 + TypeScript（strict 模式）
-- [Tailwind CSS](https://tailwindcss.com/) v4
-- [AI SDK](https://sdk.vercel.ai/) — 统一多模型接口
-- [Vitest](https://vitest.dev/) — 单元测试（目标 80%+ 覆盖率）
-- [Lucide React](https://lucide.dev/) — 图标
-- [react-markdown](https://github.com/remarkjs/react-markdown) — 渲染课程内容
-
-## 项目结构
+### 关键目录
 
 ```
 app/
-  api/agent/route.ts        # AI 对话流式接口（认证 + 限流 + 降级）
-  api/review/route.ts       # AI 代码审阅接口
-  api/storage/route.ts      # 服务端键值存储
-  api/analytics/route.ts    # 数据分析端点
-  lesson/[id]/page.tsx      # 课程详情页
-  dashboard/page.tsx        # 学习看板
-  page.tsx                  # 首页
+  page.tsx                  首页：轨道卡片 + 完整课程表
+  lesson/[id]/page.tsx      课程页（正文 + 练习 + 测验 + 可选助手）
+  prompts/                  提示词库
+  practice/                 提示词练习场
+  glossary/                 名词表
+  start/                    四道题的选路向导
+  trends/                   每周热词（读 data/trends/latest.json）
 components/
-  ChatInterface.tsx         # AI 聊天组件
-  PromptPlayground.tsx      # 代码生成练习区
-  exercise/                 # 互动代码练习
-  dashboard/                # 统计、热力图、技能雷达
-  gamification/             # 经验条、徽章解锁、彩纸特效
-  visualizations/           # 动画流程图、DOM 树
+  practice/PromptLab.tsx    练习场交互
+  prompts/PromptLibrary.tsx 提示词库交互
+  glossary/                 名词表交互
+  StartWizard.tsx           选路向导
 lib/
-  lessons.ts                # 22 节课定义
-  progress.ts               # 学习进度（Repository 模式）
-  gamification.ts           # 经验值、等级、连续学习
-  achievements.ts           # 10 种成就徽章
-  adaptive.ts               # 学习推荐引擎
-  repository.ts             # 存储抽象层（localStorage / 服务端）
-  logger.ts                 # 结构化日志
-  analytics.ts              # 用户行为追踪
-scripts/
-  setup.sh                  # 自动设置脚本
-  generate-icons.mjs        # PWA 图标生成器
+  tracks.ts                 十条轨道
+  lessons.ts                76 节课的课程表
+  prompt-coach.ts           离线提示词评分引擎
+  prompt-library.ts         45 条提示词，9 个分类
+  glossary.ts               68 个术语，6 个分组
+  practice-scenarios.ts     练习场场景
+  quiz-data.ts              老测验 + 新轨道测验汇总
+  quiz-data-ai.ts           20 个新轨道测验
+  achievements.ts           14 个徽章
+  adaptive.ts               学习建议
+  progress.ts               学习进度（schema v3）
+  trends.ts                 每周热词报告的读取与校验
+scripts/trends/             热词爬虫（Python）
+  crawl.py                  入口
+  sources.py                五个数据源，复用 chinese-scraper-utils
+  keywords.py               判断一条标题跟 AI 有没有关系
+  terms.py                  抽候选词、盯关注清单、跟名词表对账
+content/lessons/            76 篇课程正文
+data/trends/                每周热词的产出（由定时任务提交）
 ```
 
-## 自定义课程
+### 加一节课
 
-编辑 `lib/lessons.ts` 即可修改或添加课程内容，支持 Markdown 格式。
+1. 在 `content/lessons/` 下写 `<id>.md`（不要写 H1，页面会渲染标题）
+2. 在 `lib/lessons.ts` 里加一行
+3. 跑 `npm test` —— `lib/__tests__/curriculum.test.ts` 会检查每一课都有正文、前置课程存在、轨道有效
+
+---
+
+## 技术栈
+
+**网站**：Next.js 16 + React 19 + TypeScript（strict）· Tailwind CSS v4 · AI SDK（多模型）· Vitest · lucide-react · react-markdown
+
+**爬虫**：Python 3.11+ · chinese-scraper-utils · httpx · pytest。只在跑 `scripts/trends` 时需要 Python，网站本身不需要。
 
 ## 部署
 
-### Vercel（推荐）
-
-1. 推送代码到 GitHub
-2. 在 [vercel.com](https://vercel.com/) 导入仓库
-3. 在项目设置中添加环境变量
-4. 点击部署
-
-### Docker
-
-```bash
-docker compose up -d
-```
-
-使用多阶段构建，镜像约 150MB。
-
-## 相关项目
-
-- [Blog-mizuki](https://github.com/dreamnight16/Blog-mizuki) — 作者个人博客，更多 Vibe Coding 相关文章
+推送到 GitHub 后在 Vercel 导入即可，环境变量可选。也可以 `docker compose up -d`。
 
 ## License
 

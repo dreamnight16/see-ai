@@ -4,6 +4,8 @@ import {
   getLesson,
   getNextLessonId,
   getPrevLessonId,
+  getNextLessonInTrack,
+  getTrackOfLesson,
   lessons,
 } from "@/lib/lessons";
 import { getLessonContent } from "@/lib/lessons-content";
@@ -15,6 +17,7 @@ import LessonMeta from "@/components/LessonMeta";
 import Quiz from "@/components/Quiz";
 import { getQuizByLessonId, getQuizById } from "@/lib/quiz-data";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { ChevronLeft, ChevronRight, MessageCircle, Wand2, Sparkles, Flame } from "lucide-react";
 import LessonExercises from "./LessonExercises";
 import LessonVisualizations from "./LessonVisualizations";
@@ -35,6 +38,8 @@ export default async function LessonPage({
 
   const nextId = getNextLessonId(id);
   const prevId = getPrevLessonId(id);
+  const nextInTrackId = getNextLessonInTrack(id);
+  const track = getTrackOfLesson(id);
   const quiz = lesson.quizId ? getQuizById(lesson.quizId) : getQuizByLessonId(id);
   const content = getLessonContent(id);
   const exercises = getExercisesByLesson(id);
@@ -52,6 +57,12 @@ export default async function LessonPage({
           {/* Module breadcrumb */}
           <div className="text-sm text-muted mb-3 animate-slide-up">
             <Link href="/" className="hover:text-accent transition-colors">课程</Link>
+            {track && (
+              <>
+                <span className="mx-2 text-faint">/</span>
+                <span>{track.name}</span>
+              </>
+            )}
             <span className="mx-2 text-faint">/</span>
             <span>{lesson.module}</span>
           </div>
@@ -61,6 +72,11 @@ export default async function LessonPage({
             {lesson.title}
           </h1>
 
+          {/* 一句话收获 */}
+          <p className="text-base md:text-lg text-accent mb-4 animate-slide-up stagger-2 leading-relaxed">
+            {lesson.takeaway}
+          </p>
+
           {/* Meta */}
           <div className="mb-10 animate-slide-up stagger-2">
             <LessonMeta lesson={lesson} />
@@ -68,7 +84,9 @@ export default async function LessonPage({
 
           {/* Lesson content */}
           <div className="prose dark:prose-invert max-w-none mb-12 animate-slide-up stagger-3">
-            <ReactMarkdown>{content}</ReactMarkdown>
+            {/* remark-gfm 是必须的：课程里有 20 篇用 Markdown 表格做对比，
+                没有它表格会原样显示成一堆竖线 */}
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
           </div>
 
           {/* Visualizations */}
@@ -140,6 +158,26 @@ export default async function LessonPage({
                 <PromptPlayground />
               </div>
             </div>
+          )}
+
+          {/* 同轨道的下一课 */}
+          {nextInTrackId && (
+            <Link
+              href={"/lesson/" + nextInTrackId}
+              className="mb-8 flex items-center gap-3 p-4 rounded-xl bg-accent-soft/60 border border-accent/20 hover:border-accent/40 transition-all group"
+            >
+              <span className="w-8 h-8 rounded-lg bg-accent text-white flex items-center justify-center shrink-0">
+                <ChevronRight className="w-4 h-4" />
+              </span>
+              <div className="min-w-0">
+                <div className="text-[10px] text-faint">
+                  {track ? track.name + " · " : ""}下一节
+                </div>
+                <div className="text-sm font-medium group-hover:text-accent transition-colors truncate">
+                  {getLesson(nextInTrackId)?.title}
+                </div>
+              </div>
+            </Link>
           )}
 
           {/* Navigation */}

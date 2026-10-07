@@ -2,7 +2,7 @@
 
 import CodeExercise from '@/components/exercise/CodeExercise';
 import type { Exercise } from '@/lib/exercises';
-import { emitGameEvent } from '@/lib/events';
+import { recordExerciseCompleted } from '@/lib/progress';
 
 interface LessonExercisesProps {
   exercises: Exercise[];
@@ -10,7 +10,8 @@ interface LessonExercisesProps {
 
 export default function LessonExercises({ exercises }: LessonExercisesProps) {
   function handleExerciseComplete(exerciseId: string) {
-    emitGameEvent({ type: 'exercise:completed', exerciseId });
+    // recordExerciseCompleted 里会顺带把游戏事件发出去
+    recordExerciseCompleted(exerciseId);
   }
 
   return (

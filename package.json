@@ -2,7 +2,7 @@
   "name": "dreamcode",
   "version": "0.2.0",
   "private": true,
-  "description": "Interactive coding crash course — 22 lessons with local exercises, progress tracking, and a small optional code helper",
+  "description": "AI literacy course for non-technical students — 64 lessons across 8 tracks, offline prompt practice, prompt library and glossary, with an optional AI helper",
   "author": "DreamNight",
   "license": "MIT",
   "repository": {
@@ -14,12 +14,14 @@
   },
   "homepage": "https://github.com/dreamnight16/vibe-coding-agent#readme",
   "keywords": [
-    "vibe-coding",
+    "ai-literacy",
+    "ai-education",
+    "prompt-engineering",
     "education",
     "tutorial",
     "nextjs",
     "typescript",
-    "code-playground"
+    "vibe-coding"
   ],
   "scripts": {
     "dev": "next dev",
@@ -27,7 +29,9 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "trends": "python scripts/trends/crawl.py",
+    "trends:test": "python -m pytest scripts/trends -q"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.71",
@@ -36,7 +40,8 @@
     "next": "^16.3.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "react-markdown": "^10.1.0"
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

@@ -4,7 +4,8 @@ export type GameEvent =
   | { type: 'playground:generated' }
   | { type: 'exercise:completed'; exerciseId: string }
   | { type: 'daily:visit' }
-  | { type: 'code:reviewed' };
+  | { type: 'code:reviewed' }
+  | { type: 'prompt:reviewed'; score: number };
 
 type Listener = (event: GameEvent) => void;
 const listeners = new Map<string, Set<Listener>>();

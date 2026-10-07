@@ -1,4 +1,7 @@
-# Vibe Coding 入门课 — 设置指南
+# 梦夜的 AI 课 — 设置指南
+
+> 课程、练习场、提示词库、名词表和测验都不需要 API Key，也不需要联网。
+> 下面的配置只影响每节课底部的「学习助手」。
 
 ## 一、准备工作
 
@@ -33,7 +36,7 @@ Node.js 是这个项目运行的基础环境。
 ### 1. 打开终端，进入项目目录
 
 ```bash
-cd /Users/mengyeshiliu/code/agent/vibe-coding-agent
+cd 你放这个项目的目录/learn-to-code
 ```
 
 ### 2. 运行设置脚本
