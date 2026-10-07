@@ -4,7 +4,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
-[![CI](https://github.com/dreamnight16/learn-to-code/actions/workflows/ci.yml/badge.svg)](https://github.com/dreamnight16/learn-to-code/actions/workflows/ci.yml)
+[![CI](https://github.com/dreamnight16/see-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/dreamnight16/see-ai/actions/workflows/ci.yml)
 [![Try Online](https://socialistic.ai/api/embed/dreamcode-vibe-curriculum-6a796a?lang=en)](https://socialistic.ai/en/skill/dreamcode-vibe-curriculum-6a796a)
 
 一套面向非专业大学生的 AI 入门课。目标读者不是程序员，而是**手机里装着豆包、平时只会拿它闲聊**的那批人。

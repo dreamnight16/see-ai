@@ -36,7 +36,7 @@ Node.js 是这个项目运行的基础环境。
 ### 1. 打开终端，进入项目目录
 
 ```bash
-cd 你放这个项目的目录/learn-to-code
+cd 你放这个项目的目录/see-ai
 ```
 
 ### 2. 运行设置脚本
@@ -212,7 +212,7 @@ git add .
 git commit -m "初始化项目"
 
 # 关联远程仓库
-git remote add origin https://github.com/你的用户名/learn-to-code.git
+git remote add origin https://github.com/你的用户名/see-ai.git
 
 # 推送代码
 git push -u origin main
@@ -225,7 +225,7 @@ git push -u origin main
 ## 七、项目结构说明
 
 ```
-learn-to-code/
+see-ai/
 ├── app/                    # 页面文件
 │   ├── api/agent/          # AI 对话接口
 │   ├── lesson/[id]/        # 课程内容页

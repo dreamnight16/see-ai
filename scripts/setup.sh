@@ -47,7 +47,7 @@ else
   echo "   ${PROJECT_DIR}/.env"
   echo ""
   echo "   不填 Anthropic Key 的话，也可以换成其他模型："
-  echo "   https://github.com/dreamnight16/learn-to-code#readme"
+  echo "   https://github.com/dreamnight16/see-ai#readme"
   echo ""
 fi
 

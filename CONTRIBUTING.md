@@ -7,8 +7,8 @@ Thanks for your interest in contributing!
 ## Getting Started
 
 ```bash
-git clone https://github.com/dreamnight16/learn-to-code.git
-cd learn-to-code
+git clone https://github.com/dreamnight16/see-ai.git
+cd see-ai
 npm install
 cp .env.example .env   # 可选：只在要用页面底部的学习助手时才需要填
 npm run dev
@@ -65,6 +65,6 @@ Types: `feat` `fix` `refactor` `test` `docs` `chore` `perf` `ci`
 
 ## Questions?
 
-Open a [discussion](https://github.com/dreamnight16/learn-to-code/discussions).
+Open a [discussion](https://github.com/dreamnight16/see-ai/discussions).
 
 [conv]: https://www.conventionalcommits.org/

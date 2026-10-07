@@ -4,7 +4,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
-[![CI](https://github.com/dreamnight16/learn-to-code/actions/workflows/ci.yml/badge.svg)](https://github.com/dreamnight16/learn-to-code/actions/workflows/ci.yml)
+[![CI](https://github.com/dreamnight16/see-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/dreamnight16/see-ai/actions/workflows/ci.yml)
 [![オンラインで試す](https://socialistic.ai/api/embed/dreamcode-vibe-curriculum-6a796a?lang=en)](https://socialistic.ai/en/skill/dreamcode-vibe-curriculum-6a796a)
 
 プログラマーではない大学生向けの AI 入門コースです。対象読者はエンジニアではなく、**スマホに豆包（Doubao）を入れていて、普段はそれで雑談しかしない**ような人たちです。
