@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 import {
   Coffee,
   Briefcase,
@@ -11,10 +11,11 @@ import {
   Rocket,
   GraduationCap,
   ArrowRight,
-} from "lucide-react";
-import type { Track } from "@/lib/tracks";
-import { lessons } from "@/lib/lessons";
-import type { ComponentType } from "react";
+} from 'lucide-react';
+import type { Track } from '@/lib/tracks';
+import { lessons } from '@/lib/lessons';
+import { trackVisual } from '@/components/track-visuals';
+import type { ComponentType } from 'react';
 
 const ICONS: Record<string, ComponentType<{ className?: string }>> = {
   Sprout,
@@ -29,69 +30,106 @@ const ICONS: Record<string, ComponentType<{ className?: string }>> = {
   Code,
 };
 
-const COLOR_STYLES: Record<string, { chip: string; ring: string; text: string }> = {
-  accent: { chip: "bg-accent-soft", ring: "group-hover:border-accent/40", text: "text-accent" },
-  success: { chip: "bg-success-soft", ring: "group-hover:border-success/40", text: "text-success" },
-  warning: { chip: "bg-warning-soft", ring: "group-hover:border-warning/40", text: "text-warning" },
-  info: { chip: "bg-info-soft", ring: "group-hover:border-info/40", text: "text-info" },
-};
-
 interface TrackCardProps {
   track: Track;
+  /** 在整张课程表里的序号，显示成 01 / 02 … */
+  index: number;
   /** 卡片上第一节课的链接锚点 */
   startLessonId?: string;
 }
 
-export default function TrackCard({ track, startLessonId }: TrackCardProps) {
+/**
+ * 一条轨道 = 一块品牌实色色块。
+ *
+ * 文字全部用 --dn-text-on-color；层级靠字号和字重拉开，不靠降低不透明度，
+ * 因为透明度会直接吃掉对比度。整块可点击，键盘焦点由 .dn-focus 提供。
+ */
+export default function TrackCard({ track, index, startLessonId }: TrackCardProps) {
   const trackLessons = lessons.filter((l) => l.track === track.id);
   const minutes = trackLessons.reduce((sum, l) => sum + l.estimatedMinutes, 0);
   const Icon = ICONS[track.icon] ?? Sprout;
-  const style = COLOR_STYLES[track.color] ?? COLOR_STYLES.accent;
+  const visual = trackVisual(track.color);
   const first = startLessonId ?? trackLessons[0]?.id;
+  const projectCount = trackLessons.filter((l) => l.type === 'project').length;
 
-  return (
-    <div
+  const body = (
+    <article
       className={
-        "card p-6 flex flex-col h-full transition-all duration-300 group " + style.ring
+        'dn-interactive flex h-full flex-col p-5 sm:p-6 ' + visual.field
       }
     >
-      <div className="flex items-start gap-3.5 mb-4">
+      <div className="flex items-start justify-between gap-4">
+        <span className="see-kicker tabular-nums">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+        <Icon className="h-7 w-7 shrink-0" aria-hidden="true" />
+      </div>
+
+      <h3 className="font-display mt-10 text-3xl leading-[1.1] sm:text-[2rem]">
+        {track.name}
+      </h3>
+      <p className="mt-2.5 text-sm font-semibold">{track.tagline}</p>
+      <p className="mt-3 text-[13px] leading-relaxed">{track.description}</p>
+
+      <div className="mt-auto pt-6">
+        <p className="text-xs">
+          写给：{track.audience}
+        </p>
+        <p className="mt-1.5 text-xs tabular-nums">
+          {trackLessons.length} 节课 · 约 {minutes} 分钟
+          {projectCount > 0 ? ` · ${projectCount} 个实战` : ''}
+        </p>
+      </div>
+    </article>
+  );
+
+  if (!first) return body;
+
+  return (
+    <Link
+      href={'/lesson/' + first}
+      className="dn-focus block h-full"
+      aria-label={`进入「${track.name}」轨道`}
+    >
+      {body}
+    </Link>
+  );
+}
+
+/** 紧凑索引行：不展开内容，只作为课程表里的入口 */
+export function TrackRow({ track }: { track: Track }) {
+  const visual = trackVisual(track.color);
+  const trackLessons = lessons.filter((l) => l.track === track.id);
+  const Icon = ICONS[track.icon] ?? Sprout;
+  const first = trackLessons[0]?.id;
+
+  return (
+    <li className="border-b border-edge last:border-b-0">
+      <Link
+        href={first ? '/lesson/' + first : '/'}
+        className="dn-focus group flex min-h-[64px] items-center gap-4 px-4 py-3 hover:bg-surface-alt"
+      >
         <span
           className={
-            "w-11 h-11 rounded-xl flex items-center justify-center shrink-0 " +
-            style.chip +
-            " " +
-            style.text
+            'flex h-10 w-10 shrink-0 items-center justify-center ' + visual.field
           }
         >
-          <Icon className="w-5 h-5" />
+          <Icon className="h-5 w-5" aria-hidden="true" />
         </span>
-        <div className="min-w-0">
-          <h3 className="font-display text-lg font-bold leading-tight">{track.name}</h3>
-          <p className={"text-xs mt-1 " + style.text}>{track.tagline}</p>
-        </div>
-      </div>
-
-      <p className="text-sm text-muted leading-relaxed flex-1">{track.description}</p>
-
-      <div className="mt-4 pt-4 border-t border-edge flex items-center justify-between gap-3">
-        <span className="text-[11px] text-faint">
-          {trackLessons.length} 节课 · 约 {minutes} 分钟
+        <span className="min-w-0 flex-1">
+          <span className="block truncate text-[15px] font-semibold">{track.name}</span>
+          <span className="mt-0.5 block truncate text-xs text-text-secondary">
+            {track.tagline}
+          </span>
         </span>
-        {first && (
-          <Link
-            href={"/lesson/" + first}
-            className={
-              "inline-flex items-center gap-1 text-xs font-medium transition-all " +
-              style.text +
-              " hover:gap-2"
-            }
-          >
-            开始
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        )}
-      </div>
-    </div>
+        <span className="hidden shrink-0 text-xs tabular-nums text-text-secondary sm:block">
+          {trackLessons.length} 节
+        </span>
+        <ArrowRight
+          className="h-4 w-4 shrink-0 text-text-secondary group-hover:text-text-primary"
+          aria-hidden="true"
+        />
+      </Link>
+    </li>
   );
 }

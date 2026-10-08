@@ -9,13 +9,18 @@ interface Skill {
   value: number; // 0-100
 }
 
+/**
+ * 能力雷达。
+ *
+ * 图形用品牌色，轴线用 DNDL 的 Divider；同时把每个轴的数值
+ * 以文本形式列在下方——图形本身对读屏软件没有意义，数值才是信息。
+ */
 export default function SkillRadar() {
   const [skills] = useState<Skill[]>(() => {
     const progress = loadProgress();
     const lessonEntries = Object.entries(progress.lessons);
     const completedIds = lessonEntries.filter(([, v]) => v.completed).map(([k]) => k);
 
-    // Calculate skill levels based on tags and progress
     const htmlLessons = lessons.filter((l) => l.tags.includes('实践') || l.tags.includes('项目'));
     const jsLessons = lessons.filter((l) => l.tags.includes('项目') && l.difficulty !== 'beginner');
     const promptLessons = lessons.filter((l) => l.tags.includes('技巧'));
@@ -34,18 +39,22 @@ export default function SkillRadar() {
       { label: '提示词', value: calcScore(promptLessons) },
       { label: '工具使用', value: calcScore(toolLessons) },
       { label: '概念理解', value: calcScore(conceptLessons) },
-      { label: '动手实践', value: completedIds.length > 0 ? Math.round((completedIds.length / lessons.length) * 100) : 0 },
+      {
+        label: '动手实践',
+        value: completedIds.length > 0
+          ? Math.round((completedIds.length / lessons.length) * 100)
+          : 0,
+      },
     ];
   });
 
-  const size = 220;
+  const size = 240;
   const cx = size / 2;
   const cy = size / 2;
-  const radius = (size / 2) - 40;
+  const radius = size / 2 - 46;
 
   const angles = skills.map((_, i) => (i * 2 * Math.PI) / skills.length - Math.PI / 2);
 
-  // Generate polygon points for a given set of values
   function polygonPoints(vals: number[]): string {
     return vals
       .map((v, i) => {
@@ -58,23 +67,24 @@ export default function SkillRadar() {
   }
 
   return (
-    <div className="card p-5 animate-slide-up">
-      <h3 className="font-display font-bold text-base mb-4">技能雷达</h3>
-      <div className="flex justify-center">
-        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-          {/* Background grid */}
+    <section className="card p-5">
+      <h3 className="font-display text-lg">能力雷达</h3>
+      <p className="mt-1 text-xs text-text-secondary">
+        按课程标签统计的完成比例，不是能力测评。
+      </p>
+
+      <div className="mt-4 flex justify-center">
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true">
           {[0.25, 0.5, 0.75, 1].map((scale) => (
             <polygon
               key={scale}
               points={polygonPoints(skills.map(() => scale * 100))}
               fill="none"
-              stroke="var(--color-border-primary)"
+              stroke="var(--dn-divider)"
               strokeWidth="1"
-              opacity="0.5"
             />
           ))}
 
-          {/* Axis lines */}
           {angles.map((angle, i) => {
             const x = cx + radius * Math.cos(angle);
             const y = cy + radius * Math.sin(angle);
@@ -85,16 +95,22 @@ export default function SkillRadar() {
                 y1={cy}
                 x2={x}
                 y2={y}
-                stroke="var(--color-border-primary)"
+                stroke="var(--dn-divider)"
                 strokeWidth="1"
-                opacity="0.3"
               />
             );
           })}
 
-          {/* Labels */}
+          <polygon
+            points={polygonPoints(skills.map((s) => s.value))}
+            fill="var(--dn-teal)"
+            fillOpacity="0.22"
+            stroke="var(--dn-teal)"
+            strokeWidth="2"
+          />
+
           {skills.map((skill, i) => {
-            const labelR = radius + 24;
+            const labelR = radius + 26;
             const x = cx + labelR * Math.cos(angles[i]);
             const y = cy + labelR * Math.sin(angles[i]);
             return (
@@ -104,41 +120,33 @@ export default function SkillRadar() {
                 y={y}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                className="text-[10px] fill-muted font-medium"
+                fontSize="10"
+                fontWeight="600"
+                fill="var(--dn-text-primary)"
               >
                 {skill.label}
               </text>
             );
           })}
-
-          {/* Data polygon */}
-          <polygon
-            points={polygonPoints(skills.map((s) => s.value))}
-            fill="var(--color-accent)"
-            fillOpacity="0.15"
-            stroke="var(--color-accent)"
-            strokeWidth="2"
-            className="transition-all duration-700"
-          />
-
-          {/* Data points */}
-          {skills.map((skill, i) => {
-            const r = (skill.value / 100) * radius;
-            const x = cx + r * Math.cos(angles[i]);
-            const y = cy + r * Math.sin(angles[i]);
-            return (
-              <circle
-                key={i}
-                cx={x}
-                cy={y}
-                r="3"
-                fill="var(--color-accent)"
-                className="animate-scale-in"
-              />
-            );
-          })}
         </svg>
       </div>
-    </div>
+
+      <ul className="mt-4 border-t border-edge">
+        {skills.map((skill) => (
+          <li
+            key={skill.label}
+            className="flex min-h-[40px] items-center gap-3 border-b border-edge text-sm last:border-b-0"
+          >
+            <span className="flex-1">{skill.label}</span>
+            <span className="h-2 w-24 bg-surface-raised" aria-hidden="true">
+              <span className="block h-full bg-teal" style={{ width: skill.value + '%' }} />
+            </span>
+            <span className="w-10 text-right tabular-nums text-text-secondary">
+              {skill.value}%
+            </span>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }

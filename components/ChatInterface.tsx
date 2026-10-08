@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Send, Bot, User, Sparkles } from "lucide-react";
+import { Send, Bot, User, Sparkles, Loader2 } from "lucide-react";
 import SocraticToggle from "./chat/SocraticToggle";
 
 interface Message {
@@ -9,12 +9,19 @@ interface Message {
   content: string;
 }
 
+/**
+ * 等待回复时的三点指示。
+ *
+ * 直角方块而不是圆形小点：DNDL 默认几何，同时也和消息气泡的方角保持一致。
+ * 三点本身只是装饰，所以另外补一段 sr-only 文字，让「正在等待」不只靠动效传达。
+ */
 function TypingDots() {
   return (
-    <span className="inline-flex items-center gap-1">
-      <span className="w-2 h-2 bg-accent/40 rounded-full animate-bounce [animation-delay:0ms]" />
-      <span className="w-2 h-2 bg-accent/40 rounded-full animate-bounce [animation-delay:150ms]" />
-      <span className="w-2 h-2 bg-accent/40 rounded-full animate-bounce [animation-delay:300ms]" />
+    <span className="inline-flex items-center gap-1.5">
+      <span className="sr-only">正在输入</span>
+      <span aria-hidden="true" className="h-1.5 w-1.5 bg-teal-ink animate-bounce [animation-delay:0ms]" />
+      <span aria-hidden="true" className="h-1.5 w-1.5 bg-teal-ink animate-bounce [animation-delay:150ms]" />
+      <span aria-hidden="true" className="h-1.5 w-1.5 bg-teal-ink animate-bounce [animation-delay:300ms]" />
     </span>
   );
 }
@@ -112,31 +119,32 @@ export default function ChatInterface() {
   }
 
   return (
-    <div className="flex flex-col h-full rounded-xl border border-edge bg-surface overflow-hidden shadow-md">
+    <div className="card flex h-full flex-col overflow-hidden">
       {/* Header */}
-      <div className="px-5 py-3.5 border-b border-edge bg-surface-alt flex items-center gap-2.5 shrink-0">
-        <span className="w-8 h-8 rounded-lg bg-accent-soft flex items-center justify-center">
-          <Bot className="w-4 h-4 text-accent" />
+      <div className="flex shrink-0 items-center gap-3 border-b border-edge bg-surface-alt px-4 py-3">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-teal text-on-color">
+          <Bot className="h-4 w-4" aria-hidden="true" />
         </span>
-        <div className="flex-1">
-          <div className="flex items-center">
-            <span className="font-semibold text-sm">学习助手</span>
-            <span className="text-[10px] text-muted ml-2">需要时再用</span>
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-baseline gap-x-2">
+            <span className="text-sm font-semibold">学习助手</span>
+            <span className="text-[11px] text-text-secondary">需要时再用</span>
           </div>
-          <div className="mt-1">
+          <div className="mt-1.5">
             <SocraticToggle value={socraticMode} onChange={setSocraticMode} />
           </div>
         </div>
       </div>
 
-      {/* Messages */}
+      {/* Messages：原来那层 radial-gradient 只是装饰，换成画布底色，
+          让「用户 = 品牌实色块 / 助手 = 带描边的浅色块」这组对比自己说话。 */}
       <div
         ref={containerRef}
         onScroll={(e) => {
           const el = e.currentTarget;
           isNearBottom.current = el.scrollHeight - el.scrollTop - el.clientHeight < 80;
         }}
-        className="flex-1 overflow-y-auto p-5 space-y-5 min-h-[300px] bg-[radial-gradient(ellipse_at_top,_var(--color-accent-soft)_0%,_transparent_70%)]"
+        className="min-h-[300px] flex-1 space-y-5 overflow-y-auto bg-canvas p-4 sm:p-5"
       >
         {messages.map((msg, i) => (
           <div
@@ -145,29 +153,31 @@ export default function ChatInterface() {
               msg.role === "user" ? "flex-row-reverse" : ""
             }`}
           >
-            {/* Avatar */}
+            {/* Avatar：直角方块，不用圆形头像 */}
             <div
-              className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ring-2 ring-offset-1 ${
+              className={`flex h-9 w-9 shrink-0 items-center justify-center ${
                 msg.role === "user"
-                  ? "bg-accent text-white ring-accent/20 ring-offset-surface"
-                  : "bg-surface-alt ring-edge ring-offset-surface"
+                  ? "bg-teal text-on-color"
+                  : "border border-edge bg-teal-tint text-teal-ink"
               }`}
             >
               {msg.role === "user" ? (
-                <User className="w-4 h-4" />
+                <User className="h-4 w-4" aria-hidden="true" />
               ) : (
-                <Sparkles className="w-4 h-4 text-accent" />
+                <Sparkles className="h-4 w-4" aria-hidden="true" />
               )}
             </div>
 
             {/* Bubble */}
             <div
-              className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap ${
+              className={`max-w-[80%] px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap ${
                 msg.role === "user"
-                  ? "bg-accent text-white rounded-tr-md"
-                  : "bg-surface-alt border border-edge rounded-tl-md"
+                  ? "bg-teal text-on-color"
+                  : "border border-edge bg-surface text-text-primary"
               }`}
             >
+              {/* 头像图标是装饰性的，谁在说话要用文字说清楚 */}
+              <span className="sr-only">{msg.role === "user" ? "你说：" : "助手说："}</span>
               {msg.content ||
                 (loading && i === messages.length - 1 ? <TypingDots /> : null)}
             </div>
@@ -179,23 +189,25 @@ export default function ChatInterface() {
       {/* Input */}
       <form
         onSubmit={handleSubmit}
-        className="p-4 border-t border-edge bg-surface-alt flex gap-2.5 shrink-0"
+        className="flex shrink-0 gap-2.5 border-t border-edge bg-surface-alt p-4"
       >
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="说说你卡在哪里..."
-          className="flex-1 px-4 py-3 rounded-xl border border-edge bg-surface text-sm focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent/50 transition-all placeholder:text-faint"
+          aria-label="给学习助手发消息"
+          className="dn-focus min-h-[44px] min-w-0 flex-1 border border-edge-strong bg-surface px-4 text-sm placeholder:text-text-secondary"
         />
         <button
           type="submit"
           disabled={loading || !input.trim()}
-          className="px-5 py-3 bg-accent text-white rounded-xl text-sm font-semibold hover:shadow-lg active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100 flex items-center gap-2 transition-all"
+          aria-label="发送"
+          className="dn-focus dn-interactive flex h-11 w-11 shrink-0 items-center justify-center bg-teal text-on-color disabled:cursor-not-allowed disabled:opacity-40"
         >
           {loading ? (
-            <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
           ) : (
-            <Send className="w-4 h-4" />
+            <Send className="h-4 w-4" aria-hidden="true" />
           )}
         </button>
       </form>

@@ -1,22 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Sans_SC, Noto_Serif_SC, JetBrains_Mono } from "next/font/google";
+import { Noto_Sans_SC, JetBrains_Mono } from "next/font/google";
 import AppShell from "./app-shell";
 import "./globals.css";
 
+/**
+ * 字体策略（DNDL §4.1）：
+ * DNDL 的字体栈以设备自带的 Segoe UI / PingFang SC / HarmonyOS Sans SC /
+ * Microsoft YaHei 为首选，回退链里挂上自托管的 Noto Sans SC，
+ * 不依赖运行时联网下载字体。
+ *
+ * 原来还加载了 Noto Serif SC 作为 --font-serif，但 DNDL 的 Display 字重
+ * 是 300 的无衬线体，项目里也没有任何地方用到衬线族，故移除该字体文件。
+ */
 const notoSansSC = Noto_Sans_SC({
-  variable: "--font-sans",
+  variable: "--font-noto-sans-sc",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
-const notoSerifSC = Noto_Serif_SC({
-  variable: "--font-serif",
-  subsets: ["latin"],
-  weight: ["400", "600", "700", "900"],
-});
-
 const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
@@ -34,7 +37,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f3f6f8",
+  // DNDL Canvas
+  themeColor: "#F9FBFA",
 };
 
 export default function RootLayout({
@@ -43,18 +47,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    /* eslint-disable @next/next/no-css-tags --
+       这三个文件是逐字节取自 DNDL 上游的静态资源（见 public/vendor/dndl/VERSION），
+       必须以独立样式表原样加载，不能被打包改写，因此这里手写 <link>。 */
     <html
       lang="zh-CN"
-      className={`${notoSansSC.variable} ${notoSerifSC.variable} ${jetbrainsMono.variable} antialiased`}
+      className={`${notoSansSC.variable} ${jetbrainsMono.variable} antialiased`}
     >
-      <body className="min-h-screen bg-surface">
-        <a
-          href="https://dreamnight.net.cn"
-          className="fixed top-4 left-4 z-50 text-xs font-medium text-muted hover:text-accent transition-colors inline-flex items-center gap-1.5 glass px-4 py-2 rounded-full"
-        >
-          <span className="text-accent">&larr;</span>
-          返回博客
-        </a>
+      {/* DNDL 以确定版本引入，保留 tokens → materials → motion 的同级关系。 */}
+      <link rel="stylesheet" href="/vendor/dndl/tokens.css" precedence="dndl" />
+      <link rel="stylesheet" href="/vendor/dndl/materials.css" precedence="dndl" />
+      <link rel="stylesheet" href="/vendor/dndl/motion.css" precedence="dndl" />
+      <body>
         <AppShell>{children}</AppShell>
       </body>
     </html>

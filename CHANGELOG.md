@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — 采用 DreamNight Design Language (DNDL v1.0)
+
+- **品牌统一重设计**：按 DNDL v1.0（实现版本 1.1.0）重做界面。
+  `tokens.css` / `materials.css` / `motion.css` / `LICENSE` 以确定版本逐字节引入，
+  另附 `VERSION` 记录来源仓库与 commit，五个文件保持同级关系；未就地改动任何品牌数值。
+- **几何与排版**：默认直角、大面积品牌实色块、Display 级排版取代装饰性容器堆叠。
+- **可读性**：色块正文统一使用 `--dn-text-on-color`，浅色底次要小字使用 `--dn-text-secondary`；
+  按 WCAG 实测逐项核验对比度，不以元素级 opacity 淡化文字。
+- **无障碍**：交互目标取 `--dn-target-min`；焦点可见；支持 `prefers-reduced-motion`、
+  关闭透明与 `forced-colors` 回退；状态不再只靠颜色传达。
+- **信息架构**：页面结构与导航按产品真实内容重做（非仅换色）。
+
+
 ### Added
 - 新增「AI 智能体」轨道（6 节）：智能体与聊天机器人的区别、手机里的智能体入口、会操作浏览器的智能体、工具调用与 MCP、把重复的事串成自动化、以及它翻车时的风险边界
 - 新增「跟上浪潮」轨道（6 节）：推理模型、多模态、AI 搜索与知识库、AI 视频/音乐/数字人、机器人与 AI 硬件、怎么分辨真东西和炒作并持续跟进

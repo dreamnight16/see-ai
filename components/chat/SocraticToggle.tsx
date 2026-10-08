@@ -7,36 +7,45 @@ interface SocraticToggleProps {
   onChange: (val: boolean) => void;
 }
 
+/**
+ * 回答方式：直角分段控件，替掉原来的胶囊滑动开关。
+ *
+ * 选中态同时给三重线索——品牌实色底、加粗文字、底部 3px 实色条——
+ * 任何一条失效都不会让「当前选的是哪个」变成只靠颜色判断。
+ * value 契约不变：false = 直接回答，true = 引导思考。
+ */
 export default function SocraticToggle({ value, onChange }: SocraticToggleProps) {
+  const base =
+    'dn-focus relative inline-flex min-h-[44px] items-center gap-1.5 px-3 text-xs transition-colors';
+  const selected = 'bg-teal font-semibold text-on-color';
+  const idle = 'bg-surface text-text-secondary hover:bg-surface-alt hover:text-text-primary';
+
   return (
-    <div className="flex items-center gap-2 text-xs">
-      <span className={`${!value ? 'text-accent font-semibold' : 'text-faint'}`}>
-        直接回答
-      </span>
+    <div role="group" aria-label="回答方式" className="inline-flex border border-edge-strong">
       <button
         type="button"
-        onClick={() => onChange(!value)}
-        role="switch"
-        aria-checked={value}
-        className={`relative w-12 h-6 rounded-full transition-all duration-300 ${
-          value ? 'bg-accent' : 'bg-surface-raised'
-        }`}
+        onClick={() => onChange(false)}
+        aria-pressed={!value}
+        className={`${base} ${!value ? selected : idle}`}
       >
-        <span
-          className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-md transition-all duration-300 flex items-center justify-center ${
-            value ? 'left-[26px]' : 'left-0.5'
-          }`}
-        >
-          {value ? (
-            <MessagesSquare className="w-3 h-3 text-accent" />
-          ) : (
-            <MessageCircle className="w-3 h-3 text-muted" />
-          )}
-        </span>
+        <MessageCircle className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+        直接回答
+        {!value && (
+          <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[3px] bg-on-color" />
+        )}
       </button>
-      <span className={`${value ? 'text-accent font-semibold' : 'text-faint'}`}>
+      <button
+        type="button"
+        onClick={() => onChange(true)}
+        aria-pressed={value}
+        className={`${base} border-l border-edge-strong ${value ? selected : idle}`}
+      >
+        <MessagesSquare className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
         引导思考
-      </span>
+        {value && (
+          <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-[3px] bg-on-color" />
+        )}
+      </button>
     </div>
   );
 }

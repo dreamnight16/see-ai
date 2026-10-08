@@ -14,6 +14,13 @@ interface ReviewResult {
   simpleExplanation: string;
 }
 
+/**
+ * 审阅结果。
+ *
+ * 三块提示区都用「同色 14% 淡底 + text-text-primary 正文」，
+ * 彩色只留给小标题的派生墨色（*-ink）和左侧 3px 实色条；
+ * 每块的图标与标题文字保持不变，去掉颜色也认得出是哪一块。
+ */
 export default function CodeReview({ code, onClose }: CodeReviewProps) {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<ReviewResult | null>(null);
@@ -51,71 +58,71 @@ export default function CodeReview({ code, onClose }: CodeReviewProps) {
   }
 
   return (
-    <div className="card p-5 space-y-4 animate-scale-in">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <span className="w-8 h-8 rounded-lg bg-accent-soft flex items-center justify-center">
-            <Sparkles className="w-4 h-4 text-accent" />
+    <div className="card space-y-4 p-5">
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-teal text-on-color">
+            <Sparkles className="h-4 w-4" aria-hidden="true" />
           </span>
-          <span className="font-display font-bold text-base">请助手看一眼（可选）</span>
+          <span className="font-display text-lg">请助手看一眼（可选）</span>
         </div>
         <button
           onClick={onClose}
-          className="text-xs text-muted hover:text-accent transition-colors px-3 py-1.5 rounded-lg hover:bg-surface-alt"
+          className="dn-focus inline-flex min-h-[44px] items-center px-3 text-xs text-text-secondary transition-colors hover:bg-surface-alt hover:text-text-primary"
         >
           关闭
         </button>
       </div>
 
       {!result && !loading && !error && (
-        <div className="text-center py-8 space-y-3">
-          <Code2 className="w-12 h-12 text-faint/40 mx-auto" />
-          <p className="text-sm text-muted">它会先说清楚代码现在做了什么，再指出一两个值得动手改的地方。</p>
+        <div className="space-y-3 py-8 text-center">
+          <Code2 className="mx-auto h-12 w-12 text-text-secondary" aria-hidden="true" />
+          <p className="text-sm text-text-secondary">它会先说清楚代码现在做了什么，再指出一两个值得动手改的地方。</p>
           <button
             onClick={requestReview}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-white rounded-xl text-sm font-semibold hover:shadow-lg active:scale-95 transition-all"
+            className="dn-focus dn-interactive inline-flex min-h-[44px] items-center gap-2 bg-teal px-5 text-sm font-semibold text-on-color"
           >
-            <Sparkles className="w-4 h-4" />
+            <Sparkles className="h-4 w-4" aria-hidden="true" />
             开始审阅
           </button>
         </div>
       )}
 
       {loading && (
-        <div className="text-center py-8 space-y-3">
-          <Loader2 className="w-8 h-8 text-accent mx-auto animate-spin" />
-          <p className="text-sm text-muted">正在逐行看这段代码...</p>
+        <div className="space-y-3 py-8 text-center">
+          <Loader2 className="mx-auto h-8 w-8 animate-spin text-teal-ink" aria-hidden="true" />
+          <p className="text-sm text-text-secondary">正在逐行看这段代码...</p>
         </div>
       )}
 
       {error && (
-        <div className="flex items-start gap-2.5 p-4 rounded-xl bg-warning-soft text-warning text-sm">
-          <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
+        <div className="flex items-start gap-2.5 border-l-[3px] border-amber bg-amber-tint p-4 text-sm text-text-primary">
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-ink" aria-hidden="true" />
           <span>{error}</span>
         </div>
       )}
 
       {result && (
-        <div className="space-y-4 animate-slide-up">
+        <div className="space-y-4">
           {/* Simple explanation */}
-          <div className="p-4 rounded-xl bg-accent-soft border border-accent/10">
-            <div className="flex items-center gap-2 mb-2">
-              <Lightbulb className="w-4 h-4 text-accent" />
-              <span className="text-sm font-semibold text-accent">先说人话</span>
+          <div className="border-l-[3px] border-teal bg-teal-tint p-4">
+            <div className="mb-2 flex items-center gap-2">
+              <Lightbulb className="h-4 w-4 text-teal-ink" aria-hidden="true" />
+              <span className="text-sm font-semibold text-teal-ink">先说人话</span>
             </div>
-            <p className="text-sm leading-relaxed">{result.simpleExplanation}</p>
+            <p className="text-sm leading-relaxed text-text-primary">{result.simpleExplanation}</p>
           </div>
 
           {/* Strengths */}
-          <div className="p-4 rounded-xl bg-success-soft border border-success/10">
-            <div className="flex items-center gap-2 mb-2">
-              <ListChecks className="w-4 h-4 text-success" />
-              <span className="text-sm font-semibold text-success">做得好的地方</span>
+          <div className="border-l-[3px] border-emerald bg-emerald-tint p-4">
+            <div className="mb-2 flex items-center gap-2">
+              <ListChecks className="h-4 w-4 text-emerald-ink" aria-hidden="true" />
+              <span className="text-sm font-semibold text-emerald-ink">做得好的地方</span>
             </div>
             <ul className="space-y-1.5">
               {result.strengths.map((s, i) => (
-                <li key={i} className="text-sm text-success flex items-start gap-2">
-                  <span className="text-xs mt-1 shrink-0">✓</span>
+                <li key={i} className="flex items-start gap-2 text-sm text-text-primary">
+                  <span aria-hidden="true" className="mt-1 shrink-0 text-xs text-emerald-ink">✓</span>
                   {s}
                 </li>
               ))}
@@ -123,15 +130,15 @@ export default function CodeReview({ code, onClose }: CodeReviewProps) {
           </div>
 
           {/* Suggestions */}
-          <div className="p-4 rounded-xl bg-warning-soft border border-warning/10">
-            <div className="flex items-center gap-2 mb-2">
-              <Sparkles className="w-4 h-4 text-warning" />
-              <span className="text-sm font-semibold text-warning">可以改进的地方</span>
+          <div className="border-l-[3px] border-amber bg-amber-tint p-4">
+            <div className="mb-2 flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-amber-ink" aria-hidden="true" />
+              <span className="text-sm font-semibold text-amber-ink">可以改进的地方</span>
             </div>
             <ul className="space-y-1.5">
               {result.suggestions.map((s, i) => (
-                <li key={i} className="text-sm text-warning flex items-start gap-2">
-                  <span className="text-xs mt-1 shrink-0">→</span>
+                <li key={i} className="flex items-start gap-2 text-sm text-text-primary">
+                  <span aria-hidden="true" className="mt-1 shrink-0 text-xs text-amber-ink">→</span>
                   {s}
                 </li>
               ))}

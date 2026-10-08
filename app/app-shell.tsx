@@ -1,20 +1,17 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { usePathname } from 'next/navigation';
-import GamificationStatus from '@/components/gamification/GamificationStatus';
 import BadgeUnlock from '@/components/gamification/BadgeUnlock';
 import PWAPrompt from '@/components/ui/PWAPrompt';
+import SiteHeader from '@/components/shell/SiteHeader';
+import SiteFooter from '@/components/shell/SiteFooter';
 import { usePWA } from '@/hooks/usePWA';
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  const isLessonPage = pathname.startsWith('/lesson/');
   const [queuedBadges, setQueuedBadges] = useState<string[]>([]);
   const { installPrompt, isInstalled, promptInstall, dismissPrompt } = usePWA();
   const [pwaDismissed, setPwaDismissed] = useState(false);
 
-  // Queued badge handling
   const handleBadgeUnlock = useCallback((badgeId: string) => {
     setQueuedBadges((prev) => [...prev, badgeId]);
   }, []);
@@ -27,12 +24,16 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      {!isLessonPage && (
-        <div className="fixed top-16 left-1/2 -translate-x-1/2 z-40 w-full max-w-[400px] px-4">
-          <GamificationStatus onBadgeUnlock={handleBadgeUnlock} />
-        </div>
-      )}
-      {children}
+      <SiteHeader onBadgeUnlock={handleBadgeUnlock} />
+      <a
+        href="#main"
+        className="dn-focus sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-teal focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-on-color"
+      >
+        跳到主要内容
+      </a>
+      {/* 顶栏是 fixed 的，内容整体下移一个顶栏高度 */}
+      <div className="pt-[var(--see-header-h)]">{children}</div>
+      <SiteFooter />
       {currentBadge && (
         <BadgeUnlock badgeId={currentBadge} onDismiss={handleDismissBadge} />
       )}

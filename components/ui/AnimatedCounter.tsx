@@ -1,6 +1,20 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useSyncExternalStore } from 'react';
+
+const REDUCE_QUERY = '(prefers-reduced-motion: reduce)';
+
+function subscribeToMotionPreference(callback: () => void) {
+  if (typeof window === 'undefined' || !window.matchMedia) return () => {};
+  const mql = window.matchMedia(REDUCE_QUERY);
+  mql.addEventListener('change', callback);
+  return () => mql.removeEventListener('change', callback);
+}
+
+function readReducedMotion() {
+  if (typeof window === 'undefined' || !window.matchMedia) return false;
+  return window.matchMedia(REDUCE_QUERY).matches;
+}
 
 interface AnimatedCounterProps {
   value: number;
@@ -9,13 +23,23 @@ interface AnimatedCounterProps {
 }
 
 export default function AnimatedCounter({ value, duration = 1000, suffix = '' }: AnimatedCounterProps) {
-  const [display, setDisplay] = useState(0);
-  const prevValue = useRef(0);
+  // 服务端与水合阶段一律按「减少动态效果」处理：直接显示最终值，
+  // 这样不会先渲染 0 再跳到真实值，也不会在 effect 里同步 setState。
+  const reduced = useSyncExternalStore(subscribeToMotionPreference, readReducedMotion, () => true);
+  const [display, setDisplay] = useState(value);
+  const prevValue = useRef(value);
   const startTime = useRef(0);
   const frameRef = useRef(0);
 
   useEffect(() => {
+    if (reduced) {
+      // 数字是信息，逐帧滚动不是获取它的前提
+      prevValue.current = value;
+      return;
+    }
+
     const from = prevValue.current;
+    if (from === value) return;
     startTime.current = 0;
 
     function animate(now: number) {
@@ -33,7 +57,7 @@ export default function AnimatedCounter({ value, duration = 1000, suffix = '' }:
 
     frameRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(frameRef.current);
-  }, [value, duration]);
+  }, [value, duration, reduced]);
 
-  return <span className="tabular-nums">{display}{suffix}</span>;
+  return <span className="tabular-nums">{reduced ? value : display}{suffix}</span>;
 }

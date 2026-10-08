@@ -34,22 +34,26 @@ interface LessonVisualizationsProps {
   lessonId: string;
 }
 
+/**
+ * 挂在特定课上的概念演示。
+ * 演示可以暂停；不播放时静态结构同样可读，动画不是理解的前提。
+ */
 export default function LessonVisualizations({ lessonId }: LessonVisualizationsProps) {
   const viz = VIZ_MAP[lessonId];
   if (!viz) return null;
 
   return (
-    <div className="mb-12 animate-slide-up space-y-4">
-      <div className="flex items-center gap-2.5">
-        <span className="w-8 h-8 rounded-lg bg-accent-soft flex items-center justify-center">
-          <Eye className="w-4 h-4 text-accent" />
+    <section className="mt-12" aria-label="概念演示">
+      <div className="flex items-center gap-3">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center bg-cyan text-on-color">
+          <Eye className="h-4 w-4" aria-hidden="true" />
         </span>
-        <div>
-          <span className="font-display font-bold text-lg text-accent">{viz.title}</span>
-          <p className="text-xs text-muted">{viz.description}</p>
+        <div className="min-w-0">
+          <h2 className="font-display text-xl leading-tight">{viz.title}</h2>
+          <p className="mt-1 text-xs text-text-secondary">{viz.description}</p>
         </div>
       </div>
-      {viz.component}
-    </div>
+      <div className="mt-5">{viz.component}</div>
+    </section>
   );
 }

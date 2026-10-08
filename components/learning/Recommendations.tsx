@@ -23,6 +23,9 @@ interface RecommendationsProps {
   limit?: number;
 }
 
+/**
+ * 学习建议完全由本地进度推导（lib/adaptive.ts），没有进度就退回「先看认识 AI」。
+ */
 export default function Recommendations({ lessonId, limit = 3 }: RecommendationsProps) {
   const recs: AdaptiveRecommendation[] = useMemo(
     () => getRecommendations(lessonId).slice(0, limit),
@@ -32,40 +35,45 @@ export default function Recommendations({ lessonId, limit = 3 }: Recommendations
   if (recs.length === 0) return null;
 
   return (
-    <div className="space-y-2">
-      <p className="text-sm font-semibold mb-3 flex items-center gap-2">
-        <Lightbulb className="w-4 h-4 text-warning" />
-        学习建议
-      </p>
-      {recs.map((rec) => {
-        const IconComponent = ICON_MAP[rec.icon] || ChevronRight;
-        // 建议可能指向某一课，也可能指向提示词库、练习场这类页面
-        const target = rec.lessonId ? `/lesson/${rec.lessonId}` : rec.href;
+    <div>
+      <h2 className="flex items-center gap-2 text-sm font-semibold">
+        <Lightbulb className="h-4 w-4 text-amber-ink" aria-hidden="true" />
+        接下来可以看
+      </h2>
+      <ul className="mt-3 border-t border-edge">
+        {recs.map((rec) => {
+          const IconComponent = ICON_MAP[rec.icon] || ChevronRight;
+          // 建议可能指向某一课，也可能指向提示词库、练习场这类页面
+          const target = rec.lessonId ? `/lesson/${rec.lessonId}` : rec.href;
 
-        return (
-          <div key={`${rec.type}-${rec.lessonId || rec.reason}`}>
-            {target ? (
-              <Link
-                href={target}
-                className="flex items-center gap-3 p-3 rounded-xl card hover:border-accent/20 transition-all group cursor-pointer"
-              >
-                <span className="w-8 h-8 rounded-lg bg-accent-soft flex items-center justify-center shrink-0">
-                  <IconComponent className="w-4 h-4 text-accent" />
-                </span>
-                <span className="text-sm flex-1 min-w-0">{rec.reason}</span>
-                <ChevronRight className="w-4 h-4 text-faint group-hover:text-accent group-hover:translate-x-0.5 transition-all shrink-0" />
-              </Link>
-            ) : (
-              <div className="flex items-center gap-3 p-3 rounded-xl card transition-all">
-                <span className="w-8 h-8 rounded-lg bg-accent-soft flex items-center justify-center shrink-0">
-                  <IconComponent className="w-4 h-4 text-accent" />
-                </span>
-                <span className="text-sm flex-1 min-w-0">{rec.reason}</span>
-              </div>
-            )}
-          </div>
-        );
-      })}
+          const inner = (
+            <>
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-teal-tint text-teal-ink">
+                <IconComponent className="h-4 w-4" aria-hidden="true" />
+              </span>
+              <span className="min-w-0 flex-1 text-sm">{rec.reason}</span>
+              {target && (
+                <ChevronRight className="h-4 w-4 shrink-0 text-text-secondary" aria-hidden="true" />
+              )}
+            </>
+          );
+
+          return (
+            <li key={`${rec.type}-${rec.lessonId || rec.reason}`} className="border-b border-edge last:border-b-0">
+              {target ? (
+                <Link
+                  href={target}
+                  className="dn-focus flex min-h-[52px] items-center gap-3 py-2 hover:bg-surface-alt"
+                >
+                  {inner}
+                </Link>
+              ) : (
+                <div className="flex min-h-[52px] items-center gap-3 py-2">{inner}</div>
+              )}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }

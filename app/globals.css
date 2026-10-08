@@ -1,663 +1,392 @@
 @import "tailwindcss";
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   见 AI · DNDL 消费层
+
+   品牌数值一律来自 public/vendor/dndl/（tokens.css → materials.css → motion.css，
+   由 app/layout.tsx 以 <link> 按序加载，逐字节未改动）。本文件只做三件事：
+
+   1. 把 DNDL 的语义 token 映射到产品既有的工具类名（accent / success / …），
+      让全站组件不需要硬编码品牌色、字体、曲线与材质值。
+   2. 定义产品本地的「可读性派生墨色」（--see-*-ink）：品牌原色在浅色底上
+      做普通字号文字时对比度不足（teal 在白底只有 2.7:1），因此按 DNDL 处理
+      --dn-text-secondary 的同一思路派生出可读值。**品牌色板本身没有被修改。**
+   3. 产品本地的间距、断点与版心变量（--see-*），这些不是品牌 token。
+
+   几何：默认直角。所有圆角一律取 --dn-radius (0)。
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 :root {
-  /* Cool signal palette — flat surfaces with restrained light accents */
-  --color-bg-primary: #f3f6f8;
-  --color-bg-secondary: #ffffff;
-  --color-bg-tertiary: #e6edf2;
-  --color-text-primary: #17202a;
-  --color-text-secondary: #52616d;
-  --color-text-tertiary: #8b98a3;
-  --color-border-primary: #d7e0e6;
-  --color-border-secondary: #c4d0d9;
-  --color-accent: #3159d8;
-  --color-accent-soft: #edf1ff;
-  --color-accent-glow: rgba(49, 89, 216, 0.16);
-  --color-success: #229b8d;
-  --color-success-soft: #e3f5f1;
-  --color-warning: #d99a2e;
-  --color-warning-soft: #fbf2df;
-  --color-info: #3b86c9;
-  --color-info-soft: #e5f1fb;
+  /* ── 可读性派生墨色 ──────────────────────────────────────────────────────
+     仅在 canvas(#F9FBFA) / surface(#FFFFFF) / 同色 20% 淡底上使用；
+     三处实测对比度均 ≥ 4.5:1。品牌实色色块上请改用 --dn-text-on-color。 */
+  --see-teal-ink: #34726E;    /* 5.35 / 5.56 / 4.65 */
+  --see-cyan-ink: #267194;    /* 5.22 / 5.42 / 4.66 */
+  --see-emerald-ink: #3E7456; /* 5.27 / 5.47 / 4.63 */
+  --see-violet-ink: #714BB4;  /* 6.00 / 6.24 / 5.17 */
+  --see-amber-ink: #8B631E;   /* 5.18 / 5.38 / 4.67 */
+  --see-orange-ink: #AD4A27;  /* 5.34 / 5.55 / 4.65 */
+  --see-steel-ink: #506C7C;   /* 5.35 / 5.56 / 4.63 */
+  --see-crimson-ink: #AF415A; /* 5.42 / 5.64 / 4.65 */
 
-  /* Spacing scale */
-  --space-xs: 0.25rem;
-  --space-sm: 0.5rem;
-  --space-md: 1rem;
-  --space-lg: 1.5rem;
-  --space-xl: 2rem;
-  --space-2xl: 3rem;
-  --space-3xl: 5rem;
-  --space-section: clamp(3rem, 2rem + 5vw, 6rem);
+  /* ── 品牌实色的浅色底 ────────────────────────────────────────────────────
+     只用于大面积低对比区块，其上文字一律用 --dn-text-primary。
+     不得用它们承载彩色小字——那正是 --see-*-ink 的职责。 */
+  --see-teal-tint: color-mix(in srgb, var(--dn-teal) 14%, var(--dn-surface));
+  --see-cyan-tint: color-mix(in srgb, var(--dn-cyan) 14%, var(--dn-surface));
+  --see-emerald-tint: color-mix(in srgb, var(--dn-emerald) 14%, var(--dn-surface));
+  --see-violet-tint: color-mix(in srgb, var(--dn-violet) 14%, var(--dn-surface));
+  --see-amber-tint: color-mix(in srgb, var(--dn-amber) 14%, var(--dn-surface));
+  --see-orange-tint: color-mix(in srgb, var(--dn-orange) 14%, var(--dn-surface));
+  --see-steel-tint: color-mix(in srgb, var(--dn-steel) 14%, var(--dn-surface));
+  --see-crimson-tint: color-mix(in srgb, var(--dn-crimson) 14%, var(--dn-surface));
 
-  /* Typography scale */
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
-  --text-3xl: 2rem;
-  --text-4xl: 2.5rem;
-  --text-hero: clamp(2.5rem, 1.5rem + 4vw, 4rem);
+  /* 代码实色块：深色 Ink 底 + --dn-text-on-ink 文字 */
+  --see-code-bg: var(--dn-ink-primary);
+  --see-code-text: #E8F1EF;
 
-  /* Shadows — warm, layered */
-  --shadow-sm: 0 1px 2px rgba(23, 32, 42, 0.05);
-  --shadow-md: 0 4px 12px rgba(23, 32, 42, 0.07), 0 1px 3px rgba(23, 32, 42, 0.04);
-  --shadow-lg: 0 12px 28px rgba(23, 32, 42, 0.1), 0 2px 6px rgba(23, 32, 42, 0.05);
-  --shadow-xl: 0 20px 48px rgba(23, 32, 42, 0.12), 0 3px 10px rgba(23, 32, 42, 0.06);
-  --shadow-glow: 0 0 40px var(--color-accent-glow);
+  /* ── 字体 ────────────────────────────────────────────────────────────────
+     DNDL 字体栈优先；自托管的 Noto 只作为回退链中的一环保留，
+     避免中文设备缺字体时掉到无衬线通用族。不联网下载字体。 */
+  --see-font: "Segoe UI", "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei",
+    var(--font-noto-sans-sc), "Noto Sans SC", -apple-system, BlinkMacSystemFont, sans-serif;
+  --see-font-display: "Segoe UI Light", "Segoe UI", "PingFang SC", "HarmonyOS Sans SC",
+    var(--font-noto-sans-sc), "Noto Sans SC", sans-serif;
+  --see-font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace,
+    "Cascadia Code", Consolas, monospace;
 
-  /* Border radius */
-  --radius-sm: 0;
-  --radius-md: 0;
-  --radius-lg: 0;
-  --radius-xl: 0;
-  --radius-full: 9999px;
-
-  /* Transitions */
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease-spring: cubic-bezier(0.25, 0.46, 0.45, 1.4);
-  --duration-fast: 150ms;
-  --duration-normal: 300ms;
-  --duration-slow: 500ms;
-  --duration-reveal: 700ms;
-
-  /* Texture */
-  --noise-opacity: 0.03;
-}
-
-/* Dark mode — rich warm dark */
-@media (prefers-color-scheme: dark) {
-  :root {
-     --color-bg-primary: #0d131a;
-     --color-bg-secondary: #141d26;
-     --color-bg-tertiary: #1b2732;
-     --color-text-primary: #e4eaf0;
-     --color-text-secondary: #a0adb8;
-     --color-text-tertiary: #6f7d89;
-     --color-border-primary: #263542;
-     --color-border-secondary: #354856;
-     --color-accent: #6f8cff;
-     --color-accent-soft: #1b2540;
-     --color-accent-glow: rgba(111, 140, 255, 0.22);
-     --color-success: #62d4c2;
-     --color-success-soft: #143a38;
-     --color-warning: #f1bc56;
-     --color-warning-soft: #332a19;
-     --color-info: #70b8f0;
-     --color-info-soft: #182e45;
-     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
-     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.28), 0 1px 3px rgba(0, 0, 0, 0.16);
-     --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.36), 0 2px 6px rgba(0, 0, 0, 0.2);
-     --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.44), 0 3px 10px rgba(0, 0, 0, 0.22);
-    --noise-opacity: 0.05;
-  }
+  /* ── 产品本地版式变量（不是品牌 token） ──────────────────────────────── */
+  --see-shell: 1120px;
+  --see-gutter: clamp(1rem, 4vw, 2.5rem);
+  --see-section: clamp(3rem, 6vw, 5.5rem);
+  --see-hairline: 1px;
+  --see-header-h: 64px;
 }
 
 @theme inline {
-  --color-surface: var(--color-bg-primary);
-  --color-surface-alt: var(--color-bg-secondary);
-  --color-surface-raised: var(--color-bg-tertiary);
-  --color-muted: var(--color-text-secondary);
-  --color-faint: var(--color-text-tertiary);
-  --color-edge: var(--color-border-primary);
-  --color-edge-strong: var(--color-border-secondary);
-  --color-accent: var(--color-accent);
-  --color-accent-soft: var(--color-accent-soft);
-  --color-success: var(--color-success);
-  --color-success-soft: var(--color-success-soft);
-  --color-warning: var(--color-warning);
-  --color-warning-soft: var(--color-warning-soft);
-  --color-info: var(--color-info);
-  --color-info-soft: var(--color-info-soft);
+  /* 品牌八色：直接引用 DNDL 原始值，不复制十六进制 */
+  --color-teal: var(--dn-teal);
+  --color-cyan: var(--dn-cyan);
+  --color-emerald: var(--dn-emerald);
+  --color-violet: var(--dn-violet);
+  --color-amber: var(--dn-amber);
+  --color-orange: var(--dn-orange);
+  --color-steel: var(--dn-steel);
+  --color-crimson: var(--dn-crimson);
 
-  --font-sans: "Noto Sans SC", "Source Han Sans SC", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Noto Serif SC", "Source Han Serif SC", Georgia, serif;
-  --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
+  --color-teal-tint: var(--see-teal-tint);
+  --color-cyan-tint: var(--see-cyan-tint);
+  --color-emerald-tint: var(--see-emerald-tint);
+  --color-violet-tint: var(--see-violet-tint);
+  --color-amber-tint: var(--see-amber-tint);
+  --color-orange-tint: var(--see-orange-tint);
+  --color-steel-tint: var(--see-steel-tint);
+  --color-crimson-tint: var(--see-crimson-tint);
 
-  --animate-fade-in: fade-in var(--duration-slow) var(--ease-out-expo);
-  --animate-slide-up: slide-up var(--duration-slow) var(--ease-out-expo);
-  --animate-slide-down: slide-down 0.3s var(--ease-out-expo);
-  --animate-scale-in: scale-in 0.3s var(--ease-out-back);
-  --animate-reveal: reveal var(--duration-reveal) var(--ease-out-expo);
-  --animate-float: float 6s ease-in-out infinite;
-  --animate-shimmer: shimmer 2s ease-in-out infinite;
-  --animate-draw: draw 1.5s var(--ease-out-expo) forwards;
-  --animate-bounce-in: bounce-in 0.5s var(--ease-out-back);
-  --animate-slide-in-right: slide-in-right 0.4s var(--ease-out-expo);
-  --animate-slide-in-left: slide-in-left 0.4s var(--ease-out-expo);
-  --animate-pop-in: pop-in 0.3s var(--ease-out-expo);
-  --animate-shimmer-bar: shimmer-bar 2s ease-in-out infinite;
-  --animate-rotate-slow: rotate-slow 20s linear infinite;
+  --color-teal-ink: var(--see-teal-ink);
+  --color-cyan-ink: var(--see-cyan-ink);
+  --color-emerald-ink: var(--see-emerald-ink);
+  --color-violet-ink: var(--see-violet-ink);
+  --color-amber-ink: var(--see-amber-ink);
+  --color-orange-ink: var(--see-orange-ink);
+  --color-steel-ink: var(--see-steel-ink);
+  --color-crimson-ink: var(--see-crimson-ink);
+
+  /* 语义别名：源码里既有的 accent / success / warning / info 保持不变，
+     指向 DNDL 品牌色。这样全部组件自动继承品牌色板。 */
+  --color-accent: var(--dn-teal);
+  --color-accent-soft: var(--see-teal-tint);
+  --color-accent-ink: var(--see-teal-ink);
+  --color-success: var(--dn-emerald);
+  --color-success-soft: var(--see-emerald-tint);
+  --color-success-ink: var(--see-emerald-ink);
+  --color-warning: var(--dn-amber);
+  --color-warning-soft: var(--see-amber-tint);
+  --color-warning-ink: var(--see-amber-ink);
+  --color-info: var(--dn-cyan);
+  --color-info-soft: var(--see-cyan-tint);
+  --color-info-ink: var(--see-cyan-ink);
+
+  /* 底与文字 */
+  --color-canvas: var(--dn-canvas);
+  --color-surface: var(--dn-surface);
+  --color-surface-alt: var(--see-steel-tint);
+  --color-surface-raised: var(--dn-divider);
+  --color-edge: var(--dn-divider);
+  --color-edge-strong: var(--dn-control-border);
+  --color-on-color: var(--dn-text-on-color);
+  --color-on-ink: var(--dn-text-on-ink);
+  --color-code: var(--see-code-bg);
+
+  --color-text-primary: var(--dn-text-primary);
+  --color-text-secondary: var(--dn-text-secondary);
+  --color-text-tertiary: var(--dn-text-secondary);
+  /* muted / faint 都解析到语义次要正文色：原始 --dn-ink-muted 在浅色底
+     只有 3.10:1，不得用于普通小字。层级改由字号与字重表达。 */
+  --color-muted: var(--dn-text-secondary);
+  --color-faint: var(--dn-text-secondary);
+
+  /* 字体 */
+  --font-sans: var(--see-font);
+  --font-display: var(--see-font-display);
+  --font-mono: var(--see-font-mono);
+  --font-serif: var(--see-font-display);
+
+  /* 直角。rounded-full 保留给头像、状态点这类确有功能需要的圆形。 */
+  --radius-xs: var(--dn-radius);
+  --radius-sm: var(--dn-radius);
+  --radius-md: var(--dn-radius);
+  --radius-lg: var(--dn-radius);
+  --radius-xl: var(--dn-radius);
+  --radius-2xl: var(--dn-radius);
+  --radius-3xl: var(--dn-radius);
+  --radius-4xl: var(--dn-radius);
+
+  /* 阴影只解释层级；Level 0/1 无阴影。 */
+  --shadow-sm: var(--dn-shadow-1);
+  --shadow-md: var(--dn-shadow-2);
+  --shadow-lg: var(--dn-shadow-3);
+  --shadow-xl: var(--dn-shadow-4);
+  --shadow-2xl: var(--dn-shadow-4);
+
+  /* 字号与字距：沿用 DNDL 的排版尺度 */
+  --text-hero: var(--dn-size-display);
+  --tracking-kicker: var(--dn-tracking-kicker);
 }
 
-/* ── Keyframes ── */
+@layer base {
+  html {
+    font-family: var(--see-font);
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+  }
 
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+  body {
+    background: var(--dn-canvas);
+    color: var(--dn-text-primary);
+    font-size: var(--dn-size-body);
+    line-height: var(--dn-leading-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-@keyframes slide-up {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+  /* 焦点必须可见，且在实际背景上可辨识。 */
+  :focus-visible {
+    outline: var(--dn-focus-width) solid var(--dn-focus);
+    outline-offset: var(--dn-focus-offset);
+  }
 
-@keyframes slide-down {
-  from { opacity: 0; transform: translateY(-12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+  ::selection {
+    background: var(--see-teal-tint);
+    color: var(--dn-text-primary);
+  }
 
-@keyframes scale-in {
-  from { opacity: 0; transform: scale(0.92); }
-  to { opacity: 1; transform: scale(1); }
-}
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--dn-canvas); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--dn-steel);
+    border: 2px solid var(--dn-canvas);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--dn-text-secondary); }
 
-@keyframes reveal {
-  from { opacity: 0; transform: translateY(32px); filter: blur(4px); }
-  to { opacity: 1; transform: translateY(0); filter: blur(0); }
-}
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-@keyframes draw {
-  to { stroke-dashoffset: 0; }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 var(--color-accent-glow); }
-  50% { box-shadow: 0 0 0 12px transparent; }
-}
-
-@keyframes bounce-in {
-  0% { opacity: 0; transform: scale(0.3); }
-  50% { transform: scale(1.08); }
-  70% { transform: scale(0.95); }
-  100% { opacity: 1; transform: scale(1); }
-}
-
-@keyframes slide-in-right {
-  from { opacity: 0; transform: translateX(24px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes slide-in-left {
-  from { opacity: 0; transform: translateX(-24px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes pop-in {
-  0% { opacity: 0; transform: scale(0.8) translateY(8px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-@keyframes shimmer-bar {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-@keyframes rotate-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* ── Base ── */
-
-body {
-  background: var(--color-bg-primary);
-  color: var(--color-text-primary);
-  font-feature-settings: "liga" 1, "kern" 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Noise texture overlay */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  opacity: var(--noise-opacity);
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: -20%;
-  z-index: -1;
-  pointer-events: none;
-  background: radial-gradient(circle at 18% 20%, rgba(49, 89, 216, 0.10), transparent 24%),
-    radial-gradient(circle at 80% 70%, rgba(34, 155, 141, 0.09), transparent 22%);
-  animation: signal-drift 16s cubic-bezier(0.22, 1, 0.36, 1) infinite alternate;
-}
-
-/* Keep the interface architectural and square; pills/circular indicators use
-   `rounded-full` and are intentionally left alone. */
-.rounded-sm,
-.rounded-md,
-.rounded-lg,
-.rounded-xl,
-.rounded-2xl {
-  border-radius: 0 !important;
-}
-
-/* ── Scrollbar ── */
-
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb {
-  background: var(--color-text-tertiary);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-secondary);
-}
-
-/* ── Selection ── */
-
-::selection {
-  background: var(--color-accent-soft);
-  color: var(--color-accent);
-}
-
-/* ── Focus ── */
-
-:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
-  border-radius: 2px;
-}
-
-/* ── Typography utilities ── */
-
-.font-display {
-  font-family: var(--font-serif);
-  letter-spacing: -0.02em;
-}
-
-/* ── Card base ── */
-
-.card {
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border-primary);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 280ms var(--ease-out-expo),
-              transform 360ms var(--ease-out-back),
-              border-color 220ms var(--ease-out-expo);
-}
-.card:hover {
-  box-shadow: var(--shadow-lg);
-  border-color: var(--color-border-secondary);
-  transform: translateY(-2px);
-}
-
-.card-raised {
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border-primary);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-}
-
-/* ── Glass surface ── */
-
-.glass {
-  background: color-mix(in srgb, var(--color-bg-secondary) 88%, transparent);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--color-border-primary);
-}
-@media (prefers-color-scheme: dark) {
-  .glass {
-    background: color-mix(in srgb, var(--color-bg-secondary) 88%, transparent);
+  @media (forced-colors: active) {
+    :focus-visible { outline-color: Highlight; }
   }
 }
 
-/* ── Gradients ── */
+@layer components {
+  /* ── 表面：直角、无阴影。阴影留给真正表达层级的场景。 ── */
+  .card {
+    background: var(--dn-surface);
+    border: var(--see-hairline) solid var(--dn-divider);
+    border-radius: var(--dn-radius);
+  }
 
-.gradient-warm {
-  background: linear-gradient(
-    135deg,
-    var(--color-accent-soft) 0%,
-    var(--color-info-soft) 50%,
-    var(--color-success-soft) 100%
-  );
-}
+  /* 深色实色块（代码、终端）：用 on-ink 文字色。 */
+  .see-code {
+    background: var(--see-code-bg);
+    color: var(--see-code-text);
+    border-radius: var(--dn-radius);
+  }
 
-.gradient-subtle {
-  background: linear-gradient(
-    180deg,
-    var(--color-bg-secondary) 0%,
-    var(--color-bg-primary) 100%
-  );
-}
+  /* Kicker：英文大写小字，品牌排版的一部分。 */
+  .see-kicker {
+    font-size: var(--dn-size-kicker);
+    font-weight: var(--dn-weight-kicker);
+    letter-spacing: var(--dn-tracking-kicker);
+    text-transform: uppercase;
+  }
 
-/* ── Decorative ── */
+  /* 表达性标题：DNDL 的 Display 是 300 字重。 */
+  .font-display {
+    font-family: var(--see-font-display);
+    font-weight: var(--dn-weight-display);
+    letter-spacing: -0.011em;
+  }
 
-.decorative-line {
-  position: relative;
-}
-.decorative-line::after {
-  content: "";
-  display: block;
-  width: 48px;
-  height: 3px;
-  margin-top: var(--space-md);
-  background: var(--color-accent);
-  border-radius: var(--radius-full);
-}
-
-.decorative-dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  margin: 0 2px;
-}
-
-/* ── Prose overrides ── */
-
-.prose {
-  --tw-prose-body: var(--color-text-primary);
-  --tw-prose-headings: var(--color-text-primary);
-  --tw-prose-links: var(--color-accent);
-  --tw-prose-bold: var(--color-text-primary);
-  --tw-prose-counters: var(--color-text-secondary);
-  --tw-prose-bullets: var(--color-text-tertiary);
-  --tw-prose-hr: var(--color-border-primary);
-  --tw-prose-quotes: var(--color-text-primary);
-  --tw-prose-quote-borders: var(--color-accent);
-  --tw-prose-captions: var(--color-text-secondary);
-  --tw-prose-code: var(--color-accent);
-  --tw-prose-pre-code: var(--color-text-primary);
-  --tw-prose-pre-bg: var(--color-bg-tertiary);
-  --tw-prose-th-borders: var(--color-border-secondary);
-  --tw-prose-td-borders: var(--color-border-primary);
-  font-family: var(--font-sans);
-  line-height: 1.8;
-  font-size: var(--text-lg);
-}
-
-.prose h1, .prose h2, .prose h3, .prose h4 {
-  font-family: var(--font-serif);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.prose h2 {
-  margin-top: 2.5em;
-  font-size: var(--text-3xl);
-}
-
-.prose h3 {
-  margin-top: 2em;
-  font-size: var(--text-2xl);
-}
-
-.prose p {
-  margin-bottom: 1.5em;
-}
-
-/* Tailwind 的 preflight 把 ul/ol 的 list-style 和缩进清零了，
-   课程正文里大量用到分点列表，必须在这里补回来，否则会变成
-   没有项目符号、没有缩进的一坨文字。 */
-.prose ul, .prose ol {
-  margin: 0 0 1.5em;
-  padding-left: 1.5em;
-}
-
-.prose ul {
-  list-style: disc;
-}
-
-.prose ol {
-  list-style: decimal;
-}
-
-.prose li {
-  margin-bottom: 0.5em;
-  padding-left: 0.25em;
-}
-
-.prose li::marker {
-  color: var(--color-accent);
-}
-
-.prose li > ul, .prose li > ol {
-  margin-top: 0.5em;
-  margin-bottom: 0;
-}
-
-/* 课程里有 20 篇用 Markdown 表格做对比。
-   宽度用 max-content + min-width:100%，窄表格铺满、宽表格在手机上横向滚动。 */
-.prose table {
-  display: block;
-  width: max-content;
-  min-width: 100%;
-  max-width: 100%;
-  overflow-x: auto;
-  border-collapse: collapse;
-  margin: 0 0 1.75em;
-  font-size: var(--text-base);
-  line-height: 1.6;
-}
-
-.prose thead {
-  background: var(--color-bg-tertiary);
-}
-
-.prose th, .prose td {
-  border: 1px solid var(--color-border-primary);
-  padding: 0.6em 0.9em;
-  text-align: left;
-  vertical-align: top;
-}
-
-.prose th {
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.prose tbody tr + tr td {
-  border-top-color: var(--color-border-secondary);
-}
-
-.prose hr {
-  border: 0;
-  border-top: 1px solid var(--color-border-primary);
-  margin: 2.5em 0;
-}
-
-.prose code {
-  font-family: var(--font-mono);
-  font-size: 0.9em;
-  padding: 0.15em 0.4em;
-  border-radius: 4px;
-  background: var(--color-bg-tertiary);
-}
-
-.prose pre {
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border-primary);
-  box-shadow: var(--shadow-md);
-}
-
-.prose blockquote {
-  border-left: 4px solid var(--color-accent);
-  background: var(--color-accent-soft);
-  padding: var(--space-lg) var(--space-xl);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  font-style: normal;
-}
-
-.prose strong {
-  color: var(--color-accent);
-  font-weight: 600;
-}
-
-.prose a {
-  text-decoration: none;
-  border-bottom: 1px solid var(--color-accent);
-  transition: border-color var(--duration-fast);
-}
-.prose a:hover {
-  border-bottom-width: 2px;
-}
-
-.prose img {
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-}
-
-/* Dark prose overrides */
-@media (prefers-color-scheme: dark) {
+  /* ── 课程正文 ─────────────────────────────────────────────────────────── */
   .prose {
-    --tw-prose-body: var(--color-text-primary);
-    --tw-prose-headings: var(--color-text-primary);
-    --tw-prose-pre-bg: var(--color-bg-tertiary);
+    font-family: var(--see-font);
+    font-size: 1.0625rem;
+    line-height: 1.85;
+    color: var(--dn-text-primary);
+    max-width: 68ch;
   }
-}
 
-/* ── Animation helpers ── */
-
-.stagger-1 { animation-delay: 0ms; }
-.stagger-2 { animation-delay: 80ms; }
-.stagger-3 { animation-delay: 160ms; }
-.stagger-4 { animation-delay: 240ms; }
-.stagger-5 { animation-delay: 320ms; }
-.stagger-6 { animation-delay: 400ms; }
-.stagger-7 { animation-delay: 480ms; }
-.stagger-8 { animation-delay: 560ms; }
-
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity var(--duration-reveal) var(--ease-out-expo),
-              transform var(--duration-reveal) var(--ease-out-expo);
-}
-.animate-on-scroll.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ── Micro-interactions ── */
-
-.hover-lift {
-  transition: transform var(--duration-normal) var(--ease-out-expo),
-              box-shadow var(--duration-normal) var(--ease-out-expo);
-}
-.hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-.hover-lift:active {
-  transform: translateY(0);
-}
-
-.hover-glow {
-  transition: box-shadow var(--duration-normal) var(--ease-out-expo);
-}
-.hover-glow:hover {
-  box-shadow: var(--shadow-glow);
-}
-
-.btn-ripple {
-  position: relative;
-  overflow: hidden;
-}
-.btn-ripple::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity var(--duration-fast);
-}
-.btn-ripple:active::after {
-  opacity: 1;
-}
-
-@keyframes signal-drift {
-  from { transform: translate3d(-2%, -1%, 0) scale(0.98); opacity: 0.65; }
-  to { transform: translate3d(2%, 1%, 0) scale(1.03); opacity: 1; }
-}
-
-/* ── Page transitions ── */
-
-@keyframes page-enter {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
+  .prose h1, .prose h2, .prose h3, .prose h4 {
+    font-family: var(--see-font-display);
+    font-weight: var(--dn-weight-display);
+    letter-spacing: -0.011em;
+    color: var(--dn-text-primary);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .prose h2 {
+    margin-top: 2.4em;
+    margin-bottom: 0.7em;
+    font-size: var(--dn-size-h2);
+    line-height: 1.25;
+    padding-top: 0.6em;
+    border-top: var(--see-hairline) solid var(--dn-divider);
   }
-}
 
-.page-transition {
-  animation: page-enter 0.4s var(--ease-out-expo);
-}
-
-/* ── Skeleton loading ── */
-
-.skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--color-bg-tertiary) 25%,
-    var(--color-bg-secondary) 50%,
-    var(--color-bg-tertiary) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer-bar 2s ease-in-out infinite;
-  border-radius: var(--radius-md);
-}
-
-/* ── Tooltip ── */
-
-.tooltip {
-  position: relative;
-}
-.tooltip::before {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-4px);
-  padding: 4px 10px;
-  background: var(--color-text-primary);
-  color: var(--color-bg-primary);
-  font-size: 0.7rem;
-  border-radius: 6px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s, transform 0.2s;
-}
-.tooltip:hover::before {
-  opacity: 1;
-  transform: translateX(-50%) translateY(-8px);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
+  .prose h3 {
+    margin-top: 1.8em;
+    margin-bottom: 0.5em;
+    font-size: 1.25rem;
+    line-height: 1.35;
   }
-  body::after { animation: none; }
+
+  .prose h4 {
+    margin-top: 1.5em;
+    margin-bottom: 0.4em;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    font-family: var(--see-font);
+  }
+
+  .prose p { margin-bottom: 1.3em; }
+
+  /* Tailwind 的 preflight 把 ul/ol 的 list-style 和缩进清零了，
+     课程正文里大量用到分点列表，必须在这里补回来。 */
+  .prose ul, .prose ol {
+    margin: 0 0 1.3em;
+    padding-left: 1.4em;
+  }
+  .prose ul { list-style: square; }
+  .prose ol { list-style: decimal; }
+  .prose li { margin-bottom: 0.45em; padding-left: 0.25em; }
+  .prose li::marker { color: var(--dn-teal); font-weight: 600; }
+  .prose li > ul, .prose li > ol { margin-top: 0.45em; margin-bottom: 0; }
+
+  /* 课程里有 20 篇用 Markdown 表格做对比。
+     宽度用 max-content + min-width:100%，窄表格铺满、宽表格在手机上横向滚动。 */
+  .prose table {
+    display: block;
+    width: max-content;
+    min-width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    margin: 0 0 1.6em;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+  }
+  .prose thead { background: var(--dn-divider); color: var(--dn-text-primary); }
+  .prose th, .prose td {
+    border: var(--see-hairline) solid var(--dn-divider);
+    padding: 0.6em 0.9em;
+    text-align: left;
+    vertical-align: top;
+  }
+  .prose th { font-weight: 600; white-space: nowrap; }
+
+  .prose hr {
+    border: 0;
+    border-top: var(--see-hairline) solid var(--dn-divider);
+    margin: 2.4em 0;
+  }
+
+  .prose code {
+    font-family: var(--see-font-mono);
+    font-size: 0.875em;
+    padding: 0.12em 0.36em;
+    border-radius: var(--dn-radius);
+    background: var(--dn-divider);
+    color: var(--dn-text-primary);
+  }
+
+  .prose pre {
+    border-radius: var(--dn-radius);
+    border: var(--see-hairline) solid var(--dn-ink-primary);
+    background: var(--see-code-bg);
+    color: var(--see-code-text);
+    padding: 1.1em 1.2em;
+    overflow-x: auto;
+    margin-bottom: 1.6em;
+  }
+  .prose pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+  }
+
+  /* 引用块承担「这一节要记住的话」，做成品牌色块而非装饰边框。 */
+  .prose blockquote {
+    margin: 0 0 1.6em;
+    padding: 1.1em 1.3em;
+    background: var(--dn-teal);
+    color: var(--dn-text-on-color);
+    border: 0;
+    border-left: 6px solid var(--dn-ink-primary);
+    font-style: normal;
+  }
+  .prose blockquote p:last-child { margin-bottom: 0; }
+  .prose blockquote strong { color: inherit; }
+
+  .prose strong { color: var(--dn-text-primary); font-weight: 600; }
+
+  /* 链接必须有非颜色提示：下划线。 */
+  .prose a {
+    color: var(--see-teal-ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .prose a:hover { text-decoration-thickness: 2px; }
+
+  .prose img {
+    border-radius: var(--dn-radius);
+    border: var(--see-hairline) solid var(--dn-divider);
+  }
+
+  /* 独立的链接样式（非正文内），保留下划线以区分于普通文字 */
+  .see-link {
+    color: var(--see-teal-ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .see-link:hover { text-decoration-thickness: 2px; }
+}
+
+/* ── 覆盖层：顶栏 ──────────────────────────────────────────────────────────
+   materials.css 是未分层的第三方样式表，其 .dn-acrylic 优先级高于 Tailwind
+   的 utilities（分层样式一律输给未分层样式）。顶栏只需要一条下边框，
+   所以用更高的选择器优先级覆盖材质块的边框，其余（模糊、不透明回退、
+   强制颜色模式）继续由 DNDL 负责。 */
+.see-shell-header.dn-acrylic {
+  border: 0;
+  border-bottom: var(--see-hairline) solid var(--dn-divider);
+}
+
+@media (forced-colors: active) {
+  .see-shell-header.dn-acrylic {
+    border-bottom-color: CanvasText;
+  }
 }

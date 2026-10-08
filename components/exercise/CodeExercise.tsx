@@ -48,28 +48,28 @@ export default function CodeExercise({ exercise, onComplete }: CodeExerciseProps
   }
 
   return (
-    <div className="card p-5 space-y-4 animate-slide-up">
+    <div className="card space-y-4 p-5">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <span className="w-8 h-8 rounded-lg bg-accent-soft flex items-center justify-center">
-            <Play className="w-4 h-4 text-accent" />
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-teal text-on-color">
+            <Play className="h-4 w-4" aria-hidden="true" />
           </span>
           <div>
-            <h4 className="font-display font-bold text-base">{exercise.title}</h4>
-            <p className="text-xs text-muted">{exercise.description}</p>
+            <h4 className="font-display text-lg">{exercise.title}</h4>
+            <p className="text-xs text-text-secondary">{exercise.description}</p>
           </div>
         </div>
         {completed && (
-          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-success bg-success-soft px-3 py-1.5 rounded-full">
-            <CheckCircle2 className="w-3.5 h-3.5" />
+          <span className="inline-flex shrink-0 items-center gap-1.5 bg-emerald px-3 py-1.5 text-xs font-semibold text-on-color">
+            <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
             完成
           </span>
         )}
       </div>
 
       {/* Expected behavior */}
-      <div className="text-sm text-muted bg-surface-alt rounded-xl p-3.5 border border-edge/50">
+      <div className="border border-edge bg-surface-alt p-3.5 text-sm text-text-secondary">
         <span className="font-semibold text-text-primary">目标：</span>
         {exercise.expectedBehavior}
       </div>
@@ -79,61 +79,68 @@ export default function CodeExercise({ exercise, onComplete }: CodeExerciseProps
         <textarea
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          className="w-full h-64 font-mono text-sm p-4 rounded-xl border border-edge bg-surface-alt resize-y focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent/50 transition-all"
+          aria-label={exercise.title + ' 代码编辑区'}
+          className="dn-focus h-64 w-full resize-y border border-edge-strong bg-surface-alt p-4 font-mono text-sm"
           spellCheck={false}
         />
-        {completed && (
-          <div className="absolute inset-0 bg-success-soft/30 rounded-xl flex items-center justify-center animate-scale-in pointer-events-none">
-            <div className="bg-success text-white px-4 py-2 rounded-xl font-bold shadow-lg">
-              完成！
-            </div>
-          </div>
-        )}
+        {/* 完成遮罩常驻挂载，只切 opacity：这样它是一个真正的 transition，
+            而不是挂载时的一次性入场动画。未完成时对读屏隐藏且不拦鼠标。 */}
+        <div
+          aria-hidden={!completed}
+          className={`pointer-events-none absolute inset-0 flex items-center justify-center bg-emerald-tint/70 transition-opacity duration-[380ms] ease-[var(--dn-ease-in)] ${
+            completed ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          <span className="dn-elevation-2 inline-flex items-center gap-2 bg-emerald px-4 py-3 font-semibold text-on-color">
+            <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+            完成！
+            <span className="text-xs font-normal">所有检查点都通过了</span>
+          </span>
+        </div>
       </div>
 
       {/* Toolbar */}
-      <div className="flex items-center gap-2 flex-wrap">
+      <div className="flex flex-wrap items-center gap-2">
         <button
           onClick={handlePreview}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-accent text-white text-sm font-semibold hover:shadow-lg active:scale-95 transition-all"
+          className="dn-focus dn-interactive inline-flex min-h-[44px] items-center gap-1.5 bg-teal px-3.5 text-sm font-semibold text-on-color"
         >
-          <Eye className="w-3.5 h-3.5" />
+          <Eye className="h-4 w-4" aria-hidden="true" />
           预览
         </button>
         <button
           onClick={checkCompletion}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-edge text-sm text-muted hover:text-accent hover:border-accent/30 transition-all"
+          className="dn-focus inline-flex min-h-[44px] items-center gap-1.5 border border-edge-strong px-3.5 text-sm text-text-primary transition-colors hover:bg-surface-alt"
         >
-          <CheckCircle2 className="w-3.5 h-3.5" />
+          <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
           检查
         </button>
         <button
           onClick={showNextHint}
           disabled={hintsRevealed >= exercise.hints.length}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-edge text-sm text-muted hover:text-warning hover:border-warning/30 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+          className="dn-focus inline-flex min-h-[44px] items-center gap-1.5 border border-edge-strong px-3.5 text-sm text-text-primary transition-colors hover:border-amber hover:bg-amber-tint hover:text-amber-ink disabled:cursor-not-allowed disabled:opacity-40"
         >
-          <Lightbulb className="w-3.5 h-3.5" />
+          <Lightbulb className="h-4 w-4" aria-hidden="true" />
           提示 {hintsRevealed > 0 && `(${hintsRevealed}/${exercise.hints.length})`}
         </button>
         <button
           onClick={reset}
-          className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-edge text-sm text-faint hover:text-muted transition-all ml-auto"
+          className="dn-focus ml-auto inline-flex min-h-[44px] items-center gap-1.5 border border-edge-strong px-3.5 text-sm text-text-secondary transition-colors hover:bg-surface-alt hover:text-text-primary"
         >
-          <RotateCcw className="w-3.5 h-3.5" />
+          <RotateCcw className="h-4 w-4" aria-hidden="true" />
           重置
         </button>
       </div>
 
       {/* Hints */}
       {hintsRevealed > 0 && (
-        <div className="space-y-2 animate-slide-down">
+        <div className="space-y-2">
           {exercise.hints.slice(0, hintsRevealed).map((hint, i) => (
             <div
               key={i}
-              className="flex items-start gap-2.5 p-3 rounded-xl bg-warning-soft border border-warning/10 text-sm text-warning animate-pop-in"
-              style={{ animationDelay: `${i * 80}ms` }}
+              className="flex items-start gap-2.5 border-l-[3px] border-amber bg-amber-tint p-3 text-sm text-text-primary"
             >
-              <Lightbulb className="w-4 h-4 shrink-0 mt-0.5" />
+              <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-amber-ink" aria-hidden="true" />
               <span>{hint}</span>
             </div>
           ))}
@@ -142,19 +149,19 @@ export default function CodeExercise({ exercise, onComplete }: CodeExerciseProps
 
       {/* Preview toggle */}
       {showPreview && (
-        <div className="border border-edge rounded-xl overflow-hidden animate-scale-in">
-          <div className="flex items-center justify-between px-4 py-2 bg-surface-alt border-b border-edge">
-            <span className="text-xs text-muted font-medium">预览</span>
+        <div className="overflow-hidden border border-edge">
+          <div className="flex items-center justify-between gap-3 border-b border-edge bg-surface-alt px-3 py-0.5">
+            <span className="text-xs font-medium text-text-secondary">预览</span>
             <button
               onClick={() => setShowPreview(false)}
-              className="text-xs text-muted hover:text-accent transition-colors"
+              className="dn-focus inline-flex min-h-[44px] items-center px-3 text-xs text-text-secondary transition-colors hover:bg-surface hover:text-text-primary"
             >
               收起
             </button>
           </div>
           <iframe
             srcDoc={code}
-            className="w-full h-[400px] border-0"
+            className="h-[400px] w-full border-0"
             sandbox="allow-scripts"
             title="exercise-preview"
           />

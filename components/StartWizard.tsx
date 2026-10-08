@@ -2,9 +2,10 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, RotateCcw, Sparkles } from "lucide-react";
+import { ArrowRight, RotateCcw } from "lucide-react";
 import { tracks, type TrackId } from "@/lib/tracks";
 import { getTrackStart, getLessonsByTrack } from "@/lib/lessons";
+import { trackVisual } from "@/components/track-visuals";
 
 interface Option {
   label: string;
@@ -149,139 +150,165 @@ export default function StartWizard() {
 
   if (done) {
     return (
-      <div className="space-y-6 animate-slide-up">
-        <div className="card p-6 md:p-8">
-          <div className="flex items-center gap-2.5 mb-4">
-            <span className="w-9 h-9 rounded-xl bg-accent-soft flex items-center justify-center">
-              <Sparkles className="w-4.5 h-4.5 text-accent" />
-            </span>
-            <h2 className="font-display text-xl font-bold">建议你从这两条轨道开始</h2>
-          </div>
+      <div className="space-y-6">
+        <section className="card p-5 sm:p-8">
+          <h2 className="font-display text-2xl leading-tight sm:text-3xl">
+            建议你从这两条轨道开始
+          </h2>
 
-          <div className="space-y-4">
-            {ranking.map(({ track }, i) => {
-              const start = getTrackStart(track.id);
-              const count = getLessonsByTrack(track.id).length;
-              return (
-                <div
-                  key={track.id}
-                  className={
-                    "p-5 rounded-xl border " +
-                    (i === 0 ? "border-accent/30 bg-accent-soft/50" : "border-edge bg-surface-alt")
-                  }
-                >
-                  <div className="flex items-start justify-between gap-4">
+          {ranking.length === 0 ? (
+            <p className="mt-5 max-w-[62ch] text-sm leading-relaxed text-text-secondary">
+              没排出特别的顺序，那就从「认识 AI」开始，五节课就能把基本概念过一遍。
+            </p>
+          ) : (
+            <ul className="mt-6 grid gap-[3px]">
+              {ranking.map(({ track }, i) => {
+                const start = getTrackStart(track.id);
+                const count = getLessonsByTrack(track.id).length;
+                const visual = trackVisual(track.color);
+                const isFirst = i === 0;
+
+                return (
+                  <li
+                    key={track.id}
+                    className={
+                      "flex flex-col gap-5 p-5 sm:flex-row sm:items-start sm:justify-between " +
+                      (isFirst ? visual.field : "border border-edge bg-surface")
+                    }
+                  >
                     <div className="min-w-0">
-                      <div className="flex items-center gap-2 mb-1.5">
-                        {i === 0 && (
-                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-accent text-white font-medium">
-                            先学这个
-                          </span>
-                        )}
-                        <h3 className="font-display font-bold">{track.name}</h3>
+                      <div className="flex flex-wrap items-center gap-3">
+                        <span
+                          className={
+                            "inline-flex min-h-[28px] items-center gap-1.5 px-2 text-xs font-semibold " +
+                            (isFirst
+                              ? "bg-[var(--dn-ink-primary)] text-on-ink"
+                              : "bg-teal text-on-color")
+                          }
+                        >
+                          {isFirst ? "先学这个" : "接着学这个"}
+                        </span>
+                        <h3 className="font-display text-2xl leading-tight">{track.name}</h3>
                       </div>
-                      <p className="text-sm text-muted leading-relaxed">{track.description}</p>
-                      <p className="text-[11px] text-faint mt-2">
-                        {count} 节课 · 写在给「{track.audience}」的
+                      <p className="mt-3 max-w-[54ch] text-sm leading-relaxed">
+                        {track.description}
+                      </p>
+                      <p className="mt-2.5 text-xs tabular-nums">
+                        {count} 节课 · 写给：{track.audience}
                       </p>
                     </div>
+
                     {start && (
                       <Link
                         href={"/lesson/" + start}
-                        className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-accent text-white text-xs font-semibold shrink-0 hover:scale-[1.02] transition-all"
+                        className={
+                          "dn-focus dn-interactive inline-flex min-h-[48px] shrink-0 items-center gap-2 px-5 text-sm font-semibold " +
+                          (isFirst
+                            ? "bg-[var(--dn-ink-primary)] text-on-ink"
+                            : "bg-teal text-on-color")
+                        }
                       >
-                        开始
-                        <ArrowRight className="w-3.5 h-3.5" />
+                        开始第一节
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
                       </Link>
                     )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {ranking.length === 0 && (
-            <p className="text-sm text-muted">
-              没排出特别的顺序，那就从「认识 AI」开始，五节课就能把基本概念过一遍。
-            </p>
+                  </li>
+                );
+              })}
+            </ul>
           )}
-        </div>
+        </section>
 
-        <div className="card p-5">
-          <p className="text-sm text-muted leading-relaxed">
+        <section className="card p-5 sm:p-6">
+          <p className="max-w-[68ch] text-sm leading-relaxed text-text-secondary">
             不管你从哪儿开始，「认识 AI」那五节课都值得看一遍，四十分钟就够。
             它解决的是「这东西为什么会答错」这类问题，后面每条轨道都会用到。
           </p>
-          <div className="flex flex-wrap gap-3 mt-4">
+          <div className="mt-4 flex flex-wrap gap-3">
             <Link
               href="/lesson/ai-1-1"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-edge text-xs text-muted hover:text-accent hover:border-accent/30 transition-all"
+              className="dn-focus inline-flex min-h-[44px] items-center border border-edge-strong px-4 text-xs font-semibold text-text-primary hover:bg-surface-alt"
             >
               先看「认识 AI」的第一节
             </Link>
             <button
               type="button"
               onClick={reset}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-edge text-xs text-muted hover:text-accent hover:border-accent/30 transition-all"
+              className="dn-focus inline-flex min-h-[44px] items-center gap-1.5 border border-edge-strong px-4 text-xs font-semibold text-text-primary hover:bg-surface-alt"
             >
-              <RotateCcw className="w-3.5 h-3.5" />
+              <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
               重新选一次
             </button>
           </div>
-        </div>
+        </section>
       </div>
     );
   }
 
   const q = QUESTIONS[step];
   return (
-    <div className="card p-6 md:p-8 animate-slide-up">
-      <div className="flex items-center gap-2 mb-6">
-        {QUESTIONS.map((_, i) => (
-          <span
-            key={i}
-            className={
-              "h-1.5 rounded-full transition-all duration-300 " +
-              (i <= step ? "bg-accent w-10" : "bg-surface-raised w-6")
-            }
-          />
+    <section className="card p-5 sm:p-8">
+      {/* 步骤用编号色块表示，当前步是实色，已完成是描边，未开始是浅底 */}
+      <ol className="flex items-center gap-2" aria-label="答题进度">
+        {QUESTIONS.map((item, i) => (
+          <li key={item.id} className="flex flex-1 items-center gap-2">
+            <span
+              className={
+                "flex h-8 flex-1 items-center justify-center text-xs font-semibold tabular-nums " +
+                (i < step
+                  ? "bg-teal text-on-color"
+                  : i === step
+                    ? "bg-teal text-on-color"
+                    : "border border-edge-strong text-text-secondary")
+              }
+            >
+              {i + 1}
+            </span>
+          </li>
         ))}
-        <span className="text-[11px] text-faint ml-2 tabular-nums">
-          {step + 1} / {QUESTIONS.length}
-        </span>
-      </div>
+      </ol>
+      <p className="mt-2 text-xs tabular-nums text-text-secondary" role="status">
+        第 {step + 1} 题，共 {QUESTIONS.length} 题
+      </p>
 
-      <h2 className="font-display text-2xl font-bold mb-1.5">{q.title}</h2>
-      <p className="text-sm text-muted mb-6">{q.sub}</p>
+      <h2 className="font-display mt-6 text-2xl leading-tight sm:text-3xl">{q.title}</h2>
+      <p className="mt-2 text-sm text-text-secondary">{q.sub}</p>
 
-      <div className="space-y-3">
+      <ul className="mt-6 space-y-2">
         {q.options.map((opt, i) => (
-          <button
-            key={opt.label}
-            type="button"
-            onClick={() => pick(i)}
-            className="w-full text-left p-4 rounded-xl border border-edge bg-surface-alt hover:border-accent/40 hover:bg-accent-soft/40 transition-all group"
-          >
-            <div className="flex items-center justify-between gap-3">
-              <div className="min-w-0">
-                <div className="font-medium text-sm">{opt.label}</div>
-                {opt.hint && <div className="text-xs text-muted mt-1">{opt.hint}</div>}
-              </div>
-              <ArrowRight className="w-4 h-4 text-faint group-hover:text-accent group-hover:translate-x-0.5 transition-all shrink-0" />
-            </div>
-          </button>
+          <li key={opt.label}>
+            <button
+              type="button"
+              onClick={() => pick(i)}
+              className="dn-focus flex min-h-[64px] w-full items-center gap-4 border border-edge-strong bg-surface px-4 py-3 text-left transition-colors hover:bg-surface-alt"
+            >
+              <span
+                className="flex h-8 w-8 shrink-0 items-center justify-center bg-surface-raised font-mono text-xs font-semibold text-text-primary"
+                aria-hidden="true"
+              >
+                {String.fromCharCode(65 + i)}
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-sm font-medium">{opt.label}</span>
+                {opt.hint && (
+                  <span className="mt-1 block text-xs text-text-secondary">{opt.hint}</span>
+                )}
+              </span>
+              <ArrowRight className="h-4 w-4 shrink-0 text-text-secondary" aria-hidden="true" />
+            </button>
+          </li>
         ))}
-      </div>
+      </ul>
 
       {step > 0 && (
         <button
           type="button"
           onClick={() => setStep((s) => s - 1)}
-          className="mt-5 text-xs text-muted hover:text-accent transition-colors"
+          className="dn-focus mt-5 inline-flex min-h-[44px] items-center text-xs font-semibold text-text-primary underline underline-offset-4"
         >
           上一题
         </button>
       )}
-    </div>
+    </section>
   );
 }

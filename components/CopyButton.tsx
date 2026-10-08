@@ -13,7 +13,8 @@ interface CopyButtonProps {
 
 /**
  * 复制按钮。目标读者很多是第一次用这类工具，
- * 所以按下去要有明确的"已经复制走了"的反馈。
+ * 所以按下去要有明确的"已经复制走了"的反馈——
+ * 反馈同时用图标、文字和颜色三重线索，不只靠变色。
  */
 export default function CopyButton({
   text,
@@ -47,22 +48,29 @@ export default function CopyButton({
     window.setTimeout(() => setCopied(false), 1800);
   }
 
+  const base =
+    "dn-focus dn-interactive inline-flex shrink-0 items-center justify-center gap-1.5 border font-semibold " +
+    (compact ? "min-h-[44px] px-3 text-[11px] " : "min-h-[44px] px-4 text-xs ");
+
   return (
     <button
       type="button"
       onClick={handleCopy}
       aria-label={copied ? copiedLabel : label}
       className={
-        "inline-flex items-center gap-1.5 rounded-lg border transition-all duration-200 shrink-0 " +
-        (compact ? "px-2.5 py-1 text-[11px] " : "px-3.5 py-2 text-xs ") +
+        base +
         (copied
-          ? "border-success/40 bg-success-soft text-success"
-          : "border-edge bg-surface-alt text-muted hover:text-accent hover:border-accent/40") +
+          ? "border-emerald bg-emerald text-on-color"
+          : "border-edge-strong bg-surface text-text-primary hover:bg-surface-alt") +
         " " +
         className
       }
     >
-      {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+      {copied ? (
+        <Check className="h-3.5 w-3.5" aria-hidden="true" />
+      ) : (
+        <Copy className="h-3.5 w-3.5" aria-hidden="true" />
+      )}
       {copied ? copiedLabel : label}
     </button>
   );

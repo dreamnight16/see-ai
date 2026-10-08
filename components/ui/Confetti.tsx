@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Particle {
   x: number; y: number; vx: number; vy: number;
@@ -14,16 +14,27 @@ interface ConfettiProps {
   particleCount?: number;
 }
 
-const COLORS = ['#e85d3a', '#f07b5a', '#d4952a', '#5b8c5a', '#4a7fb5', '#f5a623', '#e8dcc8'];
+/* DNDL 品牌八色的原始值：canvas 读不到 CSS 变量，只能在这里写字面量 */
+const COLORS = ['#59AAA5', '#70B2D1', '#72AD8C', '#A18BC8', '#D4AC65', '#D78E74', '#829BA9', '#C98292'];
 
 export default function Confetti({ active, duration = 3000, particleCount = 100 }: ConfettiProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const animFrameRef = useRef<number>(0);
   const startTimeRef = useRef<number>(0);
+  // 庆祝反馈不能变成必须承受的动画：系统要求减少动态效果时整段不画
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
-    if (!active) {
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const sync = () => setReducedMotion(query.matches);
+    sync();
+    query.addEventListener('change', sync);
+    return () => query.removeEventListener('change', sync);
+  }, []);
+
+  useEffect(() => {
+    if (!active || reducedMotion) {
       particlesRef.current = [];
       return;
     }
@@ -78,7 +89,8 @@ export default function Confetti({ active, duration = 3000, particleCount = 100 
         ctx.rotate((p.rotation * Math.PI) / 180);
         ctx.globalAlpha = alpha;
         ctx.fillStyle = p.color;
-        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+        // 直角几何：粒子是方块，不是纸屑矩形
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
         ctx.restore();
       }
 
@@ -94,14 +106,14 @@ export default function Confetti({ active, duration = 3000, particleCount = 100 
     return () => {
       cancelAnimationFrame(animFrameRef.current);
     };
-  }, [active, duration, particleCount]);
+  }, [active, duration, particleCount, reducedMotion]);
 
-  if (!active) return null;
+  if (!active || reducedMotion) return null;
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 z-[9999] pointer-events-none"
+      className="pointer-events-none fixed inset-0 z-[9999]"
       aria-hidden="true"
     />
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Confetti from '@/components/ui/Confetti';
 import { getBadgeById } from '@/lib/achievements';
 import { X, Award, Footprints, Zap, Flag, GraduationCap, Trophy, Wand2, Flame, Compass, Code2, Star } from 'lucide-react';
@@ -10,18 +10,40 @@ interface BadgeUnlockProps {
   onDismiss: () => void;
 }
 
+/**
+ * 徽章解锁提示。
+ *
+ * 4 秒后自动收起，也可以立刻关掉（按钮或 Escape）。
+ * 自动收起只是省事，不是唯一出口——内容不会因为动画结束才可读。
+ */
 export default function BadgeUnlock({ badgeId, onDismiss }: BadgeUnlockProps) {
   const [visible, setVisible] = useState(false);
   const badge = getBadgeById(badgeId);
+  const dismissRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    requestAnimationFrame(() => setVisible(true));
+    const raf = requestAnimationFrame(() => setVisible(true));
     const timer = setTimeout(() => {
       setVisible(false);
-      setTimeout(onDismiss, 500);
+      setTimeout(onDismiss, 400);
     }, 4000);
-    return () => clearTimeout(timer);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(timer);
+    };
   }, [badgeId, onDismiss]);
+
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setVisible(false);
+        setTimeout(onDismiss, 200);
+      }
+    }
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [onDismiss]);
 
   if (!badge) return null;
 
@@ -30,50 +52,64 @@ export default function BadgeUnlock({ badgeId, onDismiss }: BadgeUnlockProps) {
   };
   const IconComponent = ICON_MAP[badge.icon] || Award;
 
+  function dismiss() {
+    setVisible(false);
+    setTimeout(onDismiss, 200);
+  }
+
   return (
     <>
       <Confetti active={visible} duration={2500} particleCount={80} />
-      <div
-        className={`fixed inset-0 z-[9998] flex items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity duration-500 ${
-          visible ? 'opacity-100' : 'opacity-0'
-        }`}
-        onClick={() => { setVisible(false); setTimeout(onDismiss, 500); }}
-      >
+      <div className="fixed inset-0 z-40 flex items-center justify-center p-4">
+        <button
+          type="button"
+          aria-label="关闭徽章提示"
+          onClick={dismiss}
+          className="absolute inset-0 h-full w-full cursor-default bg-[var(--dn-overlay)]"
+        />
         <div
-          className={`bg-surface rounded-3xl p-10 max-w-sm w-[90%] text-center shadow-2xl border border-edge ${
-            visible ? 'animate-scale-in' : 'scale-90 opacity-0'
-          }`}
-          onClick={(e) => e.stopPropagation()}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="badge-unlock-title"
+          className={
+            'dn-elevation-4 relative w-full max-w-sm border border-edge bg-surface text-center transition-opacity duration-[380ms] ease-[var(--dn-ease-in)] ' +
+            (visible ? 'opacity-100' : 'opacity-0')
+          }
         >
-          {/* Badge icon */}
-          <div className="w-24 h-24 mx-auto mb-5 rounded-3xl bg-accent-soft flex items-center justify-center shadow-glow animate-bounce">
-            <IconComponent className="w-12 h-12 text-accent" />
+          <div className="flex justify-end px-2 pt-2">
+            <button
+              ref={dismissRef}
+              type="button"
+              onClick={dismiss}
+              aria-label="关闭徽章提示"
+              className="dn-focus flex h-11 w-11 items-center justify-center border border-edge-strong hover:bg-surface-alt"
+            >
+              <X className="h-4 w-4" aria-hidden="true" />
+            </button>
           </div>
 
-          {/* Title */}
-          <p className="text-sm text-accent font-semibold mb-2 animate-slide-up stagger-1">
-            获得新徽章！
-          </p>
-          <h2 className="font-display text-2xl font-bold mb-2 animate-slide-up stagger-2">
-            {badge.name}
-          </h2>
-          <p className="text-muted text-sm mb-4 animate-slide-up stagger-3">
-            {badge.description}
-          </p>
+          <div className="px-6 pb-8">
+            <span className="mx-auto flex h-20 w-20 items-center justify-center bg-amber text-on-color">
+              <IconComponent className="h-10 w-10" aria-hidden="true" />
+            </span>
 
-          {/* XP reward */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-warning-soft text-warning text-sm font-semibold animate-slide-up stagger-4">
-            <Star className="w-4 h-4" />
-            +{badge.xpReward} XP
+            <p className="see-kicker mt-5 text-amber-ink">获得新徽章</p>
+            <h2 id="badge-unlock-title" className="font-display mt-3 text-2xl leading-tight">
+              {badge.name}
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-text-secondary">
+              {badge.description}
+            </p>
+
+            <p className="mt-5 inline-flex min-h-[40px] items-center gap-2 bg-violet px-4 text-sm font-semibold text-on-color">
+              <Star className="h-4 w-4" aria-hidden="true" />
+              +{badge.xpReward} XP
+            </p>
+
+            <p className="mt-4 text-xs text-text-secondary">
+              这个提示 4 秒后自动收起，也可以按 Escape 关掉。
+            </p>
           </div>
-
-          {/* Dismiss button */}
-          <button
-            onClick={() => { setVisible(false); setTimeout(onDismiss, 500); }}
-            className="absolute top-4 right-4 w-8 h-8 rounded-lg bg-surface-alt hover:bg-surface-raised flex items-center justify-center transition-colors"
-          >
-            <X className="w-4 h-4 text-muted" />
-          </button>
         </div>
       </div>
     </>

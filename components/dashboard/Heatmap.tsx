@@ -2,12 +2,17 @@
 
 import { useHeatmap } from '@/hooks/useHeatmap';
 
-const COLORS = ['#ebe5d9', '#fcd9c8', '#f7a88a', '#f07b5a', '#e85d3a'];
+/**
+ * 五档强度全部取自品牌 Teal 的同色阶梯，而不是另一套暖色；
+ * 0 档用 DNDL 的 Divider，保证空和有是最容易分辨的一对。
+ * 每个格子都有 title 文本（日期 + XP），颜色不是唯一的信息。
+ */
+const COLORS = ['#E1E9E7', '#DEEEED', '#ACD4D2', '#82BFBB', '#59AAA5'];
+const LEVEL_LABELS = ['无记录', '少量', '一些', '较多', '最多'];
 
 export default function Heatmap() {
   const { data } = useHeatmap();
 
-  // Group into weeks
   const weeks: typeof data[] = [];
   for (let i = 0; i < data.length; i += 7) {
     weeks.push(data.slice(i, i + 7));
@@ -16,31 +21,37 @@ export default function Heatmap() {
   const CELL = 12;
   const GAP = 2;
   const LABELS = ['', '一', '', '三', '', '五', ''];
+  const totalXp = data.reduce((sum, day) => sum + day.xp, 0);
+  const activeDays = data.filter((day) => day.xp > 0).length;
 
   return (
-    <div className="card p-5 animate-slide-up">
-      <h3 className="font-display font-bold text-base mb-4">学习热力图</h3>
-      <div className="overflow-x-auto">
+    <section className="card p-5">
+      <h3 className="font-display text-lg">学习热力图</h3>
+      <p className="mt-1 text-xs text-text-secondary">
+        最近 52 周。有记录的 <span className="tabular-nums font-semibold text-text-primary">{activeDays}</span> 天，
+        合计 <span className="tabular-nums font-semibold text-text-primary">{totalXp}</span> XP。
+      </p>
+
+      <div className="mt-4 overflow-x-auto">
         <svg
-          width={weeks.length * (CELL + GAP) + 40}
-          height={CELL * 7 + GAP * 6 + 24}
-          className="min-w-full"
+          width={weeks.length * (CELL + GAP) + 24}
+          height={CELL * 7 + GAP * 6 + 22}
+          aria-hidden="true"
         >
-          {/* Day labels */}
           {LABELS.map((label, i) => (
             <text
               key={i}
               x={0}
               y={i * (CELL + GAP) + CELL - 2}
-              className="text-[8px] fill-faint"
+              fontSize="8"
+              fill="var(--dn-text-secondary)"
               textAnchor="start"
             >
               {label}
             </text>
           ))}
 
-          {/* Cells */}
-          <g transform="translate(24, 0)">
+          <g transform="translate(20, 0)">
             {weeks.map((week, wi) =>
               week.map((day, di) => (
                 <rect
@@ -49,13 +60,9 @@ export default function Heatmap() {
                   y={di * (CELL + GAP)}
                   width={CELL}
                   height={CELL}
-                  rx={2}
                   fill={COLORS[day.level]}
-                  className="transition-colors duration-200"
                 >
-                  <title>
-                    {day.date}: {day.xp} XP
-                  </title>
+                  <title>{`${day.date}：${day.xp} XP（${LEVEL_LABELS[day.level]}）`}</title>
                 </rect>
               )),
             )}
@@ -63,18 +70,16 @@ export default function Heatmap() {
         </svg>
       </div>
 
-      {/* Legend */}
-      <div className="flex items-center justify-end gap-1.5 mt-3">
-        <span className="text-[10px] text-faint">少</span>
+      <ul className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+        <li className="text-[11px] text-text-secondary">少</li>
         {COLORS.map((color, i) => (
-          <span
-            key={i}
-            className="w-2.5 h-2.5 rounded-sm"
-            style={{ backgroundColor: color }}
-          />
+          <li key={i} className="flex items-center gap-1.5 text-[11px] text-text-secondary">
+            <span className="h-2.5 w-2.5" style={{ backgroundColor: color }} aria-hidden="true" />
+            {LEVEL_LABELS[i]}
+          </li>
         ))}
-        <span className="text-[10px] text-faint">多</span>
-      </div>
-    </div>
+        <li className="text-[11px] text-text-secondary">多</li>
+      </ul>
+    </section>
   );
 }

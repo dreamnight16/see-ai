@@ -11,59 +11,49 @@ export default function ErrorPage({
   reset: () => void;
 }) {
   return (
-    <div className="relative min-h-screen bg-surface overflow-hidden">
-      {/* Warm ambient background */}
-      <div className="absolute inset-0 gradient-warm opacity-30" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_center,_var(--color-accent-glow)_0%,_transparent_60%)]" />
-
-      <div className="relative max-w-[1000px] mx-auto px-6 py-20 md:py-28 flex flex-col items-center text-center animate-fade-in">
-        {/* Emblem */}
-        <div className="w-20 h-20 md:w-24 md:h-24 rounded-3xl bg-accent-soft border border-accent/20 flex items-center justify-center shadow-glow mb-10 animate-scale-in">
-          <AlertTriangle className="w-9 h-9 md:w-10 md:h-10 text-accent" />
-        </div>
-
-        {/* Decorative line + heading */}
-        <div className="decorative-line mb-6" />
-        <h1 className="font-display text-4xl md:text-5xl font-black">
-          出了点问题
-        </h1>
-        <p className="text-muted mt-4 text-lg max-w-md leading-relaxed">
-          页面加载时发生了一点意外。你可以重试，或返回首页继续浏览。
-        </p>
-
-        {/* Error detail */}
-        <div className="mt-8 w-full max-w-lg card p-5 text-left animate-slide-up stagger-2">
-          <p className="text-xs font-medium uppercase tracking-wider text-faint mb-2">
-            错误信息
+    <main className="mx-auto max-w-[var(--see-shell)] px-[var(--see-gutter)] py-[var(--see-section)]">
+      <div className="grid gap-[3px] lg:grid-cols-12">
+        <section className="bg-crimson p-6 text-on-color sm:p-10 lg:col-span-5">
+          <AlertTriangle className="h-9 w-9" aria-hidden="true" />
+          <h1 className="font-display mt-8 text-[clamp(2rem,4vw,2.75rem)] leading-tight">
+            出了点问题
+          </h1>
+          <p className="mt-4 max-w-[42ch] text-sm leading-relaxed">
+            页面加载时发生了一点意外。你可以重试，或者回首页继续浏览。
+            课程正文、练习和进度都存在本地，不会因为这个错误丢掉。
           </p>
-          <p className="font-mono text-sm text-muted break-all leading-relaxed">
+        </section>
+
+        <section className="card p-6 sm:p-8 lg:col-span-7">
+          <h2 className="see-kicker text-text-secondary">错误信息</h2>
+          <p className="mt-3 break-all font-mono text-sm leading-relaxed text-text-primary">
             {error.message || "未知错误"}
           </p>
           {error.digest && (
-            <p className="mt-3 pt-3 border-t border-edge text-[11px] text-faint">
+            <p className="mt-4 border-t border-edge pt-4 font-mono text-xs text-text-secondary">
               错误编号：{error.digest}
             </p>
           )}
-        </div>
 
-        {/* Actions */}
-        <div className="flex flex-wrap items-center justify-center gap-4 mt-10">
-          <button
-            onClick={() => reset()}
-            className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent text-white rounded-xl font-semibold shadow-glow hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
-          >
-            <RotateCcw className="w-4 h-4" />
-            重试
-          </button>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-surface-alt border border-edge text-muted hover:text-accent hover:border-accent/30 transition-all"
-          >
-            <Home className="w-4 h-4" />
-            返回首页
-          </Link>
-        </div>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={() => reset()}
+              className="dn-focus dn-interactive inline-flex min-h-[48px] items-center gap-2 bg-teal px-6 text-sm font-semibold text-on-color"
+            >
+              <RotateCcw className="h-4 w-4" aria-hidden="true" />
+              重试
+            </button>
+            <Link
+              href="/"
+              className="dn-focus inline-flex min-h-[48px] items-center gap-2 border border-edge-strong px-6 text-sm font-semibold text-text-primary hover:bg-surface-alt"
+            >
+              <Home className="h-4 w-4" aria-hidden="true" />
+              返回课程表
+            </Link>
+          </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 }

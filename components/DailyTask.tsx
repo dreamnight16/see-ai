@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 import Link from "next/link";
-import { Sparkles, ArrowRight, CalendarDays } from "lucide-react";
+import { ArrowRight, CalendarDays } from "lucide-react";
 import { promptTemplates } from "@/lib/prompt-library";
 import { practiceScenarios } from "@/lib/practice-scenarios";
 import CopyButton from "@/components/CopyButton";
@@ -40,48 +40,54 @@ export default function DailyTask() {
   const scenario = practiceScenarios[index % practiceScenarios.length];
 
   return (
-    <div className="card p-6 md:p-7 border-accent/20">
-      <div className="flex items-center gap-2.5 mb-4">
-        <span className="w-9 h-9 rounded-xl bg-accent-soft flex items-center justify-center">
-          <CalendarDays className="w-4 h-4 text-accent" />
+    <section className="card flex h-full flex-col p-5 sm:p-6">
+      <div className="flex items-center gap-3">
+        <span className="flex h-9 w-9 items-center justify-center bg-amber text-on-color">
+          <CalendarDays className="h-4 w-4" aria-hidden="true" />
         </span>
         <div>
-          <h2 className="font-display font-bold leading-tight">今天就试这一件</h2>
-          <p className="text-[11px] text-muted">每天换一条。看完就去发一次，比多看三节课管用。</p>
+          <h2 className="font-display text-lg leading-tight">今天就试这一件</h2>
+          <p className="text-xs text-text-secondary">
+            每天换一条。看完就去发一次，比多看三节课管用。
+          </p>
         </div>
       </div>
 
-      <div className="p-5 rounded-xl bg-surface-alt border border-edge">
-        <div className="flex items-start justify-between gap-3 mb-2">
-          <h3 className="font-display font-semibold">{template.title}</h3>
+      <div className="mt-5 border border-edge">
+        <div className="flex items-start justify-between gap-3 border-b border-edge bg-surface-alt px-4 py-3">
+          <div className="min-w-0">
+            <h3 className="font-display text-base leading-tight">{template.title}</h3>
+            <p className="mt-1 text-xs text-text-secondary">{template.scene}</p>
+          </div>
           <CopyButton text={template.prompt} label="复制这段" compact />
         </div>
-        <p className="text-xs text-muted mb-3">{template.scene}</p>
-        <pre className="rounded-lg bg-surface p-3.5 text-xs leading-relaxed whitespace-pre-wrap font-sans text-muted border border-edge">
+
+        <pre className="whitespace-pre-wrap bg-surface p-4 font-sans text-[13px] leading-relaxed text-text-primary">
           {template.prompt}
         </pre>
+
         {template.tip && (
-          <p className="mt-3 text-[11px] text-accent leading-relaxed">
-            拿到结果之后：{template.tip}
+          <p className="border-t border-edge bg-amber-tint px-4 py-3 text-xs leading-relaxed text-text-primary">
+            <span className="font-semibold">拿到结果之后：</span>
+            {template.tip}
           </p>
         )}
       </div>
 
-      <div className="flex flex-wrap items-center gap-4 mt-4">
-        <span className="text-[11px] text-faint inline-flex items-center gap-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-accent" />
-          复制到豆包、DeepSeek、Kimi 里都行，换成你自己的情况再发
-        </span>
+      <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 pt-4">
+        <p className="text-xs text-text-secondary">
+          复制到豆包、DeepSeek、Kimi 里都行，换成你自己的情况再发。
+        </p>
         {scenario && (
           <Link
             href="/practice"
-            className="inline-flex items-center gap-1 text-xs text-accent hover:underline ml-auto"
+            className="dn-focus see-link ml-auto inline-flex min-h-[44px] items-center gap-1.5 text-xs font-semibold"
           >
             想先练一遍？去练习场
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
           </Link>
         )}
       </div>
-    </div>
+    </section>
   );
 }

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
 import StartWizard from "@/components/StartWizard";
+import ToolHeader from "@/components/shell/ToolHeader";
+import { tracks } from "@/lib/tracks";
+import { lessons } from "@/lib/lessons";
 
 export const metadata: Metadata = {
   title: "我该从哪开始 | 见 AI",
@@ -10,30 +11,22 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <div className="max-w-[1000px] mx-auto px-6 pt-14 pb-section">
-      <Link
-        href="/"
-        className="inline-flex items-center gap-1 text-xs text-muted hover:text-accent transition-colors mb-8"
-      >
-        <ChevronLeft className="w-3.5 h-3.5" />
-        回到课程首页
-      </Link>
-
-      <header className="mb-10">
-        <div className="decorative-line mb-4" />
-        <h1 className="font-display text-4xl md:text-5xl font-black leading-tight mb-4">
-          四道题，排个顺序
-        </h1>
-        <p className="text-lg text-muted max-w-2xl leading-relaxed">
-          十条轨道不用按顺序全学。回答四个问题，我告诉你先走哪两条，剩下的什么时候想学再说。
-        </p>
-      </header>
-
-      <StartWizard />
-
-      <p className="mt-12 text-xs text-faint leading-relaxed">
-        排出来的顺序只是个建议。随时可以从首页的课程表里跳到任何一节课，学过的进度都记在你自己浏览器里。
-      </p>
+    <div>
+      <ToolHeader
+        kicker="学习向导 · 四道题"
+        title="十条轨道不用按顺序全学"
+        lead="回答四个问题，这里会告诉你先走哪两条。答案只用来排序，不记录、不上传，随时可以重来。"
+        field="bg-steel text-on-color"
+        facts={[
+          { value: String(tracks.length), label: "条轨道，全部可选" },
+          { value: "4", label: "道题，一分钟" },
+          { value: String(lessons.length), label: "节课，可跳着学" },
+        ]}
+        footnote="排出来的顺序只是建议，随时可以从课程表跳到任何一节课。"
+      />
+      <div className="mx-auto max-w-[var(--see-shell)] px-[var(--see-gutter)] py-10">
+        <StartWizard />
+      </div>
     </div>
   );
 }

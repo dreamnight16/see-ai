@@ -4,8 +4,8 @@
   "description": "面向非专业大学生的 AI 入门课：会用、用对、别被坑",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f3f6f8",
-  "theme_color": "#3159d8",
+  "background_color": "#F9FBFA",
+  "theme_color": "#59AAA5",
   "orientation": "portrait-primary",
   "icons": [
     {

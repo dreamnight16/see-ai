@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Play, Pause, RotateCcw } from 'lucide-react';
+import type { CSSProperties } from 'react';
 
 const HTML_CODE = `<!DOCTYPE html>
 <html>
@@ -9,7 +10,7 @@ const HTML_CODE = `<!DOCTYPE html>
   <title>我的主页</title>
   <style>
     body { font-family: sans-serif; }
-    h1 { color: #e85d3a; }
+    h1 { color: #59AAA5; }
   </style>
 </head>
 <body>
@@ -18,9 +19,15 @@ const HTML_CODE = `<!DOCTYPE html>
 </body>
 </html>`;
 
-const ROOT_COLOR = '#e85d3a';
-const ELEMENT_COLOR = '#d4952a';
-const TEXT_COLOR = '#5b8c5a';
+/* 三类节点各用一个品牌实色，色块上的文字统一用 --dn-text-on-color */
+const ROOT_COLOR = 'var(--dn-teal)';
+const ELEMENT_COLOR = 'var(--dn-cyan)';
+const TEXT_COLOR = 'var(--dn-emerald)';
+
+/* 还没解析到的层留虚线占位框，而不是把节点淡成看不清 */
+const PENDING_FILL = 'var(--dn-surface)';
+const LINE = 'var(--dn-divider)';
+const ON_COLOR = 'var(--dn-text-on-color)';
 
 export default function DomTree() {
   const [activeLevel, setActiveLevel] = useState(-1);
@@ -80,38 +87,45 @@ export default function DomTree() {
     });
 
   return (
-    <div className="card p-5 animate-slide-up">
-      <div className="flex items-center justify-between mb-4">
+    <div className="card dn-rise p-5" style={{ '--dn-enter-index': 0 } as CSSProperties}>
+      <div className="mb-4 flex items-center justify-between gap-3">
         <div>
-          <h3 className="font-display font-bold text-base">HTML → DOM 树</h3>
-          <p className="text-[10px] text-muted">浏览器如何把代码变成树状结构</p>
+          <h3 className="font-display text-base">HTML → DOM 树</h3>
+          <p className="text-[11px] text-text-secondary">浏览器如何把代码变成树状结构</p>
         </div>
         <div className="flex items-center gap-1.5">
           <button
+            type="button"
             onClick={toggle}
-            className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium bg-accent text-white hover:shadow-md active:scale-95 transition-all"
+            className="dn-focus dn-interactive flex min-h-[44px] items-center gap-1.5 bg-teal px-4 text-xs font-semibold text-on-color"
           >
-            {running ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
+            {running ? (
+              <Pause className="h-3.5 w-3.5" aria-hidden="true" />
+            ) : (
+              <Play className="h-3.5 w-3.5" aria-hidden="true" />
+            )}
             {running ? '暂停' : activeLevel < 0 ? '播放' : '继续'}
           </button>
           <button
+            type="button"
             onClick={reset}
-            className="p-1.5 rounded-lg text-xs text-muted hover:text-accent hover:bg-surface-alt transition-all"
+            aria-label="重置解析过程"
+            className="dn-focus dn-interactive flex h-11 w-11 items-center justify-center border border-edge-strong text-text-primary hover:bg-surface-alt"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
+            <RotateCcw className="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
       </div>
 
       {/* Side by side: code + tree */}
-      <div className="flex gap-4 flex-col md:flex-row">
+      <div className="flex flex-col gap-4 md:flex-row">
         {/* Code panel */}
-        <div className="md:w-[45%] shrink-0">
-          <div className="rounded-xl border border-edge overflow-hidden">
-            <div className="px-3 py-2 bg-surface-alt border-b border-edge text-[10px] text-muted font-medium">
-              HTML 代码
+        <div className="shrink-0 md:w-[45%]">
+          <div className="border border-edge">
+            <div className="border-b border-edge bg-surface-alt px-3 py-2">
+              <span className="see-kicker text-text-secondary">HTML 代码</span>
             </div>
-            <pre className="p-3 text-[11px] font-mono leading-relaxed bg-[#1e1b18] text-[#e8dcc8] overflow-auto max-h-[300px]">
+            <pre className="see-code max-h-[300px] overflow-auto p-3 font-mono text-[11px] leading-relaxed">
               <code>{HTML_CODE}</code>
             </pre>
           </div>
@@ -130,10 +144,10 @@ export default function DomTree() {
                   y1={edge.from.y + 12}
                   x2={edge.to.x}
                   y2={edge.to.y - 6}
-                  stroke={visible ? edge.to.color : 'var(--color-border-primary)'}
+                  stroke={visible ? edge.to.color : LINE}
                   strokeWidth={visible ? 2 : 1}
-                  opacity={visible ? 1 : 0.2}
-                  className="transition-all duration-500"
+                  strokeDasharray={visible ? 'none' : '4,3'}
+                  className="transition-[stroke] duration-[380ms] ease-[var(--dn-ease-in)]"
                 />
               );
             })}
@@ -145,22 +159,24 @@ export default function DomTree() {
               const x = node.x - width / 2;
 
               return (
-                <g key={i} className="transition-all duration-500" opacity={visible ? 1 : 0.15}>
+                <g key={i}>
                   <rect
                     x={x}
                     y={node.y - 8}
                     width={width}
                     height={22}
-                    rx={6}
-                    fill={visible ? node.color : 'var(--color-bg-tertiary)'}
-                    className="transition-all duration-500"
+                    fill={visible ? node.color : PENDING_FILL}
+                    stroke={visible ? node.color : LINE}
+                    strokeWidth={1}
+                    strokeDasharray={visible ? 'none' : '4,3'}
+                    className="transition-[fill,stroke] duration-[380ms] ease-[var(--dn-ease-in)]"
                   />
                   <text
                     x={node.x}
                     y={node.y + 6}
                     textAnchor="middle"
-                    fill={visible ? '#fff' : 'var(--color-text-tertiary)'}
-                    className="text-[10px] font-mono font-semibold transition-all duration-500"
+                    fill={visible ? ON_COLOR : 'var(--dn-text-secondary)'}
+                    className="text-[10px] font-mono font-semibold"
                   >
                     {node.label}
                   </text>
@@ -170,19 +186,19 @@ export default function DomTree() {
 
             {/* Level labels */}
             {activeLevel >= 0 && (
-              <g className="animate-slide-down">
-                {[1, 2, 3, 4].map((level) => (
+              <g>
+                {[1, 2, 3, 4].map((level) =>
                   activeLevel >= level ? (
                     <text
                       key={level}
                       x={10}
                       y={level === 1 ? 35 : level === 2 ? 85 : level === 3 ? 135 : 185}
-                      className="text-[9px] fill-muted"
+                      className="fill-text-secondary text-[9px]"
                     >
                       L{level}
                     </text>
-                  ) : null
-                ))}
+                  ) : null,
+                )}
               </g>
             )}
           </svg>
@@ -190,8 +206,8 @@ export default function DomTree() {
       </div>
 
       {/* Explanation */}
-      <div className="mt-4 p-3 rounded-xl bg-surface-alt border border-edge/50">
-        <p className="text-xs text-muted leading-relaxed">
+      <div className="mt-4 border border-edge bg-surface-alt p-3">
+        <p className="text-xs leading-relaxed text-text-secondary">
           <span className="font-semibold text-text-primary">原理：</span>
           浏览器读入 HTML 后，会把它解析成一棵&ldquo;树&rdquo;（DOM 树）。每个标签是一个节点，嵌套关系变成父子关系。
           树叶是文字内容，树枝是标签。浏览器根据这棵树来决定每个元素的颜色、大小和位置。

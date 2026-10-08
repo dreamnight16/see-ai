@@ -1,11 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { Wand2, Copy, Check, Code2, Play, Sparkles, Save, FolderOpen, AlertTriangle } from "lucide-react";
+import { Wand2, Copy, Check, Code2, Play, Sparkles, Save, FolderOpen, AlertTriangle, Loader2 } from "lucide-react";
 import CodeReview from "./playground/CodeReview";
 import { saveProject } from "@/lib/projects";
 import { emitGameEvent } from "@/lib/events";
 import Link from "next/link";
+
+/** 工具栏按钮：直角、≥44px、图标 + 文字，每条操作都自带名字。 */
+const TOOL_BTN =
+  "dn-focus inline-flex min-h-[44px] items-center gap-1.5 px-3 text-xs transition-colors";
+const TOOL_IDLE = "text-text-secondary hover:bg-surface-alt hover:text-text-primary";
 
 export default function PromptPlayground() {
   const [prompt, setPrompt] = useState("");
@@ -92,57 +97,59 @@ export default function PromptPlayground() {
     .trim();
 
   return (
-    <div className="flex flex-col h-full rounded-xl border border-edge bg-surface overflow-hidden shadow-md">
+    <div className="card flex h-full flex-col overflow-hidden">
       {/* Header */}
-      <div className="px-5 py-3.5 border-b border-edge bg-surface-alt flex items-center gap-2.5 shrink-0">
-        <span className="w-8 h-8 rounded-lg bg-accent-soft flex items-center justify-center">
-          <Wand2 className="w-4 h-4 text-accent" />
+      <div className="flex shrink-0 items-center gap-3 border-b border-edge bg-surface-alt px-4 py-3">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-teal text-on-color">
+          <Wand2 className="h-4 w-4" aria-hidden="true" />
         </span>
-        <div>
-          <span className="font-semibold text-sm">网页小工坊</span>
-          <span className="text-[10px] text-muted ml-2">把想法做出来</span>
+        <div className="flex flex-wrap items-baseline gap-x-2">
+          <span className="text-sm font-semibold">网页小工坊</span>
+          <span className="text-[11px] text-text-secondary">把想法做出来</span>
         </div>
       </div>
 
       {/* Input area */}
-      <div className="p-4 space-y-3 shrink-0 border-b border-edge/50">
-        <div className="relative">
-          <textarea
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            placeholder="描述你想要做的网页，比如：帮我做一个带有倒计时功能的番茄钟..."
-            className="w-full h-28 px-4 py-3.5 rounded-xl border border-edge bg-surface-alt text-sm resize-none focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent/50 focus:bg-surface transition-all placeholder:text-faint"
-          />
-          {!prompt.trim() && (
-            <div className="absolute bottom-3 left-4 right-4 flex flex-wrap gap-1.5">
-              {["番茄钟", "个人主页", "计算器", "待办清单"].map((example) => (
-                <button
-                  key={example}
-                  onClick={() => setPrompt(`帮我做一个${example}`)}
-                  className="text-[10px] px-2 py-1 rounded-md bg-surface border border-edge text-muted hover:text-accent hover:border-accent/30 transition-colors"
-                >
-                  &quot;{example}&quot;
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+      <div className="shrink-0 space-y-3 border-b border-edge p-4">
+        <textarea
+          value={prompt}
+          onChange={(e) => setPrompt(e.target.value)}
+          placeholder="描述你想要做的网页，比如：帮我做一个带有倒计时功能的番茄钟..."
+          aria-label="描述你想要做的网页"
+          className="dn-focus h-28 w-full resize-none border border-edge-strong bg-surface-alt px-4 py-3.5 text-sm placeholder:text-text-secondary focus:bg-surface"
+        />
+        {/* 示例词放在输入框下方而不是压在 placeholder 上：
+            这样每个都能拿到 44px 的触控高度，也不会和提示文字叠在一起。 */}
+        {!prompt.trim() && (
+          <div className="flex flex-wrap gap-1.5">
+            {["番茄钟", "个人主页", "计算器", "待办清单"].map((example) => (
+              <button
+                key={example}
+                type="button"
+                onClick={() => setPrompt(`帮我做一个${example}`)}
+                className="dn-focus inline-flex min-h-[44px] items-center border border-edge-strong bg-surface px-3 text-xs text-text-secondary transition-colors hover:border-teal hover:text-teal-ink"
+              >
+                &quot;{example}&quot;
+              </button>
+            ))}
+          </div>
+        )}
 
-        <div className="flex items-center justify-between">
-          <span className="text-xs text-faint">说清楚页面要做什么，结果会更接近你的想法</span>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <span className="text-xs text-text-secondary">说清楚页面要做什么，结果会更接近你的想法</span>
           <button
             onClick={generate}
             disabled={loading || !prompt.trim()}
-            className="px-5 py-2.5 bg-accent text-white rounded-xl text-sm font-semibold hover:shadow-lg active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100 flex items-center gap-2 transition-all"
+            className="dn-focus dn-interactive inline-flex min-h-[44px] items-center gap-2 bg-teal px-5 text-sm font-semibold text-on-color disabled:cursor-not-allowed disabled:opacity-40"
           >
             {loading ? (
               <>
-                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
                 生成中...
               </>
             ) : (
               <>
-                <Play className="w-4 h-4" />
+                <Play className="h-4 w-4" aria-hidden="true" />
                 生成代码
               </>
             )}
@@ -151,21 +158,21 @@ export default function PromptPlayground() {
       </div>
 
       {error && (
-        <div role="alert" className="flex items-start gap-2.5 px-4 py-3 text-sm text-warning bg-warning-soft border-b border-warning/10">
-          <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
+        <div role="alert" className="flex items-start gap-2.5 border-b border-edge bg-amber-tint px-4 py-3 text-sm text-text-primary">
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-ink" aria-hidden="true" />
           <span>{error} 课程和练习不需要模型，可以先继续学习。</span>
         </div>
       )}
 
       {/* Code output */}
       {cleanCode && (
-        <div className="flex-1 min-h-[200px] flex flex-col animate-scale-in">
-          <div className="flex items-center justify-between px-4 py-2.5 bg-surface-alt border-b border-edge shrink-0">
-            <div className="flex items-center gap-2 text-xs text-muted">
-              <Code2 className="w-3.5 h-3.5" />
+        <div className="flex min-h-[200px] flex-1 flex-col">
+          <div className="flex shrink-0 flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-edge bg-surface-alt px-4 py-1.5">
+            <div className="flex items-center gap-2 text-xs text-text-secondary">
+              <Code2 className="h-4 w-4" aria-hidden="true" />
               生成的代码
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-1">
               {/* Preview button */}
               <button
                 onClick={() => {
@@ -174,48 +181,48 @@ export default function PromptPlayground() {
                   window.open(url, '_blank');
                   setTimeout(() => URL.revokeObjectURL(url), 1000);
                 }}
-                className="flex items-center gap-1 text-xs text-muted hover:text-accent transition-colors"
+                className={`${TOOL_BTN} ${TOOL_IDLE}`}
               >
-                <Play className="w-3 h-3" />
+                <Play className="h-4 w-4" aria-hidden="true" />
                 预览
               </button>
               <button
                 onClick={handleSave}
-                className={`flex items-center gap-1 text-xs transition-colors ${
-                  saved ? 'text-success' : 'text-muted hover:text-accent'
-                }`}
+                className={`${TOOL_BTN} ${saved ? 'text-emerald-ink' : TOOL_IDLE}`}
               >
-                {saved ? <Check className="w-3 h-3" /> : <Save className="w-3 h-3" />}
+                {saved ? (
+                  <Check className="h-4 w-4" aria-hidden="true" />
+                ) : (
+                  <Save className="h-4 w-4" aria-hidden="true" />
+                )}
                 {saved ? '已保存' : '保存'}
               </button>
-              <Link
-                href="/showcase"
-                className="flex items-center gap-1 text-xs text-muted hover:text-accent transition-colors"
-              >
-                <FolderOpen className="w-3 h-3" />
+              <Link href="/showcase" className={`${TOOL_BTN} ${TOOL_IDLE}`}>
+                <FolderOpen className="h-4 w-4" aria-hidden="true" />
                 作品集
               </Link>
               <button
                 onClick={() => setShowReview(!showReview)}
-                className="flex items-center gap-1 text-xs text-muted hover:text-accent transition-colors"
+                aria-expanded={showReview}
+                className={`${TOOL_BTN} ${showReview ? 'text-teal-ink' : TOOL_IDLE}`}
               >
-                <Sparkles className="w-3 h-3" />
+                <Sparkles className="h-4 w-4" aria-hidden="true" />
                 请助手看一眼
               </button>
               <button
                 onClick={copyCode}
-                className="flex items-center gap-1 text-xs text-muted hover:text-accent transition-colors"
+                className={`${TOOL_BTN} ${TOOL_IDLE}`}
               >
                 {copied ? (
-                  <Check className="w-3.5 h-3.5 text-success" />
+                  <Check className="h-4 w-4 text-emerald-ink" aria-hidden="true" />
                 ) : (
-                  <Copy className="w-3.5 h-3.5" />
+                  <Copy className="h-4 w-4" aria-hidden="true" />
                 )}
                 {copied ? "已复制" : "复制"}
               </button>
             </div>
           </div>
-          <pre className="flex-1 p-5 overflow-auto text-sm font-mono leading-relaxed bg-[#1e1b18] text-[#e8dcc8] selection:bg-accent/30">
+          <pre className="see-code flex-1 overflow-auto p-5 font-mono text-sm leading-relaxed selection:bg-teal selection:text-on-color">
             <code>{cleanCode}</code>
           </pre>
         </div>
@@ -223,7 +230,7 @@ export default function PromptPlayground() {
 
       {/* Code Review */}
       {showReview && cleanCode && (
-        <div className="p-4 border-t border-edge">
+        <div className="border-t border-edge p-4">
           <CodeReview code={cleanCode} onClose={() => setShowReview(false)} />
         </div>
       )}
