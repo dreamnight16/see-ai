@@ -24,7 +24,8 @@ export interface UserProgress {
   lastUpdatedAt: string;
 }
 
-function emptyProgress(): UserProgress {
+/** 空进度：服务端渲染、以及客户端水合首帧都用它，保证两边渲染结果一致 */
+export function emptyProgress(): UserProgress {
   return {
     schemaVersion: CURRENT_SCHEMA,
     lessons: {},

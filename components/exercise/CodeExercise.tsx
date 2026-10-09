@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import type { Exercise } from '@/lib/exercises';
-import { Play, Eye, Lightbulb, CheckCircle2, RotateCcw } from 'lucide-react';
+import { Play, Eye, Lightbulb, CheckCircle2, RotateCcw, TriangleAlert } from 'lucide-react';
 
 interface CodeExerciseProps {
   exercise: Exercise;
@@ -14,15 +14,21 @@ export default function CodeExercise({ exercise, onComplete }: CodeExerciseProps
   const [hintsRevealed, setHintsRevealed] = useState(0);
   const [completed, setCompleted] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  // 检查结果。之前「检查」在不通过时什么都不做，点了没反应——
+  // 用户没法区分「没做到」和「按钮坏了」。这里只报数量，不报具体是哪个检查点，
+  // 否则等于直接给答案；要看方向就点「提示」。
+  const [missingCount, setMissingCount] = useState<number | null>(null);
 
   const checkCompletion = useCallback(() => {
-    const allFound = exercise.checkPatterns.every((pattern) =>
-      code.toLowerCase().includes(pattern.toLowerCase()),
+    const missing = exercise.checkPatterns.filter(
+      (pattern) => !code.toLowerCase().includes(pattern.toLowerCase()),
     );
+    const allFound = missing.length === 0;
     if (allFound && !completed) {
       setCompleted(true);
       onComplete?.(exercise.id);
     }
+    setMissingCount(allFound ? null : missing.length);
     return allFound;
   }, [code, exercise.checkPatterns, completed, onComplete, exercise.id]);
 
@@ -45,6 +51,7 @@ export default function CodeExercise({ exercise, onComplete }: CodeExerciseProps
     setCode(exercise.templateCode);
     setHintsRevealed(0);
     setCompleted(false);
+    setMissingCount(null);
   }
 
   return (
@@ -131,6 +138,19 @@ export default function CodeExercise({ exercise, onComplete }: CodeExerciseProps
           重置
         </button>
       </div>
+
+      {/* 没通过时说清楚「还差几处」：沉默的检查按钮会被当成坏掉的按钮 */}
+      {missingCount !== null && (
+        <p
+          role="status"
+          className="flex items-start gap-2.5 border-l-[3px] border-amber bg-amber-tint p-3 text-sm text-text-primary"
+        >
+          <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-amber-ink" aria-hidden="true" />
+          <span>
+            还没通过：有 {missingCount} 处没做到。点「提示」看看差在哪，改完再点一次检查。
+          </span>
+        </p>
+      )}
 
       {/* Hints */}
       {hintsRevealed > 0 && (

@@ -1,8 +1,49 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useSyncExternalStore } from "react";
 import { Send, Bot, User, Sparkles, Loader2 } from "lucide-react";
 import SocraticToggle from "./chat/SocraticToggle";
+import { getRepository } from "@/lib/repository";
+
+/** 「回答方式」偏好的存储键；0.1 起就在用这个键，不能改名 */
+const SOCRATIC_KEY = "vibe-coding-socratic";
+
+/**
+ * 「回答方式」偏好是一个外部状态：它住在 localStorage 里，服务端读不到。
+ *
+ * 直接用 useState 初始化里读 localStorage 会 hydration 不匹配——
+ * 服务端渲染「直接回答」，客户端首帧渲染「引导思考」，React 只能把整棵树
+ * 丢回客户端重渲染（React #418），用户看到状态先闪一下再跳回去。
+ *
+ * 所以按 React 推荐的做法走 useSyncExternalStore：服务端快照写死成 false，
+ * 首帧与服务端一致，水合完成后 React 自己会再读一次真实值并重渲染。
+ * 也顺便不用在 effect 里同步 setState（那会触发级联渲染）。
+ */
+const socraticListeners = new Set<() => void>();
+
+function subscribeSocratic(onStoreChange: () => void) {
+  socraticListeners.add(onStoreChange);
+  // 另一个标签页改了偏好，这边也跟着变
+  window.addEventListener("storage", onStoreChange);
+  return () => {
+    socraticListeners.delete(onStoreChange);
+    window.removeEventListener("storage", onStoreChange);
+  };
+}
+
+function readSocratic() {
+  return getRepository().getItem(SOCRATIC_KEY) === "true";
+}
+
+function writeSocratic(next: boolean) {
+  getRepository().setItem(SOCRATIC_KEY, String(next));
+  socraticListeners.forEach((listener) => listener());
+}
+
+/** 服务端没有 localStorage：一律按默认的「直接回答」渲染 */
+function serverSocratic() {
+  return false;
+}
 
 interface Message {
   role: "user" | "assistant";
@@ -36,18 +77,13 @@ export default function ChatInterface() {
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [socraticMode, setSocraticMode] = useState<boolean>(
-    () =>
-      typeof window !== 'undefined' &&
-      localStorage.getItem('vibe-coding-socratic') === 'true',
+  const socraticMode = useSyncExternalStore(
+    subscribeSocratic,
+    readSocratic,
+    serverSocratic,
   );
   const containerRef = useRef<HTMLDivElement>(null);
   const isNearBottom = useRef(true);
-
-  // Persist socratic mode changes
-  useEffect(() => {
-    localStorage.setItem('vibe-coding-socratic', String(socraticMode));
-  }, [socraticMode]);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -131,7 +167,7 @@ export default function ChatInterface() {
             <span className="text-[11px] text-text-secondary">需要时再用</span>
           </div>
           <div className="mt-1.5">
-            <SocraticToggle value={socraticMode} onChange={setSocraticMode} />
+            <SocraticToggle value={socraticMode} onChange={writeSocratic} />
           </div>
         </div>
       </div>

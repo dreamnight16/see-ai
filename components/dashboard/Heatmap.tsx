@@ -1,6 +1,7 @@
 'use client';
 
 import { useHeatmap } from '@/hooks/useHeatmap';
+import { useHydrated } from '@/hooks/useHydrated';
 
 /**
  * 五档强度全部取自品牌 Teal 的同色阶梯，而不是另一套暖色；
@@ -11,7 +12,10 @@ const COLORS = ['#E1E9E7', '#DEEEED', '#ACD4D2', '#82BFBB', '#59AAA5'];
 const LEVEL_LABELS = ['无记录', '少量', '一些', '较多', '最多'];
 
 export default function Heatmap() {
-  const { data } = useHeatmap();
+  // 格子上的日期与颜色都取决于"今天"和本地进度，两者服务端都拿不到：
+  // 水合完成前只渲染标题、统计和占位块，避免水合前后对不上（React #418）
+  const hydrated = useHydrated();
+  const { data } = useHeatmap(hydrated);
 
   const weeks: typeof data[] = [];
   for (let i = 0; i < data.length; i += 7) {
@@ -32,7 +36,9 @@ export default function Heatmap() {
         合计 <span className="tabular-nums font-semibold text-text-primary">{totalXp}</span> XP。
       </p>
 
-      <div className="mt-4 overflow-x-auto">
+      {!hydrated && <div className="mt-4 h-[118px]" aria-hidden="true" />}
+
+      <div className={`mt-4 overflow-x-auto${hydrated ? '' : ' hidden'}`}>
         <svg
           width={weeks.length * (CELL + GAP) + 24}
           height={CELL * 7 + GAP * 6 + 22}

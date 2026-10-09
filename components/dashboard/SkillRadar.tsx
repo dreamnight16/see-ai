@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
-import { loadProgress } from '@/lib/progress';
+import { useMemo } from 'react';
+import { loadProgress, emptyProgress } from '@/lib/progress';
 import { lessons } from '@/lib/lessons';
+import { useHydrated } from '@/hooks/useHydrated';
 
 interface Skill {
   label: string;
@@ -16,8 +17,10 @@ interface Skill {
  * 以文本形式列在下方——图形本身对读屏软件没有意义，数值才是信息。
  */
 export default function SkillRadar() {
-  const [skills] = useState<Skill[]>(() => {
-    const progress = loadProgress();
+  // 同 StatsGrid：水合首帧按"空进度"算，和服务端渲染一致，水合后再用真实进度
+  const hydrated = useHydrated();
+  const skills = useMemo<Skill[]>(() => {
+    const progress = hydrated ? loadProgress() : emptyProgress();
     const lessonEntries = Object.entries(progress.lessons);
     const completedIds = lessonEntries.filter(([, v]) => v.completed).map(([k]) => k);
 
@@ -46,7 +49,7 @@ export default function SkillRadar() {
           : 0,
       },
     ];
-  });
+  }, [hydrated]);
 
   const size = 240;
   const cx = size / 2;

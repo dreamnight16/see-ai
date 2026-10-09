@@ -183,6 +183,12 @@ export default function VibeCodingFlow() {
         </svg>
       </div>
 
+      {/* 容器窄于 500px 时图必须横滑，不给提示的话第 3 步会被从中间切断，
+          看上去像渲染坏了。640px 以上容器装得下整张图，无需提示。 */}
+      <p className="mt-2 text-center text-[10px] text-text-secondary sm:hidden">
+        ← 左右滑动查看完整流程 →
+      </p>
+
       <div className="mt-3 flex items-center justify-center gap-4 text-[10px] text-text-secondary">
         <span className="flex items-center gap-1.5">
           <span aria-hidden="true" className="h-2.5 w-2.5 bg-teal" /> 当前步骤

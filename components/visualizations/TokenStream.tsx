@@ -110,7 +110,7 @@ export default function TokenStream() {
           <button
             type="button"
             onClick={toggle}
-            className="dn-focus dn-interactive flex min-h-[44px] items-center gap-1.5 bg-teal px-4 text-xs font-semibold text-on-color"
+            className="dn-focus dn-interactive flex min-h-[44px] shrink-0 items-center gap-1.5 bg-teal px-4 text-xs font-semibold text-on-color"
           >
             {running ? (
               <Pause className="h-3.5 w-3.5" aria-hidden="true" />
@@ -123,7 +123,7 @@ export default function TokenStream() {
             type="button"
             onClick={reset}
             aria-label="重置生成过程"
-            className="dn-focus dn-interactive flex h-11 w-11 items-center justify-center border border-edge-strong text-text-primary hover:bg-surface-alt"
+            className="dn-focus dn-interactive flex h-11 w-11 shrink-0 items-center justify-center border border-edge-strong text-text-primary hover:bg-surface-alt"
           >
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
           </button>

@@ -8,6 +8,7 @@ import { getTrack } from "@/lib/tracks";
 import { trackVisual } from "@/components/track-visuals";
 import { Menu, X, ChevronRight, FolderOpen, BarChart3, Library, Target, BookMarked, Compass } from "lucide-react";
 import { loadProgress, subscribe } from "@/lib/progress";
+import { useHydrated } from "@/hooks/useHydrated";
 
 function buildProgressMap(): Record<string, boolean> {
   const p = loadProgress();
@@ -17,6 +18,9 @@ function buildProgressMap(): Record<string, boolean> {
   }
   return map;
 }
+
+/** 服务端与水合首帧用的"没有进度"视图：稳定引用，别每次渲染新建 */
+const EMPTY_PROGRESS: Record<string, boolean> = {};
 
 const SIDE_LINKS = [
   { href: "/start", icon: Compass, label: "我该从哪开始" },
@@ -38,6 +42,10 @@ export default function LessonNavigator() {
   const currentId = pathname.split("/").pop();
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState<Record<string, boolean>>(buildProgressMap);
+  // 进度只存在浏览器里，服务端渲染出来是"全未完成"。水合首帧照服务端那份渲染，
+  // 水合完成后再显示真实完成情况，否则课程页每次打开都报 hydration 失败（#418）。
+  const hydrated = useHydrated();
+  const done = hydrated ? progress : EMPTY_PROGRESS;
   const triggerRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
 
@@ -69,7 +77,7 @@ export default function LessonNavigator() {
   }, [open]);
 
   const grouped = getLessonsGroupedByTrack();
-  const completedCount = Object.values(progress).filter(Boolean).length;
+  const completedCount = Object.values(done).filter(Boolean).length;
   const overallPct = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
 
   const nav = (
@@ -91,7 +99,7 @@ export default function LessonNavigator() {
           if (!track) return null;
           const visual = trackVisual(track.color);
           const trackLessons = modules.flatMap((m) => m.lessons);
-          const trackDone = trackLessons.filter((l) => progress[l.id]).length;
+          const trackDone = trackLessons.filter((l) => done[l.id]).length;
           const allDone = trackDone === trackLessons.length && trackLessons.length > 0;
 
           return (
@@ -116,7 +124,7 @@ export default function LessonNavigator() {
                   <ul>
                     {group.lessons.map((lesson) => {
                       const isActive = lesson.id === currentId;
-                      const isCompleted = progress[lesson.id];
+                      const isCompleted = done[lesson.id];
                       return (
                         <li key={lesson.id}>
                           <Link
@@ -200,7 +208,7 @@ export default function LessonNavigator() {
         onClick={() => setOpen(true)}
         aria-label="打开课程目录"
         aria-expanded={open}
-        className="dn-focus dn-interactive fixed bottom-5 right-5 z-30 flex h-14 w-14 items-center justify-center bg-teal text-on-color lg:hidden"
+        className="see-lesson-fab dn-focus dn-interactive fixed bottom-5 right-5 z-30 flex h-14 w-14 items-center justify-center bg-teal text-on-color lg:hidden"
       >
         <Menu className="h-5 w-5" aria-hidden="true" />
       </button>

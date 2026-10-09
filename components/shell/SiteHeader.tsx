@@ -71,7 +71,7 @@ export default function SiteHeader({ onBadgeUnlock }: SiteHeaderProps = {}) {
       <header className="see-shell-header dn-acrylic fixed inset-x-0 top-0 z-20 flex h-[var(--see-header-h)] items-center gap-3 px-4 sm:px-6">
         <Link
           href="/"
-          className="see-brand dn-focus flex min-h-[44px] shrink-0 items-center gap-2.5"
+          className="see-brand dn-focus flex min-h-[44px] min-w-11 shrink-0 items-center gap-2.5"
           aria-label="见 AI 课程首页"
         >
           <span className="flex h-9 w-9 items-center justify-center bg-teal text-[15px] font-semibold text-on-color">

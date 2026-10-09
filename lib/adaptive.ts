@@ -1,6 +1,6 @@
 import { lessons, getLessonsByTrack, getLesson } from './lessons';
 import { getTrack } from './tracks';
-import { loadProgress } from './progress';
+import { loadProgress, type UserProgress } from './progress';
 
 export type RecommendationType =
   | 'next-lesson'
@@ -27,9 +27,14 @@ export interface AdaptiveRecommendation {
 /**
  * 学习建议。
  * 优先级压得很低是有意的：一次只给三条，别让人挑花眼。
+ *
+ * progress 默认取本地进度；组件在水合首帧会显式传一份空进度进来，
+ * 让客户端首帧与服务端渲染结果一致（服务端读不到 localStorage）。
  */
-export function getRecommendations(lessonId?: string): AdaptiveRecommendation[] {
-  const progress = loadProgress();
+export function getRecommendations(
+  lessonId?: string,
+  progress: UserProgress = loadProgress(),
+): AdaptiveRecommendation[] {
   const recs: AdaptiveRecommendation[] = [];
 
   const completedIds = Object.entries(progress.lessons)

@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-import { loadProgress } from '@/lib/progress';
+import { useMemo } from 'react';
+import { loadProgress, emptyProgress } from '@/lib/progress';
 import { calculateLevel } from '@/lib/gamification';
 import { lessons } from '@/lib/lessons';
 import AnimatedCounter from '@/components/ui/AnimatedCounter';
+import { useHydrated } from '@/hooks/useHydrated';
 
 interface StatCard {
   label: string;
@@ -30,8 +31,12 @@ const FIELDS = [
 ] as const;
 
 export default function StatsGrid() {
-  const [stats] = useState<StatCard[]>(() => {
-    const progress = loadProgress();
+  // 进度只存在浏览器里，服务端算出来全是 0。水合首帧按"空进度"算，
+  // 与服务端渲染对上；水合完成后换成真实进度，否则这一页每次打开都报
+  // hydration 失败（React #418），整棵树会被丢回客户端重渲染。
+  const hydrated = useHydrated();
+  const stats = useMemo<StatCard[]>(() => {
+    const progress = hydrated ? loadProgress() : emptyProgress();
     const gs = progress.gamification;
     const lessonVals = Object.values(progress.lessons);
     const completed = lessonVals.filter((l) => l.completed).length;
@@ -52,7 +57,7 @@ export default function StatsGrid() {
       { label: '学习时长', value: totalMinutes, suffix: ' 分钟', field: FIELDS[6] },
       { label: '徽章', value: gs?.badges?.length || 0, suffix: '', field: FIELDS[7] },
     ];
-  });
+  }, [hydrated]);
 
   return (
     <dl className="grid grid-cols-2 gap-[3px] md:grid-cols-4">

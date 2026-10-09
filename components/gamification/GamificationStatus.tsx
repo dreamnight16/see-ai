@@ -6,8 +6,20 @@ import { loadProjects } from '@/lib/projects';
 import type { GamificationState } from '@/lib/gamification';
 import { calculateLevel, xpForNextLevel, emptyGamification, updateStreak, awardXp } from '@/lib/gamification';
 import { checkNewBadges } from '@/lib/achievements';
+import { useHydrated } from '@/hooks/useHydrated';
 import { Flame, Trophy, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+
+/**
+ * 服务端（以及水合首帧）一律按空进度渲染。
+ *
+ * 顶栏在每一页上，等级 / EXP / 连胜都来自 localStorage：服务端渲染出来是
+ * Lv.1 / 0 XP，客户端首帧却带着真实进度，两边文本对不上——React 报 #418，
+ * 整棵树被丢回客户端重新渲染。实测只要有本地进度，11 条路由页页报错。
+ * 所以首帧渲染这份固定的空值，水合完成后再切到真实进度（见 useHydrated）。
+ * 这里必须是稳定引用，否则 useSyncExternalStore 之外的地方会误判成「变了」。
+ */
+const SERVER_GAMIFICATION = emptyGamification();
 
 interface GamificationStatusProps {
   compact?: boolean;
@@ -62,8 +74,11 @@ export default function GamificationStatus({ compact = false, onBadgeUnlock }: G
   const [gamification, setGamification] = useState<GamificationState>(() =>
     syncBadges(loadProgress().gamification || emptyGamification()),
   );
-  const level = calculateLevel(gamification.xp);
-  const xpProgress = xpForNextLevel(gamification.xp);
+  // 渲染用的是 view：水合首帧等于服务端那份空进度，水合完成后才是真实进度
+  const hydrated = useHydrated();
+  const view = hydrated ? gamification : SERVER_GAMIFICATION;
+  const level = calculateLevel(view.xp);
+  const xpProgress = xpForNextLevel(view.xp);
   const xpPct = xpProgress.next > 0 ? Math.round((xpProgress.current / xpProgress.next) * 100) : 100;
 
   const handleEvent = useCallback((xpAmount: number) => {
@@ -115,7 +130,7 @@ export default function GamificationStatus({ compact = false, onBadgeUnlock }: G
     return (
       <Link
         href="/dashboard"
-        aria-label={`等级 ${level}，已获得 ${gamification.totalXpEarned} 点经验，去学习数据页`}
+        aria-label={`等级 ${level}，已获得 ${view.totalXpEarned} 点经验，去学习数据页`}
         className="dn-focus group hidden items-center gap-3 sm:flex"
       >
         <span className="flex h-11 min-w-[44px] items-center justify-center bg-teal px-2 font-display text-base text-on-color tabular-nums">
@@ -129,10 +144,10 @@ export default function GamificationStatus({ compact = false, onBadgeUnlock }: G
             <span className="block h-full bg-teal" style={{ width: xpPct + '%' }} />
           </span>
         </span>
-        {gamification.currentStreak > 0 && (
+        {view.currentStreak > 0 && (
           <span className="flex items-center gap-1 text-sm font-semibold tabular-nums text-text-primary">
             <Flame className="h-4 w-4 text-amber-ink" aria-hidden="true" />
-            {gamification.currentStreak}
+            {view.currentStreak}
             <span className="sr-only">天连续学习</span>
           </span>
         )}
@@ -150,7 +165,7 @@ export default function GamificationStatus({ compact = false, onBadgeUnlock }: G
           Lv.{level}
         </span>
         <span className="text-[11px] tabular-nums">
-          累计 {gamification.totalXpEarned} XP
+          累计 {view.totalXpEarned} XP
         </span>
       </div>
 
@@ -171,14 +186,14 @@ export default function GamificationStatus({ compact = false, onBadgeUnlock }: G
         <div className="flex items-center gap-3 bg-amber px-4 text-on-color">
           <Flame className="h-5 w-5 shrink-0" aria-hidden="true" />
           <span className="font-display text-2xl leading-none tabular-nums">
-            {gamification.currentStreak}
+            {view.currentStreak}
           </span>
           <span className="text-xs font-semibold">天连续学习</span>
         </div>
         <div className="flex items-center gap-3 bg-violet px-4 text-on-color">
           <Trophy className="h-5 w-5 shrink-0" aria-hidden="true" />
           <span className="font-display text-2xl leading-none tabular-nums">
-            {gamification.badges.length}
+            {view.badges.length}
           </span>
           <span className="text-xs font-semibold">个徽章</span>
         </div>

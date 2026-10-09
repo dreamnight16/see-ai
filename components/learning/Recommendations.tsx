@@ -3,6 +3,8 @@
 import { useMemo } from 'react';
 import type { AdaptiveRecommendation } from '@/lib/adaptive';
 import { getRecommendations } from '@/lib/adaptive';
+import { emptyProgress } from '@/lib/progress';
+import { useHydrated } from '@/hooks/useHydrated';
 import Link from 'next/link';
 import { ChevronRight, Lightbulb, BookOpen, ArrowRight, RotateCcw, Wand, Trophy, Target, Library } from 'lucide-react';
 
@@ -25,11 +27,16 @@ interface RecommendationsProps {
 
 /**
  * 学习建议完全由本地进度推导（lib/adaptive.ts），没有进度就退回「先看认识 AI」。
+ *
+ * 进度在 localStorage 里，服务端读不到：水合首帧必须拿"空进度"算一遍，
+ * 才能和服务端渲染出来的那三条对上；否则 React 报 hydration 失败（#418），
+ * 整个首页被丢回客户端重新渲染。水合完成后才用真实进度重算。
  */
 export default function Recommendations({ lessonId, limit = 3 }: RecommendationsProps) {
+  const hydrated = useHydrated();
   const recs: AdaptiveRecommendation[] = useMemo(
-    () => getRecommendations(lessonId).slice(0, limit),
-    [lessonId, limit],
+    () => getRecommendations(lessonId, hydrated ? undefined : emptyProgress()).slice(0, limit),
+    [lessonId, limit, hydrated],
   );
 
   if (recs.length === 0) return null;

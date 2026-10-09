@@ -170,6 +170,15 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Tailwind v4 的 preflight 不再给 button 设 cursor:pointer，
+     导致按钮（如「直接回答 / 引导思考」的切换）看着不像能点。
+     在基础层补回来；disabled / aria-disabled 仍保持默认箭头。 */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  summary {
+    cursor: pointer;
+  }
+
   /* 焦点必须可见，且在实际背景上可辨识。 */
   :focus-visible {
     outline: var(--dn-focus-width) solid var(--dn-focus);
@@ -389,4 +398,15 @@
   .see-shell-header.dn-acrylic {
     border-bottom-color: CanvasText;
   }
+}
+
+/* ── 覆盖层：右下角两个浮层 ────────────────────────────────────────────────
+   「安装应用」提示（fixed bottom-4，z-50）和课程目录按钮（fixed bottom-5
+   right-5，z-30）都在右下角。390×844 实测：提示占 x16–374 / y742–828，
+   按钮占 x314–370 / y768–824，按钮被整块盖住，点下去只会关掉提示。
+   PWAPrompt 把"提示占了多高"写进 --see-bottom-banner，按钮按它抬上去；
+   提示不在时变量为空，按钮仍在 bottom-5。未分层，才能压过 utilities 里的
+   bottom-5（分层样式一律输给未分层样式）。 */
+.see-lesson-fab {
+  bottom: calc(1.25rem + var(--see-bottom-banner, 0px));
 }
