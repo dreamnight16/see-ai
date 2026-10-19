@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-12T07:19:33Z",
-  "week": "2026-W42",
+  "generatedAt": "2026-10-19T06:09:45Z",
+  "week": "2026-W43",
   "stats": {
-    "totalItems": 171,
-    "aiItems": 51,
+    "totalItems": 170,
+    "aiItems": 59,
     "sourceCounts": {
       "Hugging Face 每日论文": 50,
       "arXiv cs.AI": 40,
@@ -18,158 +18,323 @@
   },
   "candidates": [
     {
-      "term": "AMLworld",
-      "hits": 1,
-      "sources": [
-        "Hugging Face 每日论文"
-      ],
-      "sampleTitle": "AMLworld-Compact: Importance-Weighted Downsampling for Cost-Effective LLM Evaluation and Error Diagnosis",
-      "sampleUrl": "https://huggingface.co/papers/2610.13627",
-      "inGlossary": false,
-      "firstSeen": "2026-W42"
-    },
-    {
-      "term": "DataVista",
-      "hits": 1,
-      "sources": [
-        "Hugging Face 每日论文"
-      ],
-      "sampleTitle": "DataVista: Diagnosing Multimodal LLMs on Data Video Understanding",
-      "sampleUrl": "https://huggingface.co/papers/2610.11993",
-      "inGlossary": false,
-      "firstSeen": "2026-W42"
-    },
-    {
-      "term": "DiffusionART",
-      "hits": 1,
-      "sources": [
-        "Hugging Face 每日论文"
-      ],
-      "sampleTitle": "DiffusionART: Efficient, Stable and Scalable Reinforcement of Diffusion Models",
-      "sampleUrl": "https://huggingface.co/papers/2610.12572",
-      "inGlossary": false,
-      "firstSeen": "2026-W42"
-    },
-    {
-      "term": "DyssomniaNN",
+      "term": "AlphaFold3",
       "hits": 1,
       "sources": [
         "arXiv cs.AI"
       ],
-      "sampleTitle": "DyssomniaNN: Multi-Scale Spiking Neural Modeling of Human Sleep Disorders and Perceived Restedness",
-      "sampleUrl": "http://arxiv.org/abs/2610.13918v1",
+      "sampleTitle": "Blitz: Accelerating the Diffusion Modules of AlphaFold3 and Boltz-2",
+      "sampleUrl": "http://arxiv.org/abs/2610.23703v1",
       "inGlossary": false,
-      "firstSeen": "2026-W42"
+      "firstSeen": "2026-W43"
     },
     {
-      "term": "GUI",
+      "term": "AutoResearch",
       "hits": 1,
       "sources": [
         "Hugging Face 每日论文"
       ],
-      "sampleTitle": "Work2Skill: Capturing Human GUI Experience for Reusable Agent Skill Induction",
-      "sampleUrl": "https://huggingface.co/papers/2610.12984",
+      "sampleTitle": "SciΠvot: Benchmarking Principal-Investigator Judgment at Pivotal Moments of Scientific AutoResearch Agents",
+      "sampleUrl": "https://huggingface.co/papers/2610.21082",
       "inGlossary": false,
-      "firstSeen": "2026-W42"
+      "firstSeen": "2026-W43"
     },
     {
-      "term": "GitHub",
+      "term": "BizBench",
       "hits": 1,
       "sources": [
         "Hugging Face 每日论文"
       ],
-      "sampleTitle": "Skill Constellations: Tracing the Supply Chain of Agent Skills on GitHub",
-      "sampleUrl": "https://huggingface.co/papers/2610.11169",
+      "sampleTitle": "BizBench: Unveiling Hidden Challenges in Deploying Long-Horizon Agents for Real-World Business",
+      "sampleUrl": "https://huggingface.co/papers/2610.20424",
       "inGlossary": false,
-      "firstSeen": "2026-W42"
+      "firstSeen": "2026-W43"
     },
     {
-      "term": "HIDE",
+      "term": "CER",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "Equal CER, Unequal Damage: Severity-Weighted Character Error Rate for OCR",
+      "sampleUrl": "https://huggingface.co/papers/2610.20461",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "CocoRNA",
       "hits": 1,
       "sources": [
         "arXiv cs.AI"
       ],
-      "sampleTitle": "Hide and Seek: HIDE Concepts to SEEK explanations for black box models",
-      "sampleUrl": "http://arxiv.org/abs/2610.13935v1",
+      "sampleTitle": "CocoRNA: Collective RNA Design with Cooperative Multi-agent Reinforcement Learning",
+      "sampleUrl": "http://arxiv.org/abs/2610.23820v1",
       "inGlossary": false,
-      "firstSeen": "2026-W42"
+      "firstSeen": "2026-W43"
     },
     {
-      "term": "InstantFusion",
+      "term": "DAGFormer",
       "hits": 1,
       "sources": [
         "Hugging Face 每日论文"
       ],
-      "sampleTitle": "InstantFusion: A Shared Latent Interface for Heterogeneous Image Generators",
-      "sampleUrl": "https://huggingface.co/papers/2610.13944",
+      "sampleTitle": "DAGFormer: Global Topology Prediction for Transformer Cross-Layer Connections",
+      "sampleUrl": "https://huggingface.co/papers/2610.19625",
       "inGlossary": false,
-      "firstSeen": "2026-W42"
+      "firstSeen": "2026-W43"
     },
     {
-      "term": "MIRA",
+      "term": "DLite",
       "hits": 1,
       "sources": [
         "Hugging Face 每日论文"
       ],
-      "sampleTitle": "MIRA: A Musical Intent Refinement Agent for Aligning Text-to-Music Generation with User Intent",
-      "sampleUrl": "https://huggingface.co/papers/2610.10355",
+      "sampleTitle": "DLite: History-free Speculative Decoding for Agentic AI",
+      "sampleUrl": "https://huggingface.co/papers/2610.23787",
       "inGlossary": false,
-      "firstSeen": "2026-W42"
+      "firstSeen": "2026-W43"
     },
     {
-      "term": "MLLMs",
+      "term": "DeepSeek",
       "hits": 1,
       "sources": [
-        "Hugging Face 每日论文"
+        "Hacker News"
       ],
-      "sampleTitle": "VisionWeave: Weaving Elastic Visual Representations as a Native Capability of MLLMs",
-      "sampleUrl": "https://huggingface.co/papers/2610.07987",
+      "sampleTitle": "DeepSeek V4.1 Flash 1017 (Max)",
+      "sampleUrl": "https://artificialanalysis.ai/models/deepseek-v4-1-flash-1017",
       "inGlossary": false,
-      "firstSeen": "2026-W42"
+      "firstSeen": "2026-W43"
     },
     {
-      "term": "PolyOCR",
-      "hits": 1,
-      "sources": [
-        "Hugging Face 每日论文"
-      ],
-      "sampleTitle": "PolyOCR-Venus: Unified OCR Foundation Models for Text-Centric Visual Intelligence",
-      "sampleUrl": "https://huggingface.co/papers/2609.37712",
-      "inGlossary": false,
-      "firstSeen": "2026-W42"
-    },
-    {
-      "term": "PreSTO",
-      "hits": 1,
-      "sources": [
-        "Hugging Face 每日论文"
-      ],
-      "sampleTitle": "PreSTO: Predictive Subtree Prefetching for Fast LLM Power Sampling",
-      "sampleUrl": "https://huggingface.co/papers/2610.13171",
-      "inGlossary": false,
-      "firstSeen": "2026-W42"
-    },
-    {
-      "term": "RATED",
+      "term": "DrugHarness",
       "hits": 1,
       "sources": [
         "arXiv cs.AI"
       ],
-      "sampleTitle": "RATED: Reliability-Aware AI Agent Tool Retrieval via Execution Dynamics",
-      "sampleUrl": "http://arxiv.org/abs/2610.13889v1",
+      "sampleTitle": "DrugHarness: An Evolvable Agent Harness for Computational Drug Discovery",
+      "sampleUrl": "http://arxiv.org/abs/2610.23791v1",
       "inGlossary": false,
-      "firstSeen": "2026-W42"
+      "firstSeen": "2026-W43"
     },
     {
-      "term": "SEEK",
+      "term": "ENFR",
       "hits": 1,
       "sources": [
         "arXiv cs.AI"
       ],
-      "sampleTitle": "Hide and Seek: HIDE Concepts to SEEK explanations for black box models",
-      "sampleUrl": "http://arxiv.org/abs/2610.13935v1",
+      "sampleTitle": "ENFR: Evidence Networks with Flow-Matched References for Amortized Simulation-Based Model Inference",
+      "sampleUrl": "http://arxiv.org/abs/2610.23825v1",
       "inGlossary": false,
-      "firstSeen": "2026-W42"
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "FC",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "FC-SWE: Failure-Conditioned RL for Long-Horizon Software Engineering Agents",
+      "sampleUrl": "https://huggingface.co/papers/2610.07898",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "FP8",
+      "hits": 1,
+      "sources": [
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "FuTransformer: FP8 prefill and INT4 decode for Llama-style inference on Hopper",
+      "sampleUrl": "http://arxiv.org/abs/2610.23796v1",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "FuTransformer",
+      "hits": 1,
+      "sources": [
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "FuTransformer: FP8 prefill and INT4 decode for Llama-style inference on Hopper",
+      "sampleUrl": "http://arxiv.org/abs/2610.23796v1",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "GLOBE",
+      "hits": 1,
+      "sources": [
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "GLOBE: Evolving Structured Agentic Memory for E-commerce Product Optimization in Generative Search",
+      "sampleUrl": "http://arxiv.org/abs/2610.23709v1",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "HexaShell",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "HexaShell: A Thin Harness for Exploring the Limits of VLM Agents as Robot Coding Agents",
+      "sampleUrl": "https://huggingface.co/papers/2610.23479",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "II",
+      "hits": 1,
+      "sources": [
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "Bridging the Language Gap in Scholarly Data II: Enhancing Gender Inference for Chinese Names",
+      "sampleUrl": "http://arxiv.org/abs/2610.23734v1",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "INT4",
+      "hits": 1,
+      "sources": [
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "FuTransformer: FP8 prefill and INT4 decode for Llama-style inference on Hopper",
+      "sampleUrl": "http://arxiv.org/abs/2610.23796v1",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "LEASH",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "LEASH: Uncertainty-Aware Weak-to-Strong Escalation and Oversight for Computer-Use Agents",
+      "sampleUrl": "https://huggingface.co/papers/2610.22280",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "LEV",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "LEV: Thinking Fast and Deep with Looped Decision Models",
+      "sampleUrl": "https://huggingface.co/papers/2610.20951",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "LM",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "Lexical Reference Frames: Interpreting LM Residual Streams in Native Semantics",
+      "sampleUrl": "https://huggingface.co/papers/2610.22169",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "LagNet",
+      "hits": 1,
+      "sources": [
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "LagNet: Lag-Structured Operators for Long-Term Time Series Forecasting",
+      "sampleUrl": "http://arxiv.org/abs/2610.23735v1",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "LeanPRM",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "LeanPRM: Lean-Grounded Process Supervision for Natural Language Proof Verification",
+      "sampleUrl": "https://huggingface.co/papers/2610.17697",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "MOSS",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "MOSS-Image Technical Report",
+      "sampleUrl": "https://huggingface.co/papers/2610.23374",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "OfficeTown",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "OfficeTown: Generative Organizations for Evolving Agent Intelligence",
+      "sampleUrl": "https://huggingface.co/papers/2610.23194",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "OpenMobile",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "OpenMobile-2: Building Versatile Mobile Agents with Scalable Environments and App-Native Tools",
+      "sampleUrl": "https://huggingface.co/papers/2610.14157",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "PremiseCheck",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "PremiseCheck: Efficient Fact-Checking of Human and AI Peer Reviews",
+      "sampleUrl": "https://huggingface.co/papers/2610.21046",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "RL",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "sampleTitle": "FC-SWE: Failure-Conditioned RL for Long-Horizon Software Engineering Agents",
+      "sampleUrl": "https://huggingface.co/papers/2610.07898",
+      "inGlossary": false,
+      "firstSeen": "2026-W41"
+    },
+    {
+      "term": "RNA",
+      "hits": 1,
+      "sources": [
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "CocoRNA: Collective RNA Design with Cooperative Multi-agent Reinforcement Learning",
+      "sampleUrl": "http://arxiv.org/abs/2610.23820v1",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
+    },
+    {
+      "term": "SAEs",
+      "hits": 1,
+      "sources": [
+        "arXiv cs.AI"
+      ],
+      "sampleTitle": "Beyond SAEs: Consistent Concept Discovery with Sparse Coding",
+      "sampleUrl": "http://arxiv.org/abs/2610.23801v1",
+      "inGlossary": false,
+      "firstSeen": "2026-W43"
     },
     {
       "term": "SWE",
@@ -177,102 +342,35 @@
       "sources": [
         "Hugging Face 每日论文"
       ],
-      "sampleTitle": "SWE-Duel: Towards a Self-Scaling Arena for Coding Agents",
-      "sampleUrl": "https://huggingface.co/papers/2610.12569",
-      "inGlossary": false,
-      "firstSeen": "2026-W42"
-    },
-    {
-      "term": "SoftwareGym",
-      "hits": 1,
-      "sources": [
-        "Hugging Face 每日论文"
-      ],
-      "sampleTitle": "SoftwareGym: Scaling Computer-Use Agent Training with Diverse Synthesized Software Environments",
-      "sampleUrl": "https://huggingface.co/papers/2610.12611",
-      "inGlossary": false,
-      "firstSeen": "2026-W42"
-    },
-    {
-      "term": "SoloQ",
-      "hits": 1,
-      "sources": [
-        "Hugging Face 每日论文"
-      ],
-      "sampleTitle": "SoloQ: Calibration-Free Quantization for Diffusion Language Models",
-      "sampleUrl": "https://huggingface.co/papers/2610.07121",
-      "inGlossary": false,
-      "firstSeen": "2026-W42"
-    },
-    {
-      "term": "SpecFold",
-      "hits": 1,
-      "sources": [
-        "Hugging Face 每日论文"
-      ],
-      "sampleTitle": "SpecFold: Folding Multi-Branch Redundancy for Faster Speculative Decoding in Diffusion Language Models",
-      "sampleUrl": "https://huggingface.co/papers/2610.04875",
-      "inGlossary": false,
-      "firstSeen": "2026-W42"
-    },
-    {
-      "term": "TabMF",
-      "hits": 1,
-      "sources": [
-        "arXiv cs.AI"
-      ],
-      "sampleTitle": "TabMF: Learning Dataset Representations with Tabular Foundation Models",
-      "sampleUrl": "http://arxiv.org/abs/2610.13818v1",
-      "inGlossary": false,
-      "firstSeen": "2026-W42"
-    },
-    {
-      "term": "VisionWeave",
-      "hits": 1,
-      "sources": [
-        "Hugging Face 每日论文"
-      ],
-      "sampleTitle": "VisionWeave: Weaving Elastic Visual Representations as a Native Capability of MLLMs",
-      "sampleUrl": "https://huggingface.co/papers/2610.07987",
-      "inGlossary": false,
-      "firstSeen": "2026-W42"
-    },
-    {
-      "term": "Work2Skill",
-      "hits": 1,
-      "sources": [
-        "Hugging Face 每日论文"
-      ],
-      "sampleTitle": "Work2Skill: Capturing Human GUI Experience for Reusable Agent Skill Induction",
-      "sampleUrl": "https://huggingface.co/papers/2610.12984",
+      "sampleTitle": "FC-SWE: Failure-Conditioned RL for Long-Horizon Software Engineering Agents",
+      "sampleUrl": "https://huggingface.co/papers/2610.07898",
       "inGlossary": false,
       "firstSeen": "2026-W42"
     }
   ],
   "knownCandidates": [
     {
-      "term": "LLMs",
-      "hits": 6,
+      "term": "LLM",
+      "hits": 4,
       "sources": [
-        "Hugging Face 每日论文",
         "arXiv cs.AI",
         "Hacker News"
       ],
-      "sampleTitle": "DataVista: Diagnosing Multimodal LLMs on Data Video Understanding",
-      "sampleUrl": "https://huggingface.co/papers/2610.11993",
+      "sampleTitle": "Recognizing Study Lineage Is Not Enough: Over-Crediting Same-Trial Evidence in LLM-Based Medical Verification",
+      "sampleUrl": "http://arxiv.org/abs/2610.23721v1",
       "inGlossary": true,
       "firstSeen": "2026-W41"
     },
     {
-      "term": "GPU",
+      "term": "MCP",
       "hits": 1,
       "sources": [
-        "Hugging Face 每日论文"
+        "Hacker News"
       ],
-      "sampleTitle": "A GPU-Parallel Framework for Heterogeneous Multi-Task Reinforcement Learning",
-      "sampleUrl": "https://huggingface.co/papers/2606.03335",
+      "sampleTitle": "Show HN: WhatsApp MCP running free on Cloudflare",
+      "sampleUrl": "https://github.com/finereli/whatsapp-mcp",
       "inGlossary": true,
-      "firstSeen": "2026-W42"
+      "firstSeen": "2026-W43"
     },
     {
       "term": "OCR",
@@ -280,13 +378,34 @@
       "sources": [
         "Hugging Face 每日论文"
       ],
-      "sampleTitle": "PolyOCR-Venus: Unified OCR Foundation Models for Text-Centric Visual Intelligence",
-      "sampleUrl": "https://huggingface.co/papers/2609.37712",
+      "sampleTitle": "Equal CER, Unequal Damage: Severity-Weighted Character Error Rate for OCR",
+      "sampleUrl": "https://huggingface.co/papers/2610.20461",
       "inGlossary": true,
       "firstSeen": "2026-W42"
     }
   ],
   "watchlist": [
+    {
+      "term": "world model",
+      "hits": 2,
+      "sources": [
+        "Hugging Face 每日论文",
+        "arXiv cs.AI"
+      ],
+      "samples": [
+        {
+          "title": "Execution Before Memory: Diagnosing Memory Failures in Video World Models",
+          "url": "https://huggingface.co/papers/2610.23542",
+          "source": "Hugging Face 每日论文"
+        },
+        {
+          "title": "Beyond Large Language Models: A Mental World Model Framework for Mental Modeling, Simulation, Evolution, and Interpretability",
+          "url": "http://arxiv.org/abs/2610.23722v1",
+          "source": "arXiv cs.AI"
+        }
+      ],
+      "inGlossary": true
+    },
     {
       "term": "computer-use",
       "hits": 1,
@@ -295,9 +414,39 @@
       ],
       "samples": [
         {
-          "title": "SoftwareGym: Scaling Computer-Use Agent Training with Diverse Synthesized Software Environments",
-          "url": "https://huggingface.co/papers/2610.12611",
+          "title": "LEASH: Uncertainty-Aware Weak-to-Strong Escalation and Oversight for Computer-Use Agents",
+          "url": "https://huggingface.co/papers/2610.22280",
           "source": "Hugging Face 每日论文"
+        }
+      ],
+      "inGlossary": true
+    },
+    {
+      "term": "distillation",
+      "hits": 1,
+      "sources": [
+        "Hugging Face 每日论文"
+      ],
+      "samples": [
+        {
+          "title": "Tree-Aware Posterior Distillation for Long-Horizon Agentic Reinforcement Learning",
+          "url": "https://huggingface.co/papers/2610.23181",
+          "source": "Hugging Face 每日论文"
+        }
+      ],
+      "inGlossary": true
+    },
+    {
+      "term": "mcp",
+      "hits": 1,
+      "sources": [
+        "Hacker News"
+      ],
+      "samples": [
+        {
+          "title": "Show HN: WhatsApp MCP running free on Cloudflare",
+          "url": "https://github.com/finereli/whatsapp-mcp",
+          "source": "Hacker News"
         }
       ],
       "inGlossary": true
@@ -306,57 +455,12 @@
       "term": "multi-agent",
       "hits": 1,
       "sources": [
-        "Hugging Face 每日论文"
-      ],
-      "samples": [
-        {
-          "title": "Towards Physically Grounded Articulated 3D Assets: A Multi-Agent Pipeline and Benchmark",
-          "url": "https://huggingface.co/papers/2610.13947",
-          "source": "Hugging Face 每日论文"
-        }
-      ],
-      "inGlossary": true
-    },
-    {
-      "term": "quantization",
-      "hits": 1,
-      "sources": [
-        "Hugging Face 每日论文"
-      ],
-      "samples": [
-        {
-          "title": "SoloQ: Calibration-Free Quantization for Diffusion Language Models",
-          "url": "https://huggingface.co/papers/2610.07121",
-          "source": "Hugging Face 每日论文"
-        }
-      ],
-      "inGlossary": true
-    },
-    {
-      "term": "reasoning model",
-      "hits": 1,
-      "sources": [
-        "Hugging Face 每日论文"
-      ],
-      "samples": [
-        {
-          "title": "When Do Biological Reasoning Models Use Their Biological Inputs?",
-          "url": "https://huggingface.co/papers/2610.00898",
-          "source": "Hugging Face 每日论文"
-        }
-      ],
-      "inGlossary": true
-    },
-    {
-      "term": "world model",
-      "hits": 1,
-      "sources": [
         "arXiv cs.AI"
       ],
       "samples": [
         {
-          "title": "Dream to Remember: Continual Steering of Generalist Robot Policies with World Models",
-          "url": "http://arxiv.org/abs/2610.13816v1",
+          "title": "CocoRNA: Collective RNA Design with Cooperative Multi-agent Reinforcement Learning",
+          "url": "http://arxiv.org/abs/2610.23820v1",
           "source": "arXiv cs.AI"
         }
       ],
@@ -365,395 +469,370 @@
   ],
   "items": [
     {
-      "title": "DiffusionART: Efficient, Stable and Scalable Reinforcement of Diffusion Models",
-      "url": "https://huggingface.co/papers/2610.12572",
+      "title": "Into the Unknown: Benchmarking AI agents on open scientific research problems",
+      "url": "https://huggingface.co/papers/2610.19159",
       "source": "Hugging Face 每日论文",
-      "score": 41,
-      "keywords": [
-        "diffusion",
-        "fine-tune",
-        "models",
-        "reinforcement learning"
-      ]
-    },
-    {
-      "title": "Can AI Agents Learn Their Way to the Top? Evaluating Heuristic Learning in a Long-Running Game Agent Competition",
-      "url": "https://huggingface.co/papers/2610.12341",
-      "source": "Hugging Face 每日论文",
-      "score": 38,
+      "score": 68,
       "keywords": [
         "agent",
         "ai",
-        "reinforcement learning"
-      ]
-    },
-    {
-      "title": "SoftwareGym: Scaling Computer-Use Agent Training with Diverse Synthesized Software Environments",
-      "url": "https://huggingface.co/papers/2610.12611",
-      "source": "Hugging Face 每日论文",
-      "score": 38,
-      "keywords": [
-        "agent",
-        "training"
-      ]
-    },
-    {
-      "title": "VisionWeave: Weaving Elastic Visual Representations as a Native Capability of MLLMs",
-      "url": "https://huggingface.co/papers/2610.07987",
-      "source": "Hugging Face 每日论文",
-      "score": 37,
-      "keywords": [
-        "models",
-        "multimodal"
-      ]
-    },
-    {
-      "title": "SoloQ: Calibration-Free Quantization for Diffusion Language Models",
-      "url": "https://huggingface.co/papers/2610.07121",
-      "source": "Hugging Face 每日论文",
-      "score": 30,
-      "keywords": [
-        "diffusion",
-        "inference",
-        "model",
-        "models",
-        "quantization"
-      ]
-    },
-    {
-      "title": "Work2Skill: Capturing Human GUI Experience for Reusable Agent Skill Induction",
-      "url": "https://huggingface.co/papers/2610.12984",
-      "source": "Hugging Face 每日论文",
-      "score": 24,
-      "keywords": [
-        "agent"
-      ]
-    },
-    {
-      "title": "Learning Representations to Guide Pixel Diffusion Transformers",
-      "url": "https://huggingface.co/papers/2610.12978",
-      "source": "Hugging Face 每日论文",
-      "score": 19,
-      "keywords": [
-        "diffusion"
-      ]
-    },
-    {
-      "title": "Pumpire: Unified Benchmark for Metric Distance Estimation",
-      "url": "https://huggingface.co/papers/2610.12423",
-      "source": "Hugging Face 每日论文",
-      "score": 18,
-      "keywords": [
-        "benchmark",
-        "models"
-      ]
-    },
-    {
-      "title": "PolyOCR-Venus: Unified OCR Foundation Models for Text-Centric Visual Intelligence",
-      "url": "https://huggingface.co/papers/2609.37712",
-      "source": "Hugging Face 每日论文",
-      "score": 17,
-      "keywords": [
-        "models",
-        "ocr"
-      ]
-    },
-    {
-      "title": "Inducing Process Supervision from Outcome-Only Reinforcement Learning",
-      "url": "https://huggingface.co/papers/2609.36641",
-      "source": "Hugging Face 每日论文",
-      "score": 16,
-      "keywords": [
-        "models",
-        "reinforcement learning",
-        "training"
-      ]
-    },
-    {
-      "title": "InstantFusion: A Shared Latent Interface for Heterogeneous Image Generators",
-      "url": "https://huggingface.co/papers/2610.13944",
-      "source": "Hugging Face 每日论文",
-      "score": 15,
-      "keywords": [
-        "diffusion",
-        "models"
-      ]
-    },
-    {
-      "title": "Towards Physically Grounded Articulated 3D Assets: A Multi-Agent Pipeline and Benchmark",
-      "url": "https://huggingface.co/papers/2610.13947",
-      "source": "Hugging Face 每日论文",
-      "score": 15,
-      "keywords": [
-        "agentic",
         "benchmark"
       ]
     },
     {
-      "title": "SWE-Duel: Towards a Self-Scaling Arena for Coding Agents",
-      "url": "https://huggingface.co/papers/2610.12569",
+      "title": "HexaShell: A Thin Harness for Exploring the Limits of VLM Agents as Robot Coding Agents",
+      "url": "https://huggingface.co/papers/2610.23479",
       "source": "Hugging Face 每日论文",
-      "score": 14,
+      "score": 66,
       "keywords": [
-        "benchmark",
-        "training"
-      ]
-    },
-    {
-      "title": "A GPU-Parallel Framework for Heterogeneous Multi-Task Reinforcement Learning",
-      "url": "https://huggingface.co/papers/2606.03335",
-      "source": "Hugging Face 每日论文",
-      "score": 12,
-      "keywords": [
-        "benchmark",
-        "reinforcement learning",
+        "agent",
+        "models",
         "robot"
       ]
     },
     {
-      "title": "Recurrent Harness for Agentic Continual Learning",
-      "url": "https://huggingface.co/papers/2610.12668",
+      "title": "BizBench: Unveiling Hidden Challenges in Deploying Long-Horizon Agents for Real-World Business",
+      "url": "https://huggingface.co/papers/2610.20424",
       "source": "Hugging Face 每日论文",
-      "score": 11,
-      "keywords": [
-        "agent",
-        "agentic",
-        "model"
-      ]
-    },
-    {
-      "title": "From Given to Gathered Evidence: Agentic Learning for Longitudinal Medical Reasoning",
-      "url": "https://huggingface.co/papers/2609.39566",
-      "source": "Hugging Face 每日论文",
-      "score": 11,
-      "keywords": [
-        "agentic",
-        "models"
-      ]
-    },
-    {
-      "title": "DataVista: Diagnosing Multimodal LLMs on Data Video Understanding",
-      "url": "https://huggingface.co/papers/2610.11993",
-      "source": "Hugging Face 每日论文",
-      "score": 10,
-      "keywords": [
-        "multimodal"
-      ]
-    },
-    {
-      "title": "Surfing the Activation Wave: Analyzing the Information and Geometry of LLM Hidden States for Speculative Decoding",
-      "url": "https://huggingface.co/papers/2610.12939",
-      "source": "Hugging Face 每日论文",
-      "score": 10,
-      "keywords": [
-        "llm",
-        "models"
-      ]
-    },
-    {
-      "title": "Judging in Latent Space: Efficient Generative Reward Modeling via Semantics-Preserving Compression",
-      "url": "https://huggingface.co/papers/2610.09788",
-      "source": "Hugging Face 每日论文",
-      "score": 10,
-      "keywords": [
-        "inference"
-      ]
-    },
-    {
-      "title": "PreSTO: Predictive Subtree Prefetching for Fast LLM Power Sampling",
-      "url": "https://huggingface.co/papers/2610.13171",
-      "source": "Hugging Face 每日论文",
-      "score": 9,
-      "keywords": [
-        "llm",
-        "model"
-      ]
-    },
-    {
-      "title": "When Do Biological Reasoning Models Use Their Biological Inputs?",
-      "url": "https://huggingface.co/papers/2610.00898",
-      "source": "Hugging Face 每日论文",
-      "score": 9,
-      "keywords": [
-        "benchmark",
-        "model",
-        "models"
-      ]
-    },
-    {
-      "title": "Stateless Language Agents: Scaling Long-Horizon Automated Research",
-      "url": "https://huggingface.co/papers/2610.07625",
-      "source": "Hugging Face 每日论文",
-      "score": 9,
-      "keywords": [
-        "inference",
-        "llm"
-      ]
-    },
-    {
-      "title": "AMLworld-Compact: Importance-Weighted Downsampling for Cost-Effective LLM Evaluation and Error Diagnosis",
-      "url": "https://huggingface.co/papers/2610.13627",
-      "source": "Hugging Face 每日论文",
-      "score": 9,
-      "keywords": [
-        "llm",
-        "models",
-        "prompt"
-      ]
-    },
-    {
-      "title": "Mara Chain: Rethinking Failure as a Stepping Stone for AI System Auto-Evolution",
-      "url": "https://huggingface.co/papers/2609.35855",
-      "source": "Hugging Face 每日论文",
-      "score": 9,
-      "keywords": [
-        "ai",
-        "model"
-      ]
-    },
-    {
-      "title": "MIRA: A Musical Intent Refinement Agent for Aligning Text-to-Music Generation with User Intent",
-      "url": "https://huggingface.co/papers/2610.10355",
-      "source": "Hugging Face 每日论文",
-      "score": 8,
+      "score": 52,
       "keywords": [
         "agent"
       ]
     },
     {
-      "title": "Synthesis Through Simulation: Generating Coherent Enterprise Data via Scalable Agent-System Interaction",
-      "url": "https://huggingface.co/papers/2610.10549",
+      "title": "Learning to Think and Explore in 3D World",
+      "url": "https://huggingface.co/papers/2610.21783",
       "source": "Hugging Face 每日论文",
-      "score": 7,
+      "score": 26,
       "keywords": [
-        "ai",
+        "model",
+        "models"
+      ]
+    },
+    {
+      "title": "OpenMobile-2: Building Versatile Mobile Agents with Scalable Environments and App-Native Tools",
+      "url": "https://huggingface.co/papers/2610.14157",
+      "source": "Hugging Face 每日论文",
+      "score": 25,
+      "keywords": [
+        "agent",
         "training"
       ]
     },
     {
-      "title": "SpecFold: Folding Multi-Branch Redundancy for Faster Speculative Decoding in Diffusion Language Models",
-      "url": "https://huggingface.co/papers/2610.04875",
+      "title": "Tree-Aware Posterior Distillation for Long-Horizon Agentic Reinforcement Learning",
+      "url": "https://huggingface.co/papers/2610.23181",
       "source": "Hugging Face 每日论文",
-      "score": 7,
+      "score": 20,
       "keywords": [
-        "diffusion",
-        "models"
+        "agentic",
+        "models",
+        "reinforcement learning",
+        "training"
       ]
     },
     {
-      "title": "Frozen Models, Evolving Expertise: Model-Agnostic Learning from Deployment Experience for Multimodal Medical AI",
-      "url": "https://huggingface.co/papers/2610.09146",
+      "title": "From Research Goals to Scientific Closure: Evaluating Agents Through Evidence-Supported Physics Research",
+      "url": "https://huggingface.co/papers/2610.21767",
       "source": "Hugging Face 每日论文",
-      "score": 6,
+      "score": 19,
       "keywords": [
         "ai",
-        "models",
-        "multimodal"
+        "benchmark"
       ]
     },
     {
-      "title": "The Lattice of Transition Laws",
-      "url": "https://huggingface.co/papers/2610.11216",
+      "title": "Execution Before Memory: Diagnosing Memory Failures in Video World Models",
+      "url": "https://huggingface.co/papers/2610.23542",
       "source": "Hugging Face 每日论文",
-      "score": 5,
+      "score": 12,
       "keywords": [
-        "diffusion",
+        "model",
         "models"
       ]
     },
     {
-      "title": "Skill Constellations: Tracing the Supply Chain of Agent Skills on GitHub",
-      "url": "https://huggingface.co/papers/2610.11169",
+      "title": "DLite: History-free Speculative Decoding for Agentic AI",
+      "url": "https://huggingface.co/papers/2610.23787",
       "source": "Hugging Face 每日论文",
-      "score": 5,
+      "score": 11,
+      "keywords": [
+        "agentic",
+        "ai",
+        "inference",
+        "llm",
+        "model"
+      ]
+    },
+    {
+      "title": "SciΠvot: Benchmarking Principal-Investigator Judgment at Pivotal Moments of Scientific AutoResearch Agents",
+      "url": "https://huggingface.co/papers/2610.21082",
+      "source": "Hugging Face 每日论文",
+      "score": 9,
+      "keywords": [
+        "llm",
+        "model"
+      ]
+    },
+    {
+      "title": "LEASH: Uncertainty-Aware Weak-to-Strong Escalation and Oversight for Computer-Use Agents",
+      "url": "https://huggingface.co/papers/2610.22280",
+      "source": "Hugging Face 每日论文",
+      "score": 8,
       "keywords": [
         "agent",
-        "ai",
-        "claude"
-      ]
-    },
-    {
-      "title": "Hide and Seek: HIDE Concepts to SEEK explanations for black box models",
-      "url": "http://arxiv.org/abs/2610.13935v1",
-      "source": "arXiv cs.AI",
-      "score": 0,
-      "keywords": [
-        "machine learning",
         "model",
-        "models"
+        "open-weight"
       ]
     },
     {
-      "title": "Constructive Bounds for the Topological Expressivity of Neural Networks",
-      "url": "http://arxiv.org/abs/2610.13931v1",
-      "source": "arXiv cs.AI",
-      "score": 0,
-      "keywords": [
-        "neural",
-        "neural network"
-      ]
-    },
-    {
-      "title": "AI Models Can Provably Hide Arbitrary Capabilities",
-      "url": "http://arxiv.org/abs/2610.13928v1",
-      "source": "arXiv cs.AI",
-      "score": 0,
-      "keywords": [
-        "ai",
-        "model",
-        "models"
-      ]
-    },
-    {
-      "title": "Goal-Oriented Bundle Management and Flow Control for Deep-Space Communications via Reinforcement Learning",
-      "url": "http://arxiv.org/abs/2610.13923v1",
-      "source": "arXiv cs.AI",
-      "score": 0,
-      "keywords": [
-        "reinforcement learning"
-      ]
-    },
-    {
-      "title": "DyssomniaNN: Multi-Scale Spiking Neural Modeling of Human Sleep Disorders and Perceived Restedness",
-      "url": "http://arxiv.org/abs/2610.13918v1",
-      "source": "arXiv cs.AI",
-      "score": 0,
-      "keywords": [
-        "neural"
-      ]
-    },
-    {
-      "title": "Revisiting Tabular Deep Regression: Objectives and the Limits of Global Early Stopping",
-      "url": "http://arxiv.org/abs/2610.13909v1",
-      "source": "arXiv cs.AI",
-      "score": 0,
-      "keywords": [
-        "deep learning",
-        "models"
-      ]
-    },
-    {
-      "title": "Structural Automata for Neural Semantic Parsing",
-      "url": "http://arxiv.org/abs/2610.13896v1",
-      "source": "arXiv cs.AI",
-      "score": 0,
-      "keywords": [
-        "neural"
-      ]
-    },
-    {
-      "title": "RATED: Reliability-Aware AI Agent Tool Retrieval via Execution Dynamics",
-      "url": "http://arxiv.org/abs/2610.13889v1",
-      "source": "arXiv cs.AI",
-      "score": 0,
+      "title": "OfficeTown: Generative Organizations for Evolving Agent Intelligence",
+      "url": "https://huggingface.co/papers/2610.23194",
+      "source": "Hugging Face 每日论文",
+      "score": 7,
       "keywords": [
         "agent",
         "ai"
       ]
     },
     {
-      "title": "Partially Informed Stochastic Optimization via Zeroth-Order Residual Tracking",
-      "url": "http://arxiv.org/abs/2610.13871v1",
+      "title": "MOSS-Image Technical Report",
+      "url": "https://huggingface.co/papers/2610.23374",
+      "source": "Hugging Face 每日论文",
+      "score": 7,
+      "keywords": [
+        "models",
+        "open-weight",
+        "text-to-image"
+      ]
+    },
+    {
+      "title": "Can Visual Generation Expand What Unified Multimodal Models Know?",
+      "url": "https://huggingface.co/papers/2610.21459",
+      "source": "Hugging Face 每日论文",
+      "score": 6,
+      "keywords": [
+        "models",
+        "multimodal"
+      ]
+    },
+    {
+      "title": "LeanPRM: Lean-Grounded Process Supervision for Natural Language Proof Verification",
+      "url": "https://huggingface.co/papers/2610.17697",
+      "source": "Hugging Face 每日论文",
+      "score": 5,
+      "keywords": [
+        "ai",
+        "training"
+      ]
+    },
+    {
+      "title": "Scalable Weak-to-Strong Verifier Hardening for Agent Environments",
+      "url": "https://huggingface.co/papers/2610.15924",
+      "source": "Hugging Face 每日论文",
+      "score": 4,
+      "keywords": [
+        "agent",
+        "llm",
+        "model"
+      ]
+    },
+    {
+      "title": "Towards Looped Models Done Right, Part I: Topology, Input Injection, Recurrent-State Design",
+      "url": "https://huggingface.co/papers/2610.23036",
+      "source": "Hugging Face 每日论文",
+      "score": 3,
+      "keywords": [
+        "models",
+        "transformer"
+      ]
+    },
+    {
+      "title": "FC-SWE: Failure-Conditioned RL for Long-Horizon Software Engineering Agents",
+      "url": "https://huggingface.co/papers/2610.07898",
+      "source": "Hugging Face 每日论文",
+      "score": 2,
+      "keywords": [
+        "reinforcement learning"
+      ]
+    },
+    {
+      "title": "Stuck on Shuffle: On Attribute-Object Binding in Vision-Language Models",
+      "url": "https://huggingface.co/papers/2610.22602",
+      "source": "Hugging Face 每日论文",
+      "score": 2,
+      "keywords": [
+        "embedding",
+        "embeddings",
+        "models",
+        "multimodal"
+      ]
+    },
+    {
+      "title": "PremiseCheck: Efficient Fact-Checking of Human and AI Peer Reviews",
+      "url": "https://huggingface.co/papers/2610.21046",
+      "source": "Hugging Face 每日论文",
+      "score": 2,
+      "keywords": [
+        "ai",
+        "benchmark",
+        "machine learning"
+      ]
+    },
+    {
+      "title": "Skip the Compressor: Coding Agents Fix More Issues When They Pick Whole Files",
+      "url": "https://huggingface.co/papers/2610.21073",
+      "source": "Hugging Face 每日论文",
+      "score": 2,
+      "keywords": [
+        "agent",
+        "prompt"
+      ]
+    },
+    {
+      "title": "Selection Is Not Learning: Choosing Model Futures",
+      "url": "https://huggingface.co/papers/2610.22029",
+      "source": "Hugging Face 每日论文",
+      "score": 2,
+      "keywords": [
+        "model",
+        "models"
+      ]
+    },
+    {
+      "title": "Equal CER, Unequal Damage: Severity-Weighted Character Error Rate for OCR",
+      "url": "https://huggingface.co/papers/2610.20461",
+      "source": "Hugging Face 每日论文",
+      "score": 2,
+      "keywords": [
+        "llm",
+        "models",
+        "ocr"
+      ]
+    },
+    {
+      "title": "Lexical Reference Frames: Interpreting LM Residual Streams in Native Semantics",
+      "url": "https://huggingface.co/papers/2610.22169",
+      "source": "Hugging Face 每日论文",
+      "score": 1,
+      "keywords": [
+        "cloud",
+        "embedding",
+        "model"
+      ]
+    },
+    {
+      "title": "Belief-Trajectory Energy: Measuring the Path to a Prediction",
+      "url": "https://huggingface.co/papers/2610.05114",
+      "source": "Hugging Face 每日论文",
+      "score": 1,
+      "keywords": [
+        "models",
+        "transformer"
+      ]
+    },
+    {
+      "title": "LEV: Thinking Fast and Deep with Looped Decision Models",
+      "url": "https://huggingface.co/papers/2610.20951",
+      "source": "Hugging Face 每日论文",
+      "score": 1,
+      "keywords": [
+        "models",
+        "training"
+      ]
+    },
+    {
+      "title": "DAGFormer: Global Topology Prediction for Transformer Cross-Layer Connections",
+      "url": "https://huggingface.co/papers/2610.19625",
+      "source": "Hugging Face 每日论文",
+      "score": 1,
+      "keywords": [
+        "model",
+        "transformer"
+      ]
+    },
+    {
+      "title": "Sparse Autoencoders Are a Shared Coordinate System for Symbolic Matching",
+      "url": "https://huggingface.co/papers/2610.19636",
+      "source": "Hugging Face 每日论文",
+      "score": 1,
+      "keywords": [
+        "model",
+        "models"
+      ]
+    },
+    {
+      "title": "StopWatch: Goal Grounding for Object-goal Navigation",
+      "url": "https://huggingface.co/papers/2610.23841",
+      "source": "Hugging Face 每日论文",
+      "score": 1,
+      "keywords": [
+        "fine-tune"
+      ]
+    },
+    {
+      "title": "Diminishing Returns of Data in Sparse Autoencoders: Functional Behavior does not Guarantee Feature Reproducibility",
+      "url": "https://huggingface.co/papers/2610.20680",
+      "source": "Hugging Face 每日论文",
+      "score": 1,
+      "keywords": [
+        "models",
+        "training"
+      ]
+    },
+    {
+      "title": "Rethinking the design space of Vanilla Pixel Diffusion Transformers",
+      "url": "http://arxiv.org/abs/2610.23854v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "diffusion",
+        "models",
+        "transformer"
+      ]
+    },
+    {
+      "title": "Behavioral Couplings: From Formation to Behavioral Emergence in Language Models",
+      "url": "http://arxiv.org/abs/2610.23847v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "model",
+        "models",
+        "training"
+      ]
+    },
+    {
+      "title": "AI-Driven Reproducibility and Analytical Robustness in Scientific Discovery",
+      "url": "http://arxiv.org/abs/2610.23845v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "llm"
+      ]
+    },
+    {
+      "title": "Task-aligned spectral inductive biases in parameterized quantum circuits",
+      "url": "http://arxiv.org/abs/2610.23834v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "machine learning"
+      ]
+    },
+    {
+      "title": "ENFR: Evidence Networks with Flow-Matched References for Amortized Simulation-Based Model Inference",
+      "url": "http://arxiv.org/abs/2610.23825v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "inference",
+        "model"
+      ]
+    },
+    {
+      "title": "CocoRNA: Collective RNA Design with Cooperative Multi-agent Reinforcement Learning",
+      "url": "http://arxiv.org/abs/2610.23820v1",
       "source": "arXiv cs.AI",
       "score": 0,
       "keywords": [
@@ -761,13 +840,42 @@
       ]
     },
     {
-      "title": "Finite-Sample Guarantees for Fully Discrete Conditional Diffusion Models",
-      "url": "http://arxiv.org/abs/2610.13851v1",
+      "title": "Explainable Machine Learning Analysis of Temperature Effects on Mechanical Strength of Fiber-Reinforced High-Performance Concrete",
+      "url": "http://arxiv.org/abs/2610.23811v1",
       "source": "arXiv cs.AI",
       "score": 0,
       "keywords": [
-        "diffusion",
-        "models"
+        "machine learning"
+      ]
+    },
+    {
+      "title": "Steering beyond Language: Improving Multilingual Training-Free Text Embeddings via Paired-Residual Subspace Removal",
+      "url": "http://arxiv.org/abs/2610.23807v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "embeddings"
+      ]
+    },
+    {
+      "title": "Beyond SAEs: Consistent Concept Discovery with Sparse Coding",
+      "url": "http://arxiv.org/abs/2610.23801v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "model",
+        "training"
+      ]
+    },
+    {
+      "title": "FuTransformer: FP8 prefill and INT4 decode for Llama-style inference on Hopper",
+      "url": "http://arxiv.org/abs/2610.23796v1",
+      "source": "arXiv cs.AI",
+      "score": 0,
+      "keywords": [
+        "cuda",
+        "inference",
+        "transformer"
       ]
     }
   ]
